@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free UK Salary Sacrifice Calculator 2025. Calculate car lease, pension contributions & BiK tax savings. See how much you can save on income tax and National Insurance with salary sacrifice schemes.">
+    <meta name="keywords" content="UK salary sacrifice calculator, car lease calculator, BiK tax calculator, pension salary sacrifice, tax savings calculator, take home pay calculator UK, salary sacrifice car scheme, electric car BiK rates 2025">
+    <meta name="author" content="UK Tax Calculator">
+    <meta property="og:title" content="Free UK Salary Sacrifice Calculator 2025 | Car Lease & Tax Savings">
+    <meta property="og:description" content="Calculate your salary sacrifice savings instantly. Car leasing, pension contributions, BiK tax rates for 2025. Free UK tax calculator.">
+    <meta property="og:type" content="website">
+    <title>Free UK Salary Sacrifice Calculator 2025 | Car Lease, Pension & BiK Tax Savings</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+        }
+
+        .input-section {
+            padding: 40px;
+            background: #f8f9fa;
+            border-right: 1px solid #e9ecef;
+        }
+
+        .results-section {
+            padding: 40px;
+            background: white;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 0.95rem;
+        }
+
+        input[type="number"], select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        input[type="number"]:focus, select:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #3498db;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+        }
+
+        .result-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-left: 5px solid #3498db;
+        }
+
+        .result-main {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #27ae60;
+            margin-bottom: 10px;
+        }
+
+        .result-label {
+            font-size: 1rem;
+            color: #7f8c8d;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .breakdown {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .breakdown-item:last-child {
+            border-bottom: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .savings-highlight {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .savings-amount {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .car-section {
+            background: #e8f4f8;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .bik-breakdown {
+            background: #f0f8ff;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            border: 1px solid #b3d9ff;
+        }
+
+        .share-section {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .share-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .share-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .tax-info {
+            background: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+        .info-box {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+
+        .info-box.tax-free-childcare {
+            background: #d1ecf1;
+            border-color: #bee5eb;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .warning {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .input-section {
+                border-right: none;
+                border-bottom: 1px solid #e9ecef;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .container {
+                margin: 10px;
+            }
+
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Free UK Salary Sacrifice Calculator 2025</h1>
+            <p>Calculate car lease, pension & BiK tax savings instantly. Discover how much you can save with salary sacrifice schemes</p>
+        </div>
+
+        <div class="main-content">
+            <div class="input-section">
+                <h2 class="section-title">Your Details</h2>
+                
+                <div class="form-group">
+                    <label for="grossSalary">Annual Gross Salary (£)</label>
+                    <input type="number" id="grossSalary" value="40000" min="0" step="1000">
+                </div>
+
+                <div class="form-group">
+                    <label for="pensionContrib">Personal Pension Contribution (£/year)</label>
+                    <input type="number" id="pensionContrib" value="2000" min="0" step="100">
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="scotland">
+                    <label for="scotland">I pay Scottish Income Tax</label>
+                </div>
+
+                <h3 class="section-title" style="margin-top: 30px;">Salary Sacrifice Schemes</h3>
+                
+                <div class="form-group">
+                    <label for="cyclesToWork">Cycle to Work Scheme (£/year)</label>
+                    <input type="number" id="cyclesToWork" value="0" min="0" max="1000" step="50">
+                    <small style="color: #666;">Up to £1,000/year - reduces taxable income</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="additionalPension">Additional Pension Contributions (£/year)</label>
+                    <input type="number" id="additionalPension" value="0" min="0" step="100">
+                    <small style="color: #666;">Salary sacrifice into workplace pension</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="carLeasing">Car Leasing Salary Sacrifice (£/year)</label>
+                    <input type="number" id="carLeasing" value="0" min="0" step="500">
+                    <small style="color: #666;">Annual lease cost - reduces taxable income, but you still pay BiK tax on car benefit</small>
+                </div>
+
+                <h3 class="section-title" style="margin-top: 30px;">Car Details (for BiK Calculation)</h3>
+                
+                <div class="form-group">
+                    <label for="carValue">Car List Price (P11D Value) £</label>
+                    <input type="number" id="carValue" value="0" min="0" step="1000">
+                    <small style="color: #666;">Only fill if you have a salary sacrifice car lease - used to calculate BiK tax</small>
+                </div>
+
+                <div class="two-column">
+                    <div class="form-group">
+                        <label for="carCO2">CO2 Emissions (g/km)</label>
+                        <input type="number" id="carCO2" value="0" min="0" max="400" step="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="carType">Car Type</label>
+                        <select id="carType">
+                            <option value="none">No Company Car</option>
+                            <option value="electric">Electric (BEV)</option>
+                            <option value="hybrid">Plug-in Hybrid</option>
+                            <option value="petrol">Petrol</option>
+                            <option value="diesel">Diesel</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group" id="electricRangeGroup" style="display: none;">
+                    <label for="electricRange">Electric Range (miles) - for hybrids</label>
+                    <input type="number" id="electricRange" value="30" min="0" step="1">
+                </div>
+
+                <div class="info-box tax-free-childcare">
+                    <strong>Tax-Free Childcare (Current Scheme):</strong><br>
+                    Get up to £2,000/year per child (£4,000 for disabled children). For every £8 you pay in, the government adds £2. This replaced childcare vouchers in 2018.
+                    <br><br>
+                    <strong>⚠️ Income Limit:</strong> You cannot get Tax-Free Childcare if you or your partner earn over £100,000 adjusted net income per year.
+                    <br><br>
+                    <strong>Note:</strong> You cannot use Tax-Free Childcare if you're on Universal Credit - check which is better for your situation.
+                </div>
+
+                <div class="warning" id="highEarnerWarning" style="display: none;">
+                    <strong>⚠️ High Earner Alert - "Childcare Tax Trap"</strong><br>
+                    Your income is approaching or exceeds £100,000. This creates a "cliff edge" where you lose:
+                    <ul style="margin: 10px 0 0 20px;">
+                        <li>Tax-Free Childcare (up to £2,000/year per child)</li>
+                        <li>30 hours free childcare (worth ~£9,400/year)</li>
+                        <li>Your personal tax allowance starts reducing</li>
+                    </ul>
+                    <strong>Consider:</strong> Pension contributions to reduce adjusted net income below £100,000.
+                </div>
+
+                <div class="tax-info">
+                    <strong>2025/26 Tax Year Rates Applied:</strong><br>
+                    • Personal Allowance: £12,570<br>
+                    • Basic Rate: 20% (£12,571-£50,270)<br>
+                    • Higher Rate: 40% (£50,271-£125,140)<br>
+                    • Additional Rate: 45% (above £125,140)<br>
+                    • National Insurance: 8% (employee)<br>
+                    • Company Car BiK rates: 3% (electric) to 37% (high CO2)<br>
+                    • Personal allowance reduces £1 for every £2 earned above £100,000
+                </div>
+            </div>
+
+            <div class="results-section">
+                <h2 class="section-title">Your Results</h2>
+                
+                <div class="result-card">
+                    <div class="result-main" id="takeHome">£30,000</div>
+                    <div class="result-label">Annual Take-Home Pay</div>
+                </div>
+
+                <div class="result-card">
+                    <div class="result-main" id="monthlyTakeHome" style="color: #3498db;">£2,500</div>
+                    <div class="result-label">Monthly Take-Home Pay</div>
+                </div>
+
+                <div class="breakdown">
+                    <h4 style="margin-bottom: 15px; color: #2c3e50;">Tax Breakdown</h4>
+                    <div class="breakdown-item">
+                        <span>Gross Salary:</span>
+                        <span id="grossDisplay">£40,000</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span>Pension Contribution:</span>
+                        <span id="pensionDisplay">£2,000</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span>Salary Sacrifice Total:</span>
+                        <span id="sacrificeTotal">£0</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span>Taxable Income (after sacrifice):</span>
+                        <span id="taxableIncome">£38,000</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span>Income Tax:</span>
+                        <span id="incomeTax">£5,086</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span>National Insurance:</span>
+                        <span id="nationalInsurance">£2,874</span>
+                    </div>
+                    <div class="breakdown-item" id="carBikRow" style="display: none;">
+                        <span>Company Car BiK Tax:</span>
+                        <span id="carBikTax">£0</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span><strong>Net Take-Home:</strong></span>
+                        <span id="netTakeHome"><strong>£30,040</strong></span>
+                    </div>
+                </div>
+
+                <div class="car-section" id="carBreakdown" style="display: none;">
+                    <h4 style="margin-bottom: 15px; color: #2c3e50;">Salary Sacrifice Car - BiK Tax Breakdown</h4>
+                    <div style="background: #fff3cd; padding: 15px; border-radius: 8px; margin-bottom: 15px; font-size: 0.9rem;">
+                        <strong>How it works:</strong> You salary sacrifice £<span id="carLeasingDisplay">0</span>/year for car lease (pre-tax), 
+                        but still pay BiK tax on the car's benefit value. Net result: significant tax savings!
+                    </div>
+                    <div class="bik-breakdown">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <span>Car List Price (P11D):</span>
+                            <span id="carValueDisplay">£0</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <span>CO2 Emissions:</span>
+                            <span id="carCO2Display">0g/km</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <span>BiK Rate:</span>
+                            <span id="bikRateDisplay">0%</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; font-weight: bold; border-top: 1px solid #ccc; padding-top: 10px;">
+                            <span>Annual BiK Value:</span>
+                            <span id="bikValueDisplay">£0</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-top: 5px;">
+                            <span>Your BiK Tax:</span>
+                            <span id="bikTaxDisplay">£0</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-top: 10px; font-weight: bold; color: #27ae60; border-top: 1px solid #ccc; padding-top: 10px;">
+                            <span>Net Monthly Car Cost:</span>
+                            <span id="netCarCost">£0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="savings-highlight">
+                    <div class="savings-amount" id="totalSavings">£0</div>
+                    <div>Total Annual Tax Savings from Salary Sacrifice</div>
+                    <div style="margin-top: 10px; font-size: 0.9rem; opacity: 0.9;">
+                        That's <span id="monthlySavings">£0</span> extra per month!
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="share-section">
+            <h3>Found this calculator helpful?</h3>
+            <p>Help others discover these current tax savings by sharing this free tool!</p>
+            <div class="share-buttons">
+                <button class="share-btn" onclick="shareCalculator()">📱 Share Link</button>
+                <button class="share-btn" onclick="downloadCalculator()">💾 Download Tool</button>
+                <a href="https://twitter.com/intent/tweet?text=Check out this free UK Tax %26 Salary Sacrifice Calculator 2025! 💷 Calculate your savings with current BiK rates and salary sacrifice schemes." class="share-btn" target="_blank">🐦 Tweet</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tax rates for 2025/26
+        const TAX_RATES = {
+            personalAllowance: 12570,
+            basicRateThreshold: 50270,
+            higherRateThreshold: 125140,
+            basicRate: 0.20,
+            higherRate: 0.40,
+            additionalRate: 0.45,
+            niThreshold: 12570,
+            niRate: 0.08,
+            niUpperThreshold: 50270,
+            niUpperRate: 0.02
+        };
+
+        const SCOTTISH_RATES = {
+            starterRate: 0.19,
+            starterThreshold: 14876,
+            basicRate: 0.20,
+            basicThreshold: 26561,
+            intermediateRate: 0.21,
+            intermediateThreshold: 43662,
+            higherRate: 0.42,
+            higherThreshold: 75000,
+            additionalRate: 0.47
+        };
+
+        // BiK rates for 2025/26
+        const BIK_RATES = {
+            electric: 3,
+            getHybridRate: function(co2, electricRange) {
+                if (co2 === 0) return 3;
+                if (co2 <= 50) {
+                    if (electricRange >= 130) return 8;
+                    if (electricRange >= 70) return 12;
+                    if (electricRange >= 40) return 14;
+                    if (electricRange >= 30) return 16;
+                    return 18;
+                }
+                return this.getPetrolRate(co2);
+            },
+            getPetrolRate: function(co2) {
+                if (co2 === 0) return 3;
+                if (co2 <= 50) return 18;
+                if (co2 <= 54) return 19;
+                if (co2 <= 59) return 20;
+                if (co2 <= 64) return 21;
+                if (co2 <= 69) return 22;
+                if (co2 <= 74) return 23;
+                if (co2 <= 79) return 24;
+                if (co2 <= 84) return 25;
+                if (co2 <= 89) return 26;
+                if (co2 <= 94) return 27;
+                if (co2 <= 99) return 28;
+                if (co2 <= 104) return 29;
+                if (co2 <= 109) return 30;
+                if (co2 <= 114) return 31;
+                if (co2 <= 119) return 32;
+                if (co2 <= 124) return 33;
+                if (co2 <= 129) return 34;
+                if (co2 <= 134) return 35;
+                if (co2 <= 139) return 36;
+                return 37;
+            },
+            getDieselRate: function(co2) {
+                let baseRate = this.getPetrolRate(co2);
+                return Math.min(baseRate + 4, 37);
+            }
+        };
+
+        function calculateTax(taxableIncome, isScottish = false) {
+            let tax = 0;
+            
+            if (taxableIncome <= TAX_RATES.personalAllowance) {
+                return 0;
+            }
+            
+            const taxableAmount = taxableIncome - TAX_RATES.personalAllowance;
+            
+            if (isScottish) {
+                if (taxableAmount <= SCOTTISH_RATES.starterThreshold - TAX_RATES.personalAllowance) {
+                    tax = taxableAmount * SCOTTISH_RATES.starterRate;
+                } else if (taxableAmount <= SCOTTISH_RATES.basicThreshold - TAX_RATES.personalAllowance) {
+                    tax = (SCOTTISH_RATES.starterThreshold - TAX_RATES.personalAllowance) * SCOTTISH_RATES.starterRate;
+                    tax += (taxableAmount - (SCOTTISH_RATES.starterThreshold - TAX_RATES.personalAllowance)) * SCOTTISH_RATES.basicRate;
+                } else if (taxableAmount <= SCOTTISH_RATES.intermediateThreshold - TAX_RATES.personalAllowance) {
+                    tax = (SCOTTISH_RATES.starterThreshold - TAX_RATES.personalAllowance) * SCOTTISH_RATES.starterRate;
+                    tax += (SCOTTISH_RATES.basicThreshold - SCOTTISH_RATES.starterThreshold) * SCOTTISH_RATES.basicRate;
+                    tax += (taxableAmount - (SCOTTISH_RATES.basicThreshold - TAX_RATES.personalAllowance)) * SCOTTISH_RATES.intermediateRate;
+                } else if (taxableAmount <= SCOTTISH_RATES.higherThreshold - TAX_RATES.personalAllowance) {
+                    tax = (SCOTTISH_RATES.starterThreshold - TAX_RATES.personalAllowance) * SCOTTISH_RATES.starterRate;
+                    tax += (SCOTTISH_RATES.basicThreshold - SCOTTISH_RATES.starterThreshold) * SCOTTISH_RATES.basicRate;
+                    tax += (SCOTTISH_RATES.intermediateThreshold - SCOTTISH_RATES.basicThreshold) * SCOTTISH_RATES.intermediateRate;
+                    tax += (taxableAmount - (SCOTTISH_RATES.intermediateThreshold - TAX_RATES.personalAllowance)) * SCOTTISH_RATES.higherRate;
+                } else {
+                    tax = (SCOTTISH_RATES.starterThreshold - TAX_RATES.personalAllowance) * SCOTTISH_RATES.starterRate;
+                    tax += (SCOTTISH_RATES.basicThreshold - SCOTTISH_RATES.starterThreshold) * SCOTTISH_RATES.basicRate;
+                    tax += (SCOTTISH_RATES.intermediateThreshold - SCOTTISH_RATES.basicThreshold) * SCOTTISH_RATES.intermediateRate;
+                    tax += (SCOTTISH_RATES.higherThreshold - SCOTTISH_RATES.intermediateThreshold) * SCOTTISH_RATES.higherRate;
+                    tax += (taxableAmount - (SCOTTISH_RATES.higherThreshold - TAX_RATES.personalAllowance)) * SCOTTISH_RATES.additionalRate;
+                }
+            } else {
+                if (taxableAmount <= TAX_RATES.basicRateThreshold - TAX_RATES.personalAllowance) {
+                    tax = taxableAmount * TAX_RATES.basicRate;
+                } else if (taxableAmount <= TAX_RATES.higherRateThreshold - TAX_RATES.personalAllowance) {
+                    tax = (TAX_RATES.basicRateThreshold - TAX_RATES.personalAllowance) * TAX_RATES.basicRate;
+                    tax += (taxableAmount - (TAX_RATES.basicRateThreshold - TAX_RATES.personalAllowance)) * TAX_RATES.higherRate;
+                } else {
+                    tax = (TAX_RATES.basicRateThreshold - TAX_RATES.personalAllowance) * TAX_RATES.basicRate;
+                    tax += (TAX_RATES.higherRateThreshold - TAX_RATES.basicRateThreshold) * TAX_RATES.higherRate;
+                    tax += (taxableAmount - (TAX_RATES.higherRateThreshold - TAX_RATES.personalAllowance)) * TAX_RATES.additionalRate;
+                }
+            }
+            
+            return Math.round(tax);
+        }
+
+        function calculateNI(salary) {
+            let ni = 0;
+            
+            if (salary > TAX_RATES.niThreshold) {
+                if (salary <= TAX_RATES.niUpperThreshold) {
+                    ni = (salary - TAX_RATES.niThreshold) * TAX_RATES.niRate;
+                } else {
+                    ni = (TAX_RATES.niUpperThreshold - TAX_RATES.niThreshold) * TAX_RATES.niRate;
+                    ni += (salary - TAX_RATES.niUpperThreshold) * TAX_RATES.niUpperRate;
+                }
+            }
+            
+            return Math.round(ni);
+        }
+
+        function calculateCarBiK(carValue, carType, co2, electricRange, grossSalary, isScottish) {
+            if (carValue === 0 || carType === 'none') {
+                return { bikRate: 0, bikValue: 0, bikTax: 0 };
+            }
+
+            let bikRate = 0;
+            
+            switch (carType) {
+                case 'electric':
+                    bikRate = BIK_RATES.electric;
+                    break;
+                case 'hybrid':
+                    bikRate = BIK_RATES.getHybridRate(co2, electricRange);
+                    break;
+                case 'petrol':
+                    bikRate = BIK_RATES.getPetrolRate(co2);
+                    break;
+                case 'diesel':
+                    bikRate = BIK_RATES.getDieselRate(co2);
+                    break;
+            }
+
+            const bikValue = Math.round(carValue * (bikRate / 100));
+            
+            let taxRate = 0;
+            if (grossSalary <= TAX_RATES.basicRateThreshold) {
+                taxRate = isScottish ? SCOTTISH_RATES.basicRate : TAX_RATES.basicRate;
+            } else {
+                taxRate = isScottish ? SCOTTISH_RATES.higherRate : TAX_RATES.higherRate;
+            }
+            
+            const bikTax = Math.round(bikValue * taxRate);
+
+            return { bikRate, bikValue, bikTax };
+        }
+
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('en-GB', {
+                style: 'currency',
+                currency: 'GBP',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(amount);
+        }
+
+        function calculateAll() {
+            const grossSalary = parseFloat(document.getElementById('grossSalary').value) || 0;
+            const pensionContrib = parseFloat(document.getElementById('pensionContrib').value) || 0;
+            const cyclesToWork = parseFloat(document.getElementById('cyclesToWork').value) || 0;
+            const additionalPension = parseFloat(document.getElementById('additionalPension').value) || 0;
+            const carLeasing = parseFloat(document.getElementById('carLeasing').value) || 0;
+            const isScottish = document.getElementById('scotland').checked;
+
+            const carValue = parseFloat(document.getElementById('carValue').value) || 0;
+            const carType = document.getElementById('carType').value;
+            const carCO2 = parseFloat(document.getElementById('carCO2').value) || 0;
+            const electricRange = parseFloat(document.getElementById('electricRange').value) || 30;
+
+            const totalSalarySacrifice = cyclesToWork + additionalPension + carLeasing;
+            const taxableIncome = grossSalary - pensionContrib - totalSalarySacrifice;
+
+            const adjustedNetIncome = grossSalary - pensionContrib - additionalPension;
+            
+            const highEarnerWarning = document.getElementById('highEarnerWarning');
+            if (adjustedNetIncome >= 95000) {
+                highEarnerWarning.style.display = 'block';
+            } else {
+                highEarnerWarning.style.display = 'none';
+            }
+
+            const incomeTax = calculateTax(taxableIncome, isScottish);
+            const nationalInsurance = calculateNI(grossSalary - totalSalarySacrifice);
+            
+            const carBikData = calculateCarBiK(carValue, carType, carCO2, electricRange, grossSalary, isScottish);
+            
+            const takeHome = grossSalary - pensionContrib - totalSalarySacrifice - incomeTax - nationalInsurance - carBikData.bikTax;
+            const monthlyTakeHome = takeHome / 12;
+
+            const noSacrificeIncomeTax = calculateTax(grossSalary - pensionContrib, isScottish);
+            const noSacrificeNI = calculateNI(grossSalary);
+            const noSacrificeNet = grossSalary - pensionContrib - noSacrificeIncomeTax - noSacrificeNI - carBikData.bikTax;
+            const totalSavings = noSacrificeNet - takeHome + totalSalarySacrifice;
+
+            // Update display
+            document.getElementById('takeHome').textContent = formatCurrency(takeHome);
+            document.getElementById('monthlyTakeHome').textContent = formatCurrency(monthlyTakeHome);
+            document.getElementById('grossDisplay').textContent = formatCurrency(grossSalary);
+            document.getElementById('pensionDisplay').textContent = formatCurrency(pensionContrib);
+            document.getElementById('sacrificeTotal').textContent = formatCurrency(totalSalarySacrifice);
+            document.getElementById('taxableIncome').textContent = formatCurrency(taxableIncome);
+            document.getElementById('incomeTax').textContent = formatCurrency(incomeTax);
+            document.getElementById('nationalInsurance').textContent = formatCurrency(nationalInsurance);
+            document.getElementById('netTakeHome').textContent = formatCurrency(takeHome);
+            document.getElementById('totalSavings').textContent = formatCurrency(Math.max(0, totalSavings));
+            document.getElementById('monthlySavings').textContent = formatCurrency(Math.max(0, totalSavings / 12));
+
+            // Update car BiK display
+            if (carValue > 0 && carType !== 'none' && carLeasing > 0) {
+                document.getElementById('carBikRow').style.display = 'flex';
+                document.getElementById('carBikTax').textContent = formatCurrency(carBikData.bikTax);
+                document.getElementById('carBreakdown').style.display = 'block';
+                document.getElementById('carValueDisplay').textContent = formatCurrency(carValue);
+                document.getElementById('carCO2Display').textContent = carCO2 + 'g/km';
+                document.getElementById('bikRateDisplay').textContent = carBikData.bikRate + '%';
+                document.getElementById('bikValueDisplay').textContent = formatCurrency(carBikData.bikValue);
+                document.getElementById('bikTaxDisplay').textContent = formatCurrency(carBikData.bikTax);
+                document.getElementById('carLeasingDisplay').textContent = carLeasing.toLocaleString();
+                
+                const taxRate = grossSalary > TAX_RATES.basicRateThreshold ? 
+                    (isScottish ? SCOTTISH_RATES.higherRate : TAX_RATES.higherRate) : 
+                    (isScottish ? SCOTTISH_RATES.basicRate : TAX_RATES.basicRate);
+                const niRate = grossSalary > TAX_RATES.niUpperThreshold ? TAX_RATES.niUpperRate : TAX_RATES.niRate;
+                const totalTaxSavingsRate = taxRate + niRate;
+                const netLeaseCost = carLeasing * (1 - totalTaxSavingsRate);
+                const netMonthlyCost = (netLeaseCost + carBikData.bikTax) / 12;
+                document.getElementById('netCarCost').textContent = formatCurrency(netMonthlyCost);
+            } else {
+                document.getElementById('carBikRow').style.display = 'none';
+                document.getElementById('carBreakdown').style.display = 'none';
+            }
+        }
+
+        function shareCalculator() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'UK Tax & Salary Sacrifice Calculator 2025',
+                    text: 'Check out this free calculator with current BiK rates and salary sacrifice schemes!',
+                    url: window.location.href
+                });
+            } else {
+                navigator.clipboard.writeText(window.location.href);
+                alert('Link copied to clipboard!');
+            }
+        }
+
+        function downloadCalculator() {
+            const element = document.createElement('a');
+            const file = new Blob([document.documentElement.outerHTML], {type: 'text/html'});
+            element.href = URL.createObjectURL(file);
+            element.download = 'uk-tax-calculator-2025.html';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        function toggleElectricRange() {
+            const carType = document.getElementById('carType').value;
+            const electricRangeGroup = document.getElementById('electricRangeGroup');
+            
+            if (carType === 'hybrid') {
+                electricRangeGroup.style.display = 'block';
+            } else {
+                electricRangeGroup.style.display = 'none';
+            }
+        }
+
+        // Add event listeners
+        document.querySelectorAll('input, select').forEach(input => {
+            input.addEventListener('input', calculateAll);
+            input.addEventListener('change', calculateAll);
+        });
+
+        document.getElementById('carType').addEventListener('change', function() {
+            toggleElectricRange();
+            calculateAll();
+        });
+
+        // Initial calculation
+        calculateAll();
+        toggleElectricRange();
+    </script>
+</body>
+</html>
