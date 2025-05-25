@@ -894,11 +894,22 @@
             const takeHome = grossSalary - pensionContrib - totalSalarySacrifice - incomeTax - nationalInsurance - carBikData.bikTax - studentLoanPayment;
             const monthlyTakeHome = takeHome / 12;
 
-            const noSacrificeIncomeTax = calculateTax(grossSalary - pensionContrib, isScottish);
-            const noSacrificeNI = calculateNI(grossSalary);
-            const noSacrificeStudentLoan = calculateStudentLoan(grossSalary, studentLoanPlan);
-            const noSacrificeNet = grossSalary - pensionContrib - noSacrificeIncomeTax - noSacrificeNI - noSacrificeStudentLoan;
-            const totalSavings = takeHome - noSacrificeNet;
+            // Calculate scenario WITHOUT car salary sacrifice (but keeping pension sacrifice)
+            const noCarSacrificeIncome = grossSalary - pensionContrib - (totalSalarySacrifice - carLeasing);
+            const noCarSacrificeIncomeTax = calculateTax(noCarSacrificeIncome, isScottish);
+            const noCarSacrificeNI = calculateNI(noCarSacrificeIncome);
+            const noCarSacrificeStudentLoan = calculateStudentLoan(grossSalary, studentLoanPlan);
+
+            // Take-home if NOT salary sacrificing for car
+            const noCarSacrificeTakeHome = grossSalary - pensionContrib - (totalSalarySacrifice - carLeasing) 
+    - noCarSacrificeIncomeTax - noCarSacrificeNI - noCarSacrificeStudentLoan;
+
+            // After paying for car with after-tax money
+            const noCarSacrificeNetPosition = noCarSacrificeTakeHome - carLeasing;
+
+            // The benefit of salary sacrificing for the car
+            const totalSavings = takeHome - noCarSacrificeNetPosition;
+            
 
             // Update display
             document.getElementById('takeHome').textContent = formatCurrency(takeHome);
