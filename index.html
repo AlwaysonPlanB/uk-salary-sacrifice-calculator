@@ -898,7 +898,7 @@
             const noSacrificeNI = calculateNI(grossSalary);
             const noSacrificeStudentLoan = calculateStudentLoan(grossSalary, studentLoanPlan);
             const noSacrificeNet = grossSalary - pensionContrib - noSacrificeIncomeTax - noSacrificeNI - carBikData.bikTax - noSacrificeStudentLoan;
-            const totalSavings = noSacrificeNet - takeHome + totalSalarySacrifice;
+            const totalSavings = takeHome - noSacrificeNet;
 
             // Update display
             document.getElementById('takeHome').textContent = formatCurrency(takeHome);
