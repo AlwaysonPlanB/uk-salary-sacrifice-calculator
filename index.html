@@ -55,6 +55,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 0;
+            min-height: 80vh;
         }
 
         .input-section {
@@ -66,6 +67,14 @@
         .results-section {
             padding: 40px;
             background: white;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-section {
+            width: 100%;
+            background: #f8f9fa;
+            border-top: 1px solid #e9ecef;
         }
 
         .form-group {
@@ -279,6 +288,10 @@
             .two-column {
                 grid-template-columns: 1fr;
             }
+
+            .info-section > div > div {
+                grid-template-columns: 1fr !important;
+            }
         }
     </style>
 </head>
@@ -301,6 +314,26 @@
                 <div class="form-group">
                     <label for="pensionContrib">Personal Pension Contribution (£/year)</label>
                     <input type="number" id="pensionContrib" value="2000" min="0" step="100">
+                    <small style="color: #666;">Your contribution - reduces taxable income</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="employerPension">Employer Pension Contribution (£/year)</label>
+                    <input type="number" id="employerPension" value="2000" min="0" step="100">
+                    <small style="color: #666;">Employer's contribution - not taxable to you but counts toward annual allowance</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="studentLoanPlan">Student Loan Plan</label>
+                    <select id="studentLoanPlan">
+                        <option value="none">No Student Loan</option>
+                        <option value="plan1">Plan 1 (Before Sept 2012)</option>
+                        <option value="plan2">Plan 2 (Sept 2012 onwards)</option>
+                        <option value="plan4">Plan 4 (Scotland)</option>
+                        <option value="plan5">Plan 5 (Sept 2023 onwards)</option>
+                        <option value="postgrad">Postgraduate Loan</option>
+                    </select>
+                    <small style="color: #666;">Calculated automatically on gross salary (before salary sacrifice)</small>
                 </div>
 
                 <div class="checkbox-group">
@@ -357,37 +390,6 @@
                     <label for="electricRange">Electric Range (miles) - for hybrids</label>
                     <input type="number" id="electricRange" value="30" min="0" step="1">
                 </div>
-
-                <div class="info-box tax-free-childcare">
-                    <strong>Tax-Free Childcare (Current Scheme):</strong><br>
-                    Get up to £2,000/year per child (£4,000 for disabled children). For every £8 you pay in, the government adds £2. This replaced childcare vouchers in 2018.
-                    <br><br>
-                    <strong>⚠️ Income Limit:</strong> You cannot get Tax-Free Childcare if you or your partner earn over £100,000 adjusted net income per year.
-                    <br><br>
-                    <strong>Note:</strong> You cannot use Tax-Free Childcare if you're on Universal Credit - check which is better for your situation.
-                </div>
-
-                <div class="warning" id="highEarnerWarning" style="display: none;">
-                    <strong>⚠️ High Earner Alert - "Childcare Tax Trap"</strong><br>
-                    Your income is approaching or exceeds £100,000. This creates a "cliff edge" where you lose:
-                    <ul style="margin: 10px 0 0 20px;">
-                        <li>Tax-Free Childcare (up to £2,000/year per child)</li>
-                        <li>30 hours free childcare (worth ~£9,400/year)</li>
-                        <li>Your personal tax allowance starts reducing</li>
-                    </ul>
-                    <strong>Consider:</strong> Pension contributions to reduce adjusted net income below £100,000.
-                </div>
-
-                <div class="tax-info">
-                    <strong>2025/26 Tax Year Rates Applied:</strong><br>
-                    • Personal Allowance: £12,570<br>
-                    • Basic Rate: 20% (£12,571-£50,270)<br>
-                    • Higher Rate: 40% (£50,271-£125,140)<br>
-                    • Additional Rate: 45% (above £125,140)<br>
-                    • National Insurance: 8% (employee)<br>
-                    • Company Car BiK rates: 3% (electric) to 37% (high CO2)<br>
-                    • Personal allowance reduces £1 for every £2 earned above £100,000
-                </div>
             </div>
 
             <div class="results-section">
@@ -410,12 +412,24 @@
                         <span id="grossDisplay">£40,000</span>
                     </div>
                     <div class="breakdown-item">
-                        <span>Pension Contribution:</span>
+                        <span>Personal Pension:</span>
                         <span id="pensionDisplay">£2,000</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span>Employer Pension:</span>
+                        <span id="employerPensionDisplay">£2,000</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span>Total Pension Contributions:</span>
+                        <span id="totalPensionDisplay">£4,000</span>
                     </div>
                     <div class="breakdown-item">
                         <span>Salary Sacrifice Total:</span>
                         <span id="sacrificeTotal">£0</span>
+                    </div>
+                    <div class="breakdown-item" id="studentLoanRow" style="display: none;">
+                        <span>Student Loan Repayment:</span>
+                        <span id="studentLoanPayment">£0</span>
                     </div>
                     <div class="breakdown-item">
                         <span>Taxable Income (after sacrifice):</span>
@@ -483,6 +497,107 @@
             </div>
         </div>
 
+        <div class="disclaimer-section" style="background: #f8f9fa; border-top: 1px solid #e9ecef; border-bottom: 1px solid #e9ecef;">
+            <div style="padding: 30px; max-width: 1400px; margin: 0 auto;">
+                <h3 style="color: #2c3e50; margin-bottom: 20px; font-size: 1.2rem;">Important Disclaimer</h3>
+                
+                <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+                    <strong>⚠️ This calculator is for guidance only</strong><br>
+                    The results provided by this calculator are estimates based on the information you provide and current tax rates for 2025/26. Your actual tax liability and take-home pay may differ.
+                </div>
+
+                <div style="font-size: 0.9rem; line-height: 1.6; color: #555;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                        <div>
+                            <h4 style="color: #2c3e50; margin-bottom: 10px;">Tax & Financial Advice</h4>
+                            <p>• This calculator does not constitute financial or tax advice</p>
+                            <p>• Individual circumstances vary and may affect calculations</p>
+                            <p>• Tax rules and rates can change during the tax year</p>
+                            <p>• Always consult a qualified tax advisor or accountant for personalized advice</p>
+                            <p>• HMRC is the authoritative source for UK tax information</p>
+                        </div>
+                        
+                        <div>
+                            <h4 style="color: #2c3e50; margin-bottom: 10px;">Limitations & Accuracy</h4>
+                            <p>• Results are based on simplified calculations</p>
+                            <p>• Does not account for all possible tax reliefs or circumstances</p>
+                            <p>• Pension calculations may not reflect complex scheme rules</p>
+                            <p>• Student loan calculations assume standard repayment terms</p>
+                            <p>• No warranty is provided for accuracy or completeness</p>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #ddd;">
+                        <strong>Use at your own risk:</strong> While we strive for accuracy, we accept no responsibility for decisions made based on these calculations. For salary sacrifice schemes, always confirm details with your employer's HR department and seek professional advice before making financial commitments.
+                    </div>
+                    
+                    <div style="margin-top: 15px; font-size: 0.85rem; color: #666;">
+                        <p><strong>Data Privacy:</strong> This calculator runs entirely in your browser. No personal or financial information is transmitted to our servers or stored anywhere.</p>
+                        <p><strong>Last Updated:</strong> Tax rates and thresholds for 2025/26 tax year. Check HMRC website for the most current information.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <div style="padding: 40px; max-width: 1400px; margin: 0 auto;">
+                <h2 class="section-title">Important Information & Recommendations</h2>
+
+                <div class="warning" id="pensionAllowanceWarning" style="display: none;">
+                    <strong>⚠️ Pension Annual Allowance Alert</strong><br>
+                    Your total pension contributions (£<span id="totalPensionAmount">0</span>) may exceed the annual allowance limits:
+                    <ul style="margin: 10px 0 0 20px;">
+                        <li>Standard allowance: £60,000</li>
+                        <li>Tapered allowance applies if income >£200,000</li>
+                        <li>Money Purchase allowance: £10,000 (if triggered)</li>
+                    </ul>
+                    <strong>Consider:</strong> Spreading contributions across tax years or seeking pension advice.
+                </div>
+
+                <div class="warning" id="highEarnerWarning" style="display: none;">
+                    <strong>⚠️ High Earner Alert - "Childcare Tax Trap"</strong><br>
+                    Your income is approaching or exceeds £100,000. This creates a "cliff edge" where you lose:
+                    <ul style="margin: 10px 0 0 20px;">
+                        <li>Tax-Free Childcare (up to £2,000/year per child)</li>
+                        <li>30 hours free childcare (worth ~£9,400/year)</li>
+                        <li>Your personal tax allowance starts reducing</li>
+                    </ul>
+                    <strong>Consider:</strong> Pension contributions to reduce adjusted net income below £100,000.
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 30px; margin-top: 20px;">
+                    <div class="info-box tax-free-childcare">
+                        <strong>Tax-Free Childcare (Current Scheme):</strong><br>
+                        Get up to £2,000/year per child (£4,000 for disabled children). For every £8 you pay in, the government adds £2. This replaced childcare vouchers in 2018.
+                        <br><br>
+                        <strong>⚠️ Income Limit:</strong> You cannot get Tax-Free Childcare if you or your partner earn over £100,000 adjusted net income per year.
+                        <br><br>
+                        <strong>Note:</strong> You cannot use Tax-Free Childcare if you're on Universal Credit - check which is better for your situation.
+                    </div>
+
+                    <div class="info-box">
+                        <strong>2025/26 Pension Annual Allowance:</strong><br>
+                        • Standard Annual Allowance: £60,000<br>
+                        • Money Purchase Annual Allowance: £10,000 (if triggered)<br>
+                        • Tapered allowance starts at £200,000 income<br>
+                        • Minimum tapered allowance: £10,000<br>
+                        <strong>Tip:</strong> Employer contributions count toward your annual allowance but don't reduce your taxable income.
+                    </div>
+
+                    <div class="tax-info">
+                        <strong>2025/26 Tax Year Rates Applied:</strong><br>
+                        • Personal Allowance: £12,570<br>
+                        • Basic Rate: 20% (£12,571-£50,270)<br>
+                        • Higher Rate: 40% (£50,271-£125,140)<br>
+                        • Additional Rate: 45% (above £125,140)<br>
+                        • National Insurance: 8% (employee)<br>
+                        • Company Car BiK rates: 3% (electric) to 37% (high CO2)<br>
+                        • Personal allowance reduces £1 for every £2 earned above £100,000
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="share-section">
             <h3>Found this calculator helpful?</h3>
             <p>Help others discover these current tax savings by sharing this free tool!</p>
@@ -519,6 +634,49 @@
             higherRate: 0.42,
             higherThreshold: 75000,
             additionalRate: 0.47
+        };
+
+        // Pension allowance limits for 2025/26
+        const PENSION_LIMITS = {
+            annualAllowance: 60000,
+            taperedThreshold: 200000,
+            minimumAllowance: 10000,
+            moneyPurchaseAllowance: 10000
+        };
+
+        function calculateTaperedAllowance(adjustedIncome) {
+            if (adjustedIncome <= PENSION_LIMITS.taperedThreshold) {
+                return PENSION_LIMITS.annualAllowance;
+            }
+            
+            const reduction = (adjustedIncome - PENSION_LIMITS.taperedThreshold) / 2;
+            const taperedAllowance = PENSION_LIMITS.annualAllowance - reduction;
+            
+            return Math.max(taperedAllowance, PENSION_LIMITS.minimumAllowance);
+        }
+
+        // Student loan repayment rates for 2025/26
+        const STUDENT_LOAN_RATES = {
+            plan1: {
+                threshold: 24990,
+                rate: 0.09
+            },
+            plan2: {
+                threshold: 27295,
+                rate: 0.09
+            },
+            plan4: {
+                threshold: 31395,
+                rate: 0.09
+            },
+            plan5: {
+                threshold: 25000,
+                rate: 0.09
+            },
+            postgrad: {
+                threshold: 21000,
+                rate: 0.06
+            }
         };
 
         // BiK rates for 2025/26
@@ -626,6 +784,19 @@
             return Math.round(ni);
         }
 
+        function calculateStudentLoan(grossSalary, studentLoanPlan) {
+            if (studentLoanPlan === 'none' || !STUDENT_LOAN_RATES[studentLoanPlan]) {
+                return 0;
+            }
+            
+            const plan = STUDENT_LOAN_RATES[studentLoanPlan];
+            if (grossSalary <= plan.threshold) {
+                return 0;
+            }
+            
+            return Math.round((grossSalary - plan.threshold) * plan.rate);
+        }
+
         function calculateCarBiK(carValue, carType, co2, electricRange, grossSalary, isScottish) {
             if (carValue === 0 || carType === 'none') {
                 return { bikRate: 0, bikValue: 0, bikTax: 0 };
@@ -674,9 +845,11 @@
         function calculateAll() {
             const grossSalary = parseFloat(document.getElementById('grossSalary').value) || 0;
             const pensionContrib = parseFloat(document.getElementById('pensionContrib').value) || 0;
+            const employerPension = parseFloat(document.getElementById('employerPension').value) || 0;
             const cyclesToWork = parseFloat(document.getElementById('cyclesToWork').value) || 0;
             const additionalPension = parseFloat(document.getElementById('additionalPension').value) || 0;
             const carLeasing = parseFloat(document.getElementById('carLeasing').value) || 0;
+            const studentLoanPlan = document.getElementById('studentLoanPlan').value;
             const isScottish = document.getElementById('scotland').checked;
 
             const carValue = parseFloat(document.getElementById('carValue').value) || 0;
@@ -685,7 +858,23 @@
             const electricRange = parseFloat(document.getElementById('electricRange').value) || 30;
 
             const totalSalarySacrifice = cyclesToWork + additionalPension + carLeasing;
+            const totalPersonalPension = pensionContrib + additionalPension;
+            const totalPensionContributions = totalPersonalPension + employerPension;
             const taxableIncome = grossSalary - pensionContrib - totalSalarySacrifice;
+
+            // Calculate adjusted income for pension allowance (includes employer pension)
+            const adjustedIncome = grossSalary + employerPension;
+            const taperedAllowance = calculateTaperedAllowance(adjustedIncome);
+            
+            // Pension allowance warning
+            const pensionWarning = document.getElementById('pensionAllowanceWarning');
+            document.getElementById('totalPensionAmount').textContent = totalPensionContributions.toLocaleString();
+            
+            if (totalPensionContributions > taperedAllowance) {
+                pensionWarning.style.display = 'block';
+            } else {
+                pensionWarning.style.display = 'none';
+            }
 
             const adjustedNetIncome = grossSalary - pensionContrib - additionalPension;
             
@@ -698,15 +887,17 @@
 
             const incomeTax = calculateTax(taxableIncome, isScottish);
             const nationalInsurance = calculateNI(grossSalary - totalSalarySacrifice);
+            const studentLoanPayment = calculateStudentLoan(grossSalary, studentLoanPlan);
             
             const carBikData = calculateCarBiK(carValue, carType, carCO2, electricRange, grossSalary, isScottish);
             
-            const takeHome = grossSalary - pensionContrib - totalSalarySacrifice - incomeTax - nationalInsurance - carBikData.bikTax;
+            const takeHome = grossSalary - pensionContrib - totalSalarySacrifice - incomeTax - nationalInsurance - carBikData.bikTax - studentLoanPayment;
             const monthlyTakeHome = takeHome / 12;
 
             const noSacrificeIncomeTax = calculateTax(grossSalary - pensionContrib, isScottish);
             const noSacrificeNI = calculateNI(grossSalary);
-            const noSacrificeNet = grossSalary - pensionContrib - noSacrificeIncomeTax - noSacrificeNI - carBikData.bikTax;
+            const noSacrificeStudentLoan = calculateStudentLoan(grossSalary, studentLoanPlan);
+            const noSacrificeNet = grossSalary - pensionContrib - noSacrificeIncomeTax - noSacrificeNI - carBikData.bikTax - noSacrificeStudentLoan;
             const totalSavings = noSacrificeNet - takeHome + totalSalarySacrifice;
 
             // Update display
@@ -714,6 +905,8 @@
             document.getElementById('monthlyTakeHome').textContent = formatCurrency(monthlyTakeHome);
             document.getElementById('grossDisplay').textContent = formatCurrency(grossSalary);
             document.getElementById('pensionDisplay').textContent = formatCurrency(pensionContrib);
+            document.getElementById('employerPensionDisplay').textContent = formatCurrency(employerPension);
+            document.getElementById('totalPensionDisplay').textContent = formatCurrency(totalPensionContributions);
             document.getElementById('sacrificeTotal').textContent = formatCurrency(totalSalarySacrifice);
             document.getElementById('taxableIncome').textContent = formatCurrency(taxableIncome);
             document.getElementById('incomeTax').textContent = formatCurrency(incomeTax);
@@ -721,6 +914,14 @@
             document.getElementById('netTakeHome').textContent = formatCurrency(takeHome);
             document.getElementById('totalSavings').textContent = formatCurrency(Math.max(0, totalSavings));
             document.getElementById('monthlySavings').textContent = formatCurrency(Math.max(0, totalSavings / 12));
+
+            // Update student loan display
+            document.getElementById('studentLoanPayment').textContent = formatCurrency(studentLoanPayment);
+            if (studentLoanPayment > 0) {
+                document.getElementById('studentLoanRow').style.display = 'flex';
+            } else {
+                document.getElementById('studentLoanRow').style.display = 'none';
+            }
 
             // Update car BiK display
             if (carValue > 0 && carType !== 'none' && carLeasing > 0) {
