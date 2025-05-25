@@ -897,7 +897,7 @@
             const noSacrificeIncomeTax = calculateTax(grossSalary - pensionContrib, isScottish);
             const noSacrificeNI = calculateNI(grossSalary);
             const noSacrificeStudentLoan = calculateStudentLoan(grossSalary, studentLoanPlan);
-            const noSacrificeNet = grossSalary - pensionContrib - noSacrificeIncomeTax - noSacrificeNI - carBikData.bikTax - noSacrificeStudentLoan;
+            const noSacrificeNet = grossSalary - pensionContrib - noSacrificeIncomeTax - noSacrificeNI - noSacrificeStudentLoan;
             const totalSavings = takeHome - noSacrificeNet;
 
             // Update display
