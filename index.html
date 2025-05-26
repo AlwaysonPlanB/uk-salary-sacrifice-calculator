@@ -300,6 +300,11 @@
             .input-section {
                 border-right: none;
                 border-bottom: 1px solid #e9ecef;
+                padding: 20px;
+            }
+
+            .results-section {
+                padding: 20px;
             }
             
             .header h1 {
@@ -312,10 +317,110 @@
 
             .two-column {
                 grid-template-columns: 1fr;
+                gap: 10px;
             }
 
             .info-section > div > div {
                 grid-template-columns: 1fr !important;
+            }
+
+            .form-group {
+                margin-bottom: 20px;
+            }
+
+            .form-group label {
+                font-size: 0.9rem;
+            }
+
+            .form-group input, .form-group select {
+                padding: 10px 12px;
+                font-size: 0.95rem;
+            }
+
+            .form-group small {
+                font-size: 0.8rem;
+                line-height: 1.3;
+            }
+
+            .breakdown {
+                padding: 15px;
+            }
+
+            .breakdown-item {
+                padding: 6px 0;
+                font-size: 0.9rem;
+            }
+
+            .result-card {
+                padding: 20px;
+                margin-bottom: 15px;
+            }
+
+            .result-main {
+                font-size: 1.8rem;
+            }
+
+            .section-title {
+                font-size: 1.2rem;
+                margin-bottom: 15px;
+            }
+
+            .savings-highlight {
+                padding: 20px;
+                margin-top: 15px;
+            }
+
+            .savings-amount {
+                font-size: 1.7rem;
+            }
+
+            .benefit-breakdown {
+                padding: 15px;
+                margin-top: 15px;
+            }
+
+            .benefit-item {
+                padding: 6px 0;
+                font-size: 0.9rem;
+            }
+
+            /* Mobile radio button fixes */
+            .form-group > div {
+                flex-wrap: wrap;
+                gap: 8px;
+                margin-bottom: 8px;
+            }
+
+            .form-group > div label {
+                font-size: 0.85rem;
+                margin: 0;
+                margin-left: 4px;
+            }
+
+            .form-group input[type="radio"] {
+                width: 16px;
+                height: 16px;
+            }
+
+            /* Scenario comparison mobile fix */
+            .scenario-comparison {
+                grid-template-columns: 1fr !important;
+                gap: 15px !important;
+            }
+
+            .scenario-box {
+                margin-bottom: 15px;
+            }
+
+            /* Share section mobile */
+            .share-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .share-btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
             }
         }
     </style>
@@ -337,14 +442,28 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="pensionContrib">Personal Pension Contribution (£/year)</label>
+                    <label for="pensionContrib">Personal Pension Contribution</label>
+                    <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 10px;">
+                        <input type="radio" id="pensionFixed" name="pensionType" value="fixed" checked>
+                        <label for="pensionFixed" style="margin: 0;">Fixed Amount (£)</label>
+                        <input type="radio" id="pensionPercent" name="pensionType" value="percent">
+                        <label for="pensionPercent" style="margin: 0;">Percentage (%)</label>
+                    </div>
                     <input type="number" id="pensionContrib" value="2000" min="0" step="100">
+                    <input type="number" id="pensionContribPercent" value="5" min="0" max="100" step="0.1" style="display: none;">
                     <small style="color: #666;">Your contribution - reduces taxable income</small>
                 </div>
 
                 <div class="form-group">
-                    <label for="employerPension">Employer Pension Contribution (£/year)</label>
+                    <label for="employerPension">Employer Pension Contribution</label>
+                    <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 10px;">
+                        <input type="radio" id="employerFixed" name="employerType" value="fixed" checked>
+                        <label for="employerFixed" style="margin: 0;">Fixed Amount (£)</label>
+                        <input type="radio" id="employerPercent" name="employerType" value="percent">
+                        <label for="employerPercent" style="margin: 0;">Percentage (%)</label>
+                    </div>
                     <input type="number" id="employerPension" value="2000" min="0" step="100">
+                    <input type="number" id="employerPensionPercent" value="5" min="0" max="100" step="0.1" style="display: none;">
                     <small style="color: #666;">Employer's contribution - not taxable to you but counts toward annual allowance</small>
                 </div>
 
@@ -370,13 +489,20 @@
                 
                 <div class="form-group">
                     <label for="cyclesToWork">Cycle to Work Scheme (£/year)</label>
-                    <input type="number" id="cyclesToWork" value="0" min="0" max="1000" step="50">
-                    <small style="color: #666;">Up to £1,000/year - reduces taxable income</small>
+                    <input type="number" id="cyclesToWork" value="0" min="0" step="50">
+                    <small style="color: #666;">No official limit since 2019 - check your employer's scheme limit. Reduces taxable income.</small>
                 </div>
 
                 <div class="form-group">
-                    <label for="additionalPension">Additional Pension Contributions (£/year)</label>
+                    <label for="additionalPension">Additional Pension Contributions</label>
+                    <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 10px;">
+                        <input type="radio" id="additionalFixed" name="additionalType" value="fixed" checked>
+                        <label for="additionalFixed" style="margin: 0;">Fixed Amount (£)</label>
+                        <input type="radio" id="additionalPercent" name="additionalType" value="percent">
+                        <label for="additionalPercent" style="margin: 0;">Percentage (%)</label>
+                    </div>
                     <input type="number" id="additionalPension" value="0" min="0" step="100">
+                    <input type="number" id="additionalPensionPercent" value="0" min="0" max="100" step="0.1" style="display: none;">
                     <small style="color: #666;">Salary sacrifice into workplace pension</small>
                 </div>
 
@@ -545,8 +671,8 @@
                 <div style="background: #f8f9fa; border-radius: 10px; padding: 20px; margin-top: 20px;">
                     <h4 style="margin-bottom: 15px; color: #2c3e50;">Scenario Comparison: How Your Benefit is Calculated</h4>
                     
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
-                        <div style="background: #e8f5e8; border-radius: 8px; padding: 15px;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;" class="scenario-comparison">
+                        <div style="background: #e8f5e8; border-radius: 8px; padding: 15px;" class="scenario-box">
                             <h5 style="color: #2c3e50; margin-bottom: 10px;">📊 Scenario A: With Salary Sacrifice</h5>
                             <div style="font-size: 0.85rem; line-height: 1.4;">
                                 <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
@@ -572,7 +698,7 @@
                             </div>
                         </div>
 
-                        <div style="background: #fff3cd; border-radius: 8px; padding: 15px;">
+                        <div style="background: #fff3cd; border-radius: 8px; padding: 15px;" class="scenario-box">
                             <h5 style="color: #2c3e50; margin-bottom: 10px;">📊 Scenario B: Without Salary Sacrifice</h5>
                             <div style="font-size: 0.85rem; line-height: 1.4;">
                                 <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
@@ -708,7 +834,7 @@
                         • Basic Rate: 20% (£12,571-£50,270)<br>
                         • Higher Rate: 40% (£50,271-£125,140)<br>
                         • Additional Rate: 45% (above £125,140)<br>
-                        • National Insurance: 8% (employee)<br>
+                        • National Insurance: 8% (£12,571-£50,270), 2% (above £50,270)<br>
                         • Company Car BiK rates: 3% (electric) to 37% (high CO2)<br>
                         • Personal allowance reduces £1 for every £2 earned above £100,000
                     </div>
@@ -892,8 +1018,10 @@
             
             if (salary > TAX_RATES.niThreshold) {
                 if (salary <= TAX_RATES.niUpperThreshold) {
+                    // 8% on earnings between £12,570 and £50,270
                     ni = (salary - TAX_RATES.niThreshold) * TAX_RATES.niRate;
                 } else {
+                    // 8% on first band (£12,570 to £50,270) + 2% on anything above £50,270
                     ni = (TAX_RATES.niUpperThreshold - TAX_RATES.niThreshold) * TAX_RATES.niRate;
                     ni += (salary - TAX_RATES.niUpperThreshold) * TAX_RATES.niUpperRate;
                 }
@@ -960,12 +1088,67 @@
             }).format(amount);
         }
 
+        function togglePensionInputs() {
+            const pensionType = document.querySelector('input[name="pensionType"]:checked').value;
+            const employerType = document.querySelector('input[name="employerType"]:checked').value;
+            const additionalType = document.querySelector('input[name="additionalType"]:checked').value;
+            
+            // Personal pension
+            if (pensionType === 'percent') {
+                document.getElementById('pensionContrib').style.display = 'none';
+                document.getElementById('pensionContribPercent').style.display = 'block';
+            } else {
+                document.getElementById('pensionContrib').style.display = 'block';
+                document.getElementById('pensionContribPercent').style.display = 'none';
+            }
+            
+            // Employer pension
+            if (employerType === 'percent') {
+                document.getElementById('employerPension').style.display = 'none';
+                document.getElementById('employerPensionPercent').style.display = 'block';
+            } else {
+                document.getElementById('employerPension').style.display = 'block';
+                document.getElementById('employerPensionPercent').style.display = 'none';
+            }
+            
+            // Additional pension
+            if (additionalType === 'percent') {
+                document.getElementById('additionalPension').style.display = 'none';
+                document.getElementById('additionalPensionPercent').style.display = 'block';
+            } else {
+                document.getElementById('additionalPension').style.display = 'block';
+                document.getElementById('additionalPensionPercent').style.display = 'none';
+            }
+        }
+
         function calculateAll() {
             const grossSalary = parseFloat(document.getElementById('grossSalary').value) || 0;
-            const pensionContrib = parseFloat(document.getElementById('pensionContrib').value) || 0;
-            const employerPension = parseFloat(document.getElementById('employerPension').value) || 0;
+            
+            // Calculate pension contributions based on input type
+            let pensionContrib, employerPension, additionalPension;
+            
+            if (document.querySelector('input[name="pensionType"]:checked').value === 'percent') {
+                const pensionPercent = parseFloat(document.getElementById('pensionContribPercent').value) || 0;
+                pensionContrib = (grossSalary * pensionPercent) / 100;
+            } else {
+                pensionContrib = parseFloat(document.getElementById('pensionContrib').value) || 0;
+            }
+            
+            if (document.querySelector('input[name="employerType"]:checked').value === 'percent') {
+                const employerPercent = parseFloat(document.getElementById('employerPensionPercent').value) || 0;
+                employerPension = (grossSalary * employerPercent) / 100;
+            } else {
+                employerPension = parseFloat(document.getElementById('employerPension').value) || 0;
+            }
+            
+            if (document.querySelector('input[name="additionalType"]:checked').value === 'percent') {
+                const additionalPercent = parseFloat(document.getElementById('additionalPensionPercent').value) || 0;
+                additionalPension = (grossSalary * additionalPercent) / 100;
+            } else {
+                additionalPension = parseFloat(document.getElementById('additionalPension').value) || 0;
+            }
+            
             const cyclesToWork = parseFloat(document.getElementById('cyclesToWork').value) || 0;
-            const additionalPension = parseFloat(document.getElementById('additionalPension').value) || 0;
             const carLeasing = parseFloat(document.getElementById('carLeasing').value) || 0;
             const studentLoanPlan = document.getElementById('studentLoanPlan').value;
             const isScottish = document.getElementById('scotland').checked;
@@ -1012,21 +1195,22 @@
             const takeHome = grossSalary - pensionContrib - totalSalarySacrifice - incomeTax - nationalInsurance - carBikData.bikTax - studentLoanPayment;
             const monthlyTakeHome = takeHome / 12;
 
-            // Calculate scenario WITHOUT salary sacrifice (but keeping basic pension)
-            const noSacrificeIncome = grossSalary - pensionContrib;
-            const noSacrificeIncomeTax = calculateTax(noSacrificeIncome, isScottish);
-            const noSacrificeNI = calculateNI(noSacrificeIncome);
-            const noSacrificeStudentLoan = calculateStudentLoan(grossSalary, studentLoanPlan);
+            // Calculate scenario WITHOUT car salary sacrifice (but keeping pension sacrifice)
+            const noCarSacrificeIncome = grossSalary - pensionContrib - (totalSalarySacrifice - carLeasing);
+            const noCarSacrificeIncomeTax = calculateTax(noCarSacrificeIncome, isScottish);
+            const noCarSacrificeNI = calculateNI(noCarSacrificeIncome);
+            const noCarSacrificeStudentLoan = calculateStudentLoan(grossSalary, studentLoanPlan);
 
-            // Take-home if NOT salary sacrificing
-            const noSacrificeTakeHome = grossSalary - pensionContrib - noSacrificeIncomeTax - noSacrificeNI - noSacrificeStudentLoan;
+            // Take-home if NOT salary sacrificing for car
+            const noCarSacrificeTakeHome = grossSalary - pensionContrib - (totalSalarySacrifice - carLeasing) 
+    - noCarSacrificeIncomeTax - noCarSacrificeNI - noCarSacrificeStudentLoan;
 
-            // After paying for sacrifice items with after-tax money
-            const noSacrificeNetPosition = noSacrificeTakeHome - totalSalarySacrifice;
+            // After paying for car with after-tax money
+            const noCarSacrificeNetPosition = noCarSacrificeTakeHome - carLeasing;
 
-            // The benefit calculations
-            const actualTaxSavings = (noSacrificeIncomeTax + noSacrificeNI) - (incomeTax + nationalInsurance);
-            const totalSavings = takeHome - noSacrificeNetPosition;
+            // The benefit of salary sacrificing for the car
+            const actualTaxSavings = (noCarSacrificeIncomeTax + noCarSacrificeNI) - (incomeTax + nationalInsurance);
+            const totalSavings = takeHome - noCarSacrificeNetPosition;
 
             // Update display
             document.getElementById('takeHome').textContent = formatCurrency(takeHome);
@@ -1058,15 +1242,15 @@
 
             // Scenario B (Without Salary Sacrifice)
             document.getElementById('scenarioB_gross').textContent = formatCurrency(grossSalary);
-            document.getElementById('scenarioB_taxes').textContent = formatCurrency(noSacrificeIncomeTax + noSacrificeNI);
-            document.getElementById('scenarioB_beforePurchases').textContent = formatCurrency(noSacrificeTakeHome);
+            document.getElementById('scenarioB_taxes').textContent = formatCurrency(noCarSacrificeIncomeTax + noCarSacrificeNI);
+            document.getElementById('scenarioB_beforePurchases').textContent = formatCurrency(noCarSacrificeTakeHome);
             document.getElementById('scenarioB_purchases').textContent = formatCurrency(totalSalarySacrifice);
-            document.getElementById('scenarioB_final').textContent = formatCurrency(noSacrificeNetPosition);
+            document.getElementById('scenarioB_final').textContent = formatCurrency(noCarSacrificeNetPosition);
 
             // Advantage summary
             document.getElementById('advantageAmount').textContent = formatCurrency(Math.max(0, totalSavings));
             document.getElementById('advantageA').textContent = takeHome.toLocaleString();
-            document.getElementById('advantageB').textContent = noSacrificeNetPosition.toLocaleString();
+            document.getElementById('advantageB').textContent = noCarSacrificeNetPosition.toLocaleString();
 
             // Update student loan display
             document.getElementById('studentLoanPayment').textContent = formatCurrency(studentLoanPayment);
@@ -1142,12 +1326,21 @@
             input.addEventListener('change', calculateAll);
         });
 
+        // Add listeners for pension type toggles
+        document.querySelectorAll('input[name="pensionType"], input[name="employerType"], input[name="additionalType"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                togglePensionInputs();
+                calculateAll();
+            });
+        });
+
         document.getElementById('carType').addEventListener('change', function() {
             toggleElectricRange();
             calculateAll();
         });
 
-        // Initial calculation
+        // Initial setup
+        togglePensionInputs();
         calculateAll();
         toggleElectricRange();
     </script>
