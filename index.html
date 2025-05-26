@@ -11,7 +11,6 @@
     <meta property="og:type" content="website">
     <title>Free UK Salary Sacrifice Calculator 2025 | Car Lease, Pension & BiK Tax Savings</title>
 
-    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-B0YQPMRS5H"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -311,6 +310,80 @@
             color: #e74c3c;
         }
 
+        /* Custom Message Box */
+        .message-box-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+        }
+
+        .message-box-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .message-box-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 350px;
+            width: 90%;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+        }
+
+        .message-box-overlay.show .message-box-content {
+            transform: translateY(0);
+        }
+
+        .message-box-content h4 {
+            margin-bottom: 15px;
+            color: #2c3e50;
+            font-size: 1.3rem;
+        }
+
+        .message-box-content p {
+            margin-bottom: 25px;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .message-box-content button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.2s ease;
+        }
+
+        .message-box-content button:hover {
+            background: #2980b9;
+        }
+
+        .info-icon {
+            cursor: help;
+            font-size: 0.8em;
+            vertical-align: middle;
+            margin-left: 5px;
+            color: #3498db;
+        }
+
+
         @media (max-width: 768px) {
             .main-content {
                 grid-template-columns: 1fr;
@@ -435,9 +508,20 @@
                 margin-bottom: 15px;
             }
 
+            /* Mobile Fixed Bottom Summary */
+            .mobile-summary-fixed {
+                display: flex; /* Show only on mobile screens */
+            }
+
+            /* Adjust body padding to prevent overlap with fixed footer */
+            body {
+                padding-bottom: 70px; /* Adjust based on the height of your fixed summary */
+            }
+        }
+
         /* Mobile Fixed Bottom Summary */
         .mobile-summary-fixed {
-            display: none;
+            display: none; /* Hidden by default for desktop */
             position: fixed;
             bottom: 0;
             left: 0;
@@ -454,7 +538,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 400px;
+            max-width: 400px; /* Constrain width for better readability on wider mobiles */
             margin: 0 auto;
         }
 
@@ -462,7 +546,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            flex: 1;
+            flex: 1; /* Distribute space evenly */
         }
 
         .mobile-summary-label {
@@ -481,7 +565,7 @@
             width: 1px;
             height: 30px;
             background: rgba(255,255,255,0.3);
-            margin: 0 15px;
+            margin: 0 15px; /* Space out the items */
         }
     </style>
 </head>
@@ -499,7 +583,7 @@
                 
                 <div class="form-group">
                     <label for="grossSalary">Annual Gross Salary (£)</label>
-                    <input type="number" id="grossSalary" value="40000" min="0" step="1000">
+                    <input type="number" id="grossSalary" value="130000" min="0" step="1000">
                 </div>
 
                 <div class="form-group">
@@ -510,21 +594,21 @@
                         <input type="radio" id="pensionPercent" name="pensionType" value="percent">
                         <label for="pensionPercent" style="margin: 0;">Percentage (%)</label>
                     </div>
-                    <input type="number" id="pensionContrib" value="2000" min="0" step="100">
-                    <input type="number" id="pensionContribPercent" value="5" min="0" max="100" step="0.1" style="display: none;">
+                    <input type="number" id="pensionContrib" value="0" min="0" step="100">
+                    <input type="number" id="pensionContribPercent" value="0" min="0" max="100" step="0.1" style="display: none;">
                     <small style="color: #666;">Your contribution - reduces taxable income</small>
                 </div>
 
                 <div class="form-group">
-                    <label for="employerPension">Employer Pension Contribution</label>
+                    <label for="employerPension">Employer Pension Contribution <span class="info-icon" title="Employer contributions do not reduce your taxable income or National Insurance, but they do count towards your annual pension allowance.">ℹ️</span></label>
                     <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 10px;">
                         <input type="radio" id="employerFixed" name="employerType" value="fixed" checked>
                         <label for="employerFixed" style="margin: 0;">Fixed Amount (£)</label>
                         <input type="radio" id="employerPercent" name="employerType" value="percent">
                         <label for="employerPercent" style="margin: 0;">Percentage (%)</label>
                     </div>
-                    <input type="number" id="employerPension" value="2000" min="0" step="100">
-                    <input type="number" id="employerPensionPercent" value="5" min="0" max="100" step="0.1" style="display: none;">
+                    <input type="number" id="employerPension" value="0" min="0" step="100">
+                    <input type="number" id="employerPensionPercent" value="0" min="0" max="100" step="0.1" style="display: none;">
                     <small style="color: #666;">Employer's contribution - not taxable to you but counts toward annual allowance</small>
                 </div>
 
@@ -784,9 +868,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div style="background: #d4edda; border: 1px solid #c3e6cb; border-radius: 8px; padding: 15px; text-align: center;">
+                    </div> <div style="background: #d4edda; border: 1px solid #c3e6cb; border-radius: 8px; padding: 15px; text-align: center;">
                         <div style="font-size: 1.1rem; font-weight: bold; color: #155724; margin-bottom: 5px;">
                             💰 Your Annual Advantage: <span id="advantageAmount">£0</span>
                         </div>
@@ -891,13 +973,13 @@
 
                     <div class="tax-info">
                         <strong>2025/26 Tax Year Rates Applied:</strong><br>
-                        • Personal Allowance: £12,570<br>
+                        • Personal Allowance: <span id="displayedPersonalAllowance">£12,570</span><br>
                         • Basic Rate: 20% (£12,571-£50,270)<br>
                         • Higher Rate: 40% (£50,271-£125,140)<br>
                         • Additional Rate: 45% (above £125,140)<br>
                         • National Insurance: 8% (£12,571-£50,270), 2% (above £50,270)<br>
                         • Company Car BiK rates: 3% (electric) to 37% (high CO2)<br>
-                        • Personal allowance reduces £1 for every £2 earned above £100,000
+                        <span id="personalAllowanceTaperingInfo" style="display: none;">• Personal allowance reduces £1 for every £2 earned above £100,000</span>
                     </div>
                 </div>
             </div>
@@ -914,39 +996,607 @@
         </div>
     </div>
 
+    <div class="mobile-summary-fixed">
+        <div class="mobile-summary-content">
+            <div class="mobile-summary-item">
+                <span class="mobile-summary-label">Yearly Take Home</span>
+                <span class="mobile-summary-value" id="mobileSummaryYearly">£0</span>
+            </div>
+            <div class="mobile-summary-divider"></div>
+            <div class="mobile-summary-item">
+                <span class="mobile-summary-label">Monthly Take Home</span>
+                <span class="mobile-summary-value" id="mobileSummaryMonthly">£0</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="messageBoxOverlay" class="message-box-overlay">
+        <div class="message-box-content">
+            <h4 id="messageBoxTitle"></h4>
+            <p id="messageBoxMessage"></p>
+            <button id="messageBoxClose">OK</button>
+        </div>
+    </div>
+
     <script>
-        // Tax rates for 2025/26
-        const TAX_RATES = {
-            personalAllowance: 12570,
-            basicRateThreshold: 50270,
-            higherRateThreshold: 125140,
-            basicRate: 0.20,
-            higherRate: 0.40,
-            additionalRate: 0.45,
-            niThreshold: 12570,
-            niRate: 0.08,
-            niUpperThreshold: 50270,
-            niUpperRate: 0.02
+        // Constants for 2025/2026 tax year (subject to change by HMRC)
+        const PERSONAL_ALLOWANCE = 12570;
+
+        // England, Wales, and Northern Ireland Income Tax Bands 2025/26
+        // These thresholds are for *taxable income* after Personal Allowance deduction.
+        const ENGLAND_TAX_BANDS = [
+            { upper_limit: 37700, rate: 0.20 },   // £50,270 (Basic Rate Threshold) - £12,570 (Personal Allowance) = £37,700
+            { upper_limit: 125139, rate: 0.40 }, // £125,140 (Higher Rate Threshold) - £1 (to match HMRC example's £87,439 for 40% band)
+            { upper_limit: Infinity, rate: 0.45 }
+        ];
+
+        // Scottish Income Tax Bands 2025/26 (assumed, as 2025 rates not yet published)
+        // These thresholds are for *taxable income* after Personal Allowance deduction.
+        const SCOTLAND_TAX_BANDS = [
+            { upper_limit: 2306, rate: 0.19 },   // £14,876 (Starter Rate Threshold) - £12,570 (PA) = £2,306
+            { upper_limit: 13991, rate: 0.20 }, // £26,561 (Basic Rate Threshold) - £12,570 (PA) = £13,991
+            { upper_limit: 31092, rate: 0.21 }, // £43,662 (Intermediate Rate Threshold) - £12,570 (PA) = £31,092
+            { upper_limit: 62430, rate: 0.42 }, // £75,000 (Higher Rate Threshold) - £12,570 (PA) = £62,430
+            { upper_limit: 112570, rate: 0.45 }, // £125,140 (Advanced Rate Threshold) - £12,570 (PA) = £112,570
+            { upper_limit: Infinity, rate: 0.48 } // Top Rate
+        ];
+
+        // National Insurance 2025/26 (assumed, based on 2024/25 changes)
+        const NI_PRIMARY_THRESHOLD = 12570; // Annual
+        const NI_UPPER_EARNINGS_LIMIT = 50270; // Annual
+        const NI_RATE_LOWER = 0.08; // Employee Class 1 (main rate, after April 2024 changes)
+        const NI_RATE_HIGHER = 0.02; // Employee Class 1 (above UEL)
+
+        // Student Loan Thresholds and Rates 2025/26 (assumed, based on 2024/25)
+        const STUDENT_LOAN_THRESHOLDS = {
+            'none': 0, // No threshold for 'none'
+            'plan1': 24990,
+            'plan2': 27295,
+            'plan4': 31395,
+            'plan5': 25000,
+            'postgrad': 21000
+        };
+        const STUDENT_LOAN_RATE = 0.09; // 9% for Plans 1, 2, 4, 5
+        const POSTGRAD_LOAN_RATE = 0.06; // 6% for Postgraduate Loan
+
+        // BiK Rates 2025/26 (assumed, based on current projections)
+        // Note: BiK rates are typically announced for several years ahead. These are estimates.
+        const BIK_RATES_DATA = {
+            'electric': 0.03, // 3% for BEVs for 2025/26 (increases 1% per year)
+            'hybrid_electric_range': { // For 0-50g/km CO2 hybrids based on electric range
+                130: 0.08, // 130+ miles electric range
+                70: 0.11,  // 70-129 miles
+                40: 0.14,  // 40-69 miles
+                30: 0.17,  // 30-39 miles
+                0: 0.20    // <30 miles (or 0 if not specified)
+            },
+            'petrol_co2_bands': [ // For petrol and hybrids >50g/km CO2
+                { co2: 50, rate: 0.18 }, 
+                { co2: 54, rate: 0.19 },
+                { co2: 59, rate: 0.20 },
+                { co2: 64, rate: 0.21 },
+                { co2: 69, rate: 0.22 },
+                { co2: 74, rate: 0.23 },
+                { co2: 79, rate: 0.24 },
+                { co2: 84, rate: 0.25 },
+                { co2: 89, rate: 0.26 },
+                { co2: 94, rate: 0.27 },
+                { co2: 99, rate: 0.28 },
+                { co2: 104, rate: 0.29 },
+                { co2: 109, rate: 0.30 },
+                { co2: 114, rate: 0.31 },
+                { co2: 119, rate: 0.32 },
+                { co2: 124, rate: 0.33 },
+                { co2: 129, rate: 0.34 },
+                { co2: 134, rate: 0.35 },
+                { co2: 139, rate: 0.36 },
+                { co2: 140, rate: 0.37 } // Max rate for higher CO2
+            ],
+            'diesel_supplement': 0.04, // 4% diesel supplement
+            'max_bik_rate': 0.37 // HMRC max BiK rate for 2025/26
         };
 
-        const SCOTTISH_RATES = {
-            starterRate: 0.19,
-            starterThreshold: 14876,
-            basicRate: 0.20,
-            basicThreshold: 26561,
-            intermediateRate: 0.21,
-            intermediateThreshold: 43662,
-            higherRate: 0.42,
-            higherThreshold: 75000,
-            additionalRate: 0.47
-        };
+        // Get DOM Elements
+        const grossSalaryInput = document.getElementById('grossSalary');
+        const pensionFixedRadio = document.getElementById('pensionFixed');
+        const pensionPercentRadio = document.getElementById('pensionPercent');
+        const pensionContribInput = document.getElementById('pensionContrib');
+        const pensionContribPercentInput = document.getElementById('pensionContribPercent');
 
-        // Pension allowance limits for 2025/26
+        const employerFixedRadio = document.getElementById('employerFixed');
+        const employerPercentRadio = document.getElementById('employerPercent');
+        const employerPensionInput = document.getElementById('employerPension');
+        const employerPensionPercentInput = document.getElementById('employerPensionPercent');
+
+        const studentLoanPlanSelect = document.getElementById('studentLoanPlan');
+        const scotlandCheckbox = document.getElementById('scotland');
+        const cyclesToWorkInput = document.getElementById('cyclesToWork');
+
+        const additionalFixedRadio = document.getElementById('additionalFixed');
+        const additionalPercentRadio = document.getElementById('additionalPercent');
+        const additionalPensionInput = document.getElementById('additionalPension');
+        const additionalPensionPercentInput = document.getElementById('additionalPensionPercent');
+
+        const carLeasingInput = document.getElementById('carLeasing');
+        const carValueInput = document.getElementById('carValue');
+        const carCO2Input = document.getElementById('carCO2');
+        const carTypeSelect = document.getElementById('carType');
+        const electricRangeGroup = document.getElementById('electricRangeGroup');
+        const electricRangeInput = document.getElementById('electricRange');
+
+        // Output Elements
+        const takeHomeDisplay = document.getElementById('takeHome');
+        const monthlyTakeHomeDisplay = document.getElementById('monthlyTakeHome');
+        const grossDisplay = document.getElementById('grossDisplay');
+        const pensionDisplay = document.getElementById('pensionDisplay');
+        const employerPensionDisplay = document.getElementById('employerPensionDisplay');
+        const totalPensionDisplay = document.getElementById('totalPensionDisplay');
+        const sacrificeTotalDisplay = document.getElementById('sacrificeTotal');
+        const studentLoanRow = document.getElementById('studentLoanRow');
+        const studentLoanPaymentDisplay = document.getElementById('studentLoanPayment');
+        const taxableIncomeDisplay = document.getElementById('taxableIncome');
+        const incomeTaxDisplay = document.getElementById('incomeTax');
+        const nationalInsuranceDisplay = document.getElementById('nationalInsurance');
+        const carBikRow = document.getElementById('carBikRow');
+        const carBikTaxDisplay = document.getElementById('carBikTax');
+        const netTakeHomeDisplay = document.getElementById('netTakeHome');
+        const carBreakdownDiv = document.getElementById('carBreakdown');
+        const carLeasingDisplay = document.getElementById('carLeasingDisplay');
+        const carValueDisplay = document.getElementById('carValueDisplay');
+        const carCO2Display = document.getElementById('carCO2Display');
+        const bikRateDisplay = document.getElementById('bikRateDisplay');
+        const bikValueDisplay = document.getElementById('bikValueDisplay');
+        const bikTaxDisplay = document.getElementById('bikTaxDisplay');
+        const netCarCostDisplay = document.getElementById('netCarCost');
+        const sacrificeCostDisplay = document.getElementById('sacrificeCostDisplay');
+        const taxSavingsDisplay = document.getElementById('taxSavingsDisplay');
+        const netBenefitDisplay = document.getElementById('netBenefitDisplay');
+        const totalSavingsDisplay = document.getElementById('totalSavings');
+        const monthlySavingsDisplay = document.getElementById('monthlySavings');
+
+        // Scenario Comparison
+        const scenarioA_gross = document.getElementById('scenarioA_gross');
+        const scenarioA_sacrifice = document.getElementById('scenarioA_sacrifice');
+        const scenarioA_taxes = document.getElementById('scenarioA_taxes');
+        const scenarioA_bik = document.getElementById('scenarioA_bik');
+        const scenarioA_final = document.getElementById('scenarioA_final');
+
+        const scenarioB_gross = document.getElementById('scenarioB_gross');
+        const scenarioB_taxes = document.getElementById('scenarioB_taxes');
+        const scenarioB_beforePurchases = document.getElementById('scenarioB_beforePurchases');
+        const scenarioB_purchases = document.getElementById('scenarioB_purchases');
+        const scenarioB_final = document.getElementById('scenarioB_final');
+
+        const advantageAmount = document.getElementById('advantageAmount');
+        const advantageA = document.getElementById('advantageA');
+        const advantageB = document.getElementById('advantageB');
+
+        // Mobile Fixed Summary
+        const mobileSummaryYearly = document.getElementById('mobileSummaryYearly');
+        const mobileSummaryMonthly = document.getElementById('mobileSummaryMonthly');
+
+        // Message Box Elements
+        const messageBoxOverlay = document.getElementById('messageBoxOverlay');
+        const messageBoxTitle = document.getElementById('messageBoxTitle');
+        const messageBoxMessage = document.getElementById('messageBoxMessage');
+        const messageBoxClose = document.getElementById('messageBoxClose');
+        
+        // Tax Info display elements
+        const displayedPersonalAllowance = document.getElementById('displayedPersonalAllowance');
+        const personalAllowanceTaperingInfo = document.getElementById('personalAllowanceTaperingInfo');
+
+
+        // Helper function to format currency
+        function formatCurrency(amount) {
+            return `£${Math.round(amount).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
+        }
+
+        // Helper function to show custom message box
+        function showMessageBox(title, message) {
+            messageBoxTitle.textContent = title;
+            messageBoxMessage.textContent = message;
+            messageBoxOverlay.classList.add('show');
+        }
+
+        // Close message box
+        messageBoxClose.addEventListener('click', () => {
+            messageBoxOverlay.classList.remove('show');
+        });
+
+        // Helper function for percentage inputs
+        function togglePercentageInput(fixedRadio, percentRadio, fixedInput, percentInput) {
+            fixedRadio.addEventListener('change', () => {
+                fixedInput.style.display = 'block';
+                percentInput.style.display = 'none';
+                calculateAll();
+            });
+            percentRadio.addEventListener('change', () => {
+                fixedInput.style.display = 'none';
+                percentInput.style.display = 'block';
+                calculateAll();
+            });
+        }
+
+        togglePercentageInput(pensionFixedRadio, pensionPercentRadio, pensionContribInput, pensionContribPercentInput);
+        togglePercentageInput(employerFixedRadio, employerPercentRadio, employerPensionInput, employerPensionPercentInput);
+        togglePercentageInput(additionalFixedRadio, additionalPercentRadio, additionalPensionInput, additionalPensionPercentInput);
+
+
+        // Income Tax Calculation
+        function calculateIncomeTax(grossIncome, isScotland) {
+            let tax = 0;
+            let incomeToTax = grossIncome;
+            const bands = isScotland ? SCOTLAND_TAX_BANDS : ENGLAND_TAX_BANDS;
+
+            // Calculate effective personal allowance
+            let effectivePersonalAllowance = PERSONAL_ALLOWANCE;
+            if (grossIncome > 100000) {
+                effectivePersonalAllowance = Math.max(0, PERSONAL_ALLOWANCE - Math.floor((grossIncome - 100000) / 2));
+            }
+
+            // Deduct effective personal allowance from income to get taxable income
+            incomeToTax = Math.max(0, incomeToTax - effectivePersonalAllowance);
+
+            let remainingTaxableIncome = incomeToTax;
+            let prevBandUpperLimit = 0; // Keep track of the upper limit of the previous band
+
+            for (let i = 0; i < bands.length; i++) {
+                const band = bands[i];
+                const currentBandUpperLimit = band.upper_limit;
+
+                // Calculate the portion of income that falls within the current band
+                const amountInCurrentBand = Math.min(remainingTaxableIncome, currentBandUpperLimit - prevBandUpperLimit);
+
+                if (amountInCurrentBand > 0) {
+                    tax += amountInCurrentBand * band.rate;
+                    remainingTaxableIncome -= amountInCurrentBand;
+                }
+
+                prevBandUpperLimit = currentBandUpperLimit; // Update for the next iteration
+
+                if (remainingTaxableIncome <= 0) break; // No more income to tax
+            }
+
+            return Math.round(Math.max(0, tax));
+        }
+
+        // National Insurance Calculation
+        function calculateNationalInsurance(niableIncome) {
+            let ni = 0;
+            const incomeAboveThreshold = Math.max(0, niableIncome - NI_PRIMARY_THRESHOLD);
+
+            if (incomeAboveThreshold > 0) {
+                const incomeInLowerBand = Math.min(incomeAboveThreshold, NI_UPPER_EARNINGS_LIMIT - NI_PRIMARY_THRESHOLD);
+                ni += incomeInLowerBand * NI_RATE_LOWER;
+
+                const incomeInHigherBand = Math.max(0, niableIncome - NI_UPPER_EARNINGS_LIMIT);
+                ni += incomeInHigherBand * NI_RATE_HIGHER;
+            }
+            return Math.round(ni);
+        }
+
+        // Student Loan Calculation
+        function calculateStudentLoan(grossSalary, planType) {
+            if (planType === 'none' || !STUDENT_LOAN_THRESHOLDS[planType]) return 0;
+
+            const threshold = STUDENT_LOAN_THRESHOLDS[planType];
+            let rate = STUDENT_LOAN_RATE;
+            if (planType === 'postgrad') {
+                rate = POSTGRAD_LOAN_RATE;
+            }
+
+            const incomeAboveThreshold = Math.max(0, grossSalary - threshold);
+            return Math.round(incomeAboveThreshold * rate);
+        }
+
+        // BiK (Benefit-in-Kind) Calculation
+        function calculateBiK(carValue, carCO2, carType, electricRange, currentGrossSalary, isScotland) {
+            let bikRate = 0;
+            let annualBiKValue = 0;
+            let bikTax = 0;
+
+            if (carValue <= 0 || carType === 'none') {
+                return { annualBiKValue: 0, bikTax: 0, bikRate: 0 };
+            }
+
+            if (carType === 'electric') {
+                bikRate = BIK_RATES_DATA.electric;
+            } else if (carType === 'hybrid') {
+                if (carCO2 > 0 && carCO2 <= 50) { // Hybrids with CO2 <= 50g/km use electric range bands
+                    const hybridBands = BIK_RATES_DATA.hybrid_electric_range;
+                    if (electricRange >= 130) bikRate = hybridBands[130];
+                    else if (electricRange >= 70) bikRate = hybridBands[70];
+                    else if (electricRange >= 40) bikRate = hybridBands[40];
+                    else if (electricRange >= 30) bikRate = hybridBands[30];
+                    else bikRate = hybridBands[0]; // Default for <30 miles
+                } else if (carCO2 > 50) { // Hybrids with CO2 > 50g/km use petrol CO2 bands
+                    for (const band of BIK_RATES_DATA.petrol_co2_bands) {
+                        if (carCO2 <= band.co2) {
+                            bikRate = band.rate;
+                            break;
+                        }
+                    }
+                } else { // carCO2 is 0 for a hybrid, which is unusual for non-electric, treat as 0 BiK
+                    return { annualBiKValue: 0, bikTax: 0, bikRate: 0 };
+                }
+            } else { // Petrol or Diesel
+                if (carCO2 === 0) { // Petrol/Diesel with 0 CO2 should have 0 BiK
+                    return { annualBiKValue: 0, bikTax: 0, bikRate: 0 };
+                }
+                for (const band of BIK_RATES_DATA.petrol_co2_bands) {
+                    if (carCO2 <= band.co2) {
+                        bikRate = band.rate;
+                        break;
+                    }
+                }
+                if (carType === 'diesel' && carCO2 > 0) { // Apply 4% diesel supplement
+                    bikRate = Math.min(BIK_RATES_DATA.max_bik_rate, bikRate + BIK_RATES_DATA.diesel_supplement);
+                }
+            }
+
+            annualBiKValue = carValue * bikRate;
+
+            // Determine the marginal tax rate based on the current gross salary
+            let marginalTaxRate = 0;
+            const taxBands = isScotland ? SCOTLAND_TAX_BANDS : ENGLAND_TAX_BANDS;
+            let tempGrossIncomeForMarginalRate = currentGrossSalary;
+
+            // Adjust for personal allowance tapering to find effective taxable income for marginal rate
+            let adjustedPersonalAllowance = PERSONAL_ALLOWANCE;
+            if (tempGrossIncomeForMarginalRate > 100000) {
+                const taperAmount = Math.floor((tempGrossIncomeForMarginalRate - 100000) / 2);
+                adjustedPersonalAllowance = Math.max(0, PERSONAL_ALLOWANCE - taperAmount);
+            }
+            let tempTaxableIncomeForMarginalRate = Math.max(0, tempGrossIncomeForMarginalRate - adjustedPersonalAllowance);
+
+
+            let prevMarginalBandUpperLimit = 0;
+            for (let i = 0; i < taxBands.length; i++) {
+                const band = taxBands[i];
+                if (tempTaxableIncomeForMarginalRate > prevMarginalBandUpperLimit) {
+                    marginalTaxRate = band.rate;
+                }
+                prevMarginalBandUpperLimit = band.upper_limit;
+                if (tempTaxableIncomeForMarginalRate <= band.upper_limit) {
+                    break; // Found the correct band
+                }
+            }
+            
+            bikTax = annualBiKValue * marginalTaxRate;
+
+            return {
+                annualBiKValue: Math.round(annualBiKValue),
+                bikTax: Math.round(bikTax),
+                bikRate: Math.round(bikRate * 1000) / 10 // Convert to percentage with one decimal
+            };
+        }
+
+
+        // Main Calculation Function
+        function calculateAll() {
+            let grossSalary = parseFloat(grossSalaryInput.value) || 0;
+
+            // Personal Pension Contribution
+            let personalPensionContribution = 0;
+            if (pensionFixedRadio.checked) {
+                personalPensionContribution = parseFloat(pensionContribInput.value) || 0;
+            } else {
+                personalPensionContribution = grossSalary * (parseFloat(pensionContribPercentInput.value) / 100 || 0);
+            }
+
+            // Employer Pension Contribution (does NOT reduce taxable income, but counts for annual allowance)
+            let employerPensionContribution = 0;
+            if (employerFixedRadio.checked) {
+                employerPensionContribution = parseFloat(employerPensionInput.value) || 0;
+            } else {
+                employerPensionContribution = grossSalary * (parseFloat(employerPensionPercentInput.value) / 100 || 0);
+            }
+
+            let cyclesToWork = parseFloat(cyclesToWorkInput.value) || 0;
+
+            // Additional Pension Contributions (Salary Sacrifice)
+            let additionalPensionSacrifice = 0;
+            if (additionalFixedRadio.checked) {
+                additionalPensionSacrifice = parseFloat(additionalPensionInput.value) || 0;
+            } else {
+                additionalPensionSacrifice = grossSalary * (parseFloat(additionalPensionPercentInput.value) / 100 || 0);
+            }
+
+            let carLeasing = parseFloat(carLeasingInput.value) || 0;
+            let carValue = parseFloat(carValueInput.value) || 0;
+            let carCO2 = parseFloat(carCO2Input.value) || 0;
+            let carType = carTypeSelect.value;
+            let electricRange = parseFloat(electricRangeInput.value) || 0;
+            let studentLoanPlan = studentLoanPlanSelect.value;
+            let isScotland = scotlandCheckbox.checked;
+
+            // Show/hide electric range input for hybrids
+            if (carType === 'hybrid') {
+                electricRangeGroup.style.display = 'block';
+            } else {
+                electricRangeGroup.style.display = 'none';
+            }
+
+            // Total deductions that reduce gross salary for tax and NI purposes (including personal pension if it reduces taxable income)
+            let totalPreTaxDeductions = personalPensionContribution + cyclesToWork + additionalPensionSacrifice + carLeasing;
+            // Ensure deductions don't take gross below 0
+            totalPreTaxDeductions = Math.min(totalPreTaxDeductions, grossSalary);
+
+            // --- Scenario A: With Salary Sacrifice Calculations ---
+            // Taxable income AFTER all pre-tax deductions
+            let taxableIncomeA = grossSalary - totalPreTaxDeductions;
+            
+            let incomeTaxA = calculateIncomeTax(taxableIncomeA, isScotland);
+            let nationalInsuranceA = calculateNationalInsurance(taxableIncomeA); // NI calculated on reduced income
+            let studentLoanPaymentA = calculateStudentLoan(grossSalary, studentLoanPlan); // SL is usually on original gross
+            
+            // BiK tax is calculated on the P11D value and added to tax liability
+            let bikResultA = calculateBiK(carValue, carCO2, carType, electricRange, grossSalary, isScotland);
+            let carBikTaxA = bikResultA.bikTax;
+
+            let netTakeHomeA = grossSalary - totalPreTaxDeductions - incomeTaxA - nationalInsuranceA - studentLoanPaymentA - carBikTaxA;
+
+
+            // --- Scenario B: Without Salary Sacrifice Calculations ---
+            // This calculates what take-home would be if all salary sacrifice items were paid post-tax
+            let incomeTaxB = calculateIncomeTax(grossSalary, isScotland); // Tax on original gross
+            let nationalInsuranceB = calculateNationalInsurance(grossSalary); // NI on original gross
+            let studentLoanPaymentB = calculateStudentLoan(grossSalary, studentLoanPlan); // SL on original gross
+
+            let netTakeHomeBeforePurchasesB = grossSalary - incomeTaxB - nationalInsuranceB - studentLoanPaymentB;
+
+            // The "cost" of items without salary sacrifice is the full annual amount
+            // This includes personal pension contribution here for comparison with Scenario A
+            let postTaxPurchases = personalPensionContribution + cyclesToWork + additionalPensionSacrifice + carLeasing;
+            let finalPositionB = netTakeHomeBeforePurchasesB - postTaxPurchases;
+
+
+            // --- Display Results ---
+
+            // Main Take-Home Displays
+            takeHomeDisplay.textContent = formatCurrency(netTakeHomeA);
+            monthlyTakeHomeDisplay.textContent = formatCurrency(netTakeHomeA / 12);
+            mobileSummaryYearly.textContent = formatCurrency(netTakeHomeA);
+            mobileSummaryMonthly.textContent = formatCurrency(netTakeHomeA / 12);
+
+
+            // Tax Breakdown
+            grossDisplay.textContent = formatCurrency(grossSalary);
+            pensionDisplay.textContent = formatCurrency(personalPensionContribution);
+            employerPensionDisplay.textContent = formatCurrency(employerPensionContribution);
+            totalPensionDisplay.textContent = formatCurrency(personalPensionContribution + employerPensionContribution + additionalPensionSacrifice);
+            sacrificeTotalDisplay.textContent = formatCurrency(totalPreTaxDeductions); // Now includes personal pension
+            taxableIncomeDisplay.textContent = formatCurrency(taxableIncomeA);
+            incomeTaxDisplay.textContent = formatCurrency(incomeTaxA);
+            nationalInsuranceDisplay.textContent = formatCurrency(nationalInsuranceA);
+
+            if (studentLoanPlan !== 'none' && studentLoanPaymentA > 0) {
+                studentLoanRow.style.display = 'flex';
+                studentLoanPaymentDisplay.textContent = formatCurrency(studentLoanPaymentA);
+            } else {
+                studentLoanRow.style.display = 'none';
+            }
+
+            if (carLeasing > 0 && carValue > 0 && carType !== 'none') {
+                carBikRow.style.display = 'flex';
+                carBikTaxDisplay.textContent = formatCurrency(carBikTaxA);
+            } else {
+                carBikRow.style.display = 'none';
+            }
+            netTakeHomeDisplay.textContent = formatCurrency(netTakeHomeA);
+
+
+            // Car Breakdown
+            if (carLeasing > 0 && carValue > 0 && carType !== 'none') {
+                carBreakdownDiv.style.display = 'block';
+                carLeasingDisplay.textContent = formatCurrency(carLeasing);
+                carValueDisplay.textContent = formatCurrency(carValue);
+                carCO2Display.textContent = `${carCO2}g/km`;
+                bikRateDisplay.textContent = `${bikResultA.bikRate}%`;
+                bikValueDisplay.textContent = formatCurrency(bikResultA.annualBiKValue);
+                bikTaxDisplay.textContent = formatCurrency(bikResultA.bikTax);
+                
+                const netMonthlyCarCost = (carLeasing + carBikTaxA) / 12;
+                netCarCostDisplay.textContent = formatCurrency(netMonthlyCarCost);
+
+            } else {
+                carBreakdownDiv.style.display = 'none';
+            }
+
+
+            // Salary Sacrifice Benefit Analysis
+            sacrificeCostDisplay.textContent = formatCurrency(totalPreTaxDeductions); // Now includes personal pension
+            
+            // Tax savings are the difference in total tax/NI/SL between 'without SS' and 'with SS' scenarios
+            const taxSavings = (incomeTaxB + nationalInsuranceB + studentLoanPaymentB) - (incomeTaxA + nationalInsuranceA + studentLoanPaymentA);
+            taxSavingsDisplay.textContent = formatCurrency(taxSavings);
+            taxSavingsDisplay.style.color = taxSavings >= 0 ? '#27ae60' : '#e74c3c'; // Green for savings, red for loss
+
+            // Net annual benefit calculation: Difference in final take-home between scenarios
+            let netAnnualBenefit = netTakeHomeA - finalPositionB;
+            netBenefitDisplay.textContent = formatCurrency(netAnnualBenefit);
+            netBenefitDisplay.style.color = netAnnualBenefit >= 0 ? '#27ae60' : '#e74c3c';
+
+            totalSavingsDisplay.textContent = formatCurrency(netAnnualBenefit);
+            totalSavingsDisplay.style.background = netAnnualBenefit >= 0 ? 'linear-gradient(135deg, #27ae60, #2ecc71)' : 'linear-gradient(135deg, #e74c3c, #c0392b)';
+            monthlySavingsDisplay.textContent = formatCurrency(netAnnualBenefit / 12);
+
+
+            // Scenario Comparison
+            scenarioA_gross.textContent = formatCurrency(grossSalary);
+            scenarioA_sacrifice.textContent = formatCurrency(totalPreTaxDeductions); // Now includes personal pension
+            scenarioA_taxes.textContent = formatCurrency(incomeTaxA + nationalInsuranceA + studentLoanPaymentA);
+            scenarioA_bik.textContent = formatCurrency(carBikTaxA);
+            scenarioA_final.textContent = formatCurrency(netTakeHomeA);
+
+            scenarioB_gross.textContent = formatCurrency(grossSalary);
+            scenarioB_taxes.textContent = formatCurrency(incomeTaxB + nationalInsuranceB + studentLoanPaymentB);
+            scenarioB_beforePurchases.textContent = formatCurrency(netTakeHomeBeforePurchasesB);
+            scenarioB_purchases.textContent = formatCurrency(postTaxPurchases); // Now includes personal pension
+            scenarioB_final.textContent = formatCurrency(finalPositionB);
+
+            // Advantage summary
+            advantageAmount.textContent = formatCurrency(netAnnualBenefit);
+            advantageA.textContent = Math.round(netTakeHomeA).toLocaleString();
+            advantageB.textContent = Math.round(finalPositionB).toLocaleString();
+
+            // Pension Allowance Warning
+            const totalPensionContributions = personalPensionContribution + employerPensionContribution + additionalPensionSacrifice;
+            const adjustedIncomeForPensionAllowance = grossSalary + employerPensionContribution; // Adjusted income for AA tapering calculation
+            const taperedAllowance = calculateTaperedAllowance(adjustedIncomeForPensionAllowance);
+            
+            const pensionWarning = document.getElementById('pensionAllowanceWarning');
+            document.getElementById('totalPensionAmount').textContent = totalPensionContributions.toLocaleString();
+            
+            if (totalPensionContributions > taperedAllowance) {
+                pensionWarning.style.display = 'block';
+            } else {
+                pensionWarning.style.display = 'none';
+            }
+
+            // High Earner Warning (Childcare Tax Trap)
+            const adjustedNetIncomeForChildcare = grossSalary - personalPensionContribution - additionalPensionSacrifice;
+            const highEarnerWarning = document.getElementById('highEarnerWarning');
+            if (adjustedNetIncomeForChildcare >= 95000 && adjustedNetIncomeForChildcare < 100000) { // Warning if approaching 100k
+                highEarnerWarning.style.display = 'block';
+                highEarnerWarning.querySelector('strong').textContent = '⚠️ High Earner Alert - "Childcare Tax Trap"';
+                highEarnerWarning.querySelector('ul').innerHTML = `
+                    <li>Tax-Free Childcare (up to £2,000/year per child)</li>
+                    <li>30 hours free childcare (worth ~£9,400/year)</li>
+                    <li>Your personal tax allowance starts reducing</li>
+                `;
+            } else if (adjustedNetIncomeForChildcare >= 100000) { // More direct warning if over 100k
+                 highEarnerWarning.style.display = 'block';
+                 highEarnerWarning.querySelector('strong').textContent = '⚠️ High Earner Alert - "Childcare Tax Trap" & Personal Allowance Loss';
+                 highEarnerWarning.querySelector('ul').innerHTML = `
+                    <li>Tax-Free Childcare (up to £2,000/year per child)</li>
+                    <li>30 hours free childcare (worth ~£9,400/year)</li>
+                    <li>Your personal tax allowance is reducing</li>
+                 `;
+            }
+            else {
+                highEarnerWarning.style.display = 'none';
+            }
+
+            // Update Personal Allowance in Tax Info section
+            let effectivePersonalAllowanceForDisplay = PERSONAL_ALLOWANCE;
+            if (grossSalary > 100000) {
+                effectivePersonalAllowanceForDisplay = Math.max(0, PERSONAL_ALLOWANCE - Math.floor((grossSalary - 100000) / 2));
+            }
+            displayedPersonalAllowance.textContent = formatCurrency(effectivePersonalAllowanceForDisplay);
+            
+            if (grossSalary > 100000) {
+                personalAllowanceTaperingInfo.style.display = 'block';
+            } else {
+                personalAllowanceTaperingInfo.style.display = 'none';
+            }
+        }
+
+        // Pension allowance limits for 2025/26 (moved here for scope)
         const PENSION_LIMITS = {
             annualAllowance: 60000,
             taperedThreshold: 200000,
-            minimumAllowance: 10000,
-            moneyPurchaseAllowance: 10000
+            minimumAllowance: 10000
         };
 
         function calculateTaperedAllowance(adjustedIncome) {
@@ -960,411 +1610,22 @@
             return Math.max(taperedAllowance, PENSION_LIMITS.minimumAllowance);
         }
 
-        // Student loan repayment rates for 2025/26
-        const STUDENT_LOAN_RATES = {
-            plan1: {
-                threshold: 24990,
-                rate: 0.09
-            },
-            plan2: {
-                threshold: 27295,
-                rate: 0.09
-            },
-            plan4: {
-                threshold: 31395,
-                rate: 0.09
-            },
-            plan5: {
-                threshold: 25000,
-                rate: 0.09
-            },
-            postgrad: {
-                threshold: 21000,
-                rate: 0.06
-            }
-        };
-
-        // BiK rates for 2025/26
-        const BIK_RATES = {
-            electric: 3,
-            getHybridRate: function(co2, electricRange) {
-                if (co2 === 0) return 3;
-                if (co2 <= 50) {
-                    if (electricRange >= 130) return 8;
-                    if (electricRange >= 70) return 12;
-                    if (electricRange >= 40) return 14;
-                    if (electricRange >= 30) return 16;
-                    return 18;
-                }
-                return this.getPetrolRate(co2);
-            },
-            getPetrolRate: function(co2) {
-                if (co2 === 0) return 3;
-                if (co2 <= 50) return 18;
-                if (co2 <= 54) return 19;
-                if (co2 <= 59) return 20;
-                if (co2 <= 64) return 21;
-                if (co2 <= 69) return 22;
-                if (co2 <= 74) return 23;
-                if (co2 <= 79) return 24;
-                if (co2 <= 84) return 25;
-                if (co2 <= 89) return 26;
-                if (co2 <= 94) return 27;
-                if (co2 <= 99) return 28;
-                if (co2 <= 104) return 29;
-                if (co2 <= 109) return 30;
-                if (co2 <= 114) return 31;
-                if (co2 <= 119) return 32;
-                if (co2 <= 124) return 33;
-                if (co2 <= 129) return 34;
-                if (co2 <= 134) return 35;
-                if (co2 <= 139) return 36;
-                return 37;
-            },
-            getDieselRate: function(co2) {
-                let baseRate = this.getPetrolRate(co2);
-                return Math.min(baseRate + 4, 37);
-            }
-        };
-
-        function calculateTax(taxableIncome, isScottish = false) {
-            let tax = 0;
-            
-            if (taxableIncome <= TAX_RATES.personalAllowance) {
-                return 0;
-            }
-            
-            const taxableAmount = taxableIncome - TAX_RATES.personalAllowance;
-            
-            if (isScottish) {
-                if (taxableAmount <= SCOTTISH_RATES.starterThreshold - TAX_RATES.personalAllowance) {
-                    tax = taxableAmount * SCOTTISH_RATES.starterRate;
-                } else if (taxableAmount <= SCOTTISH_RATES.basicThreshold - TAX_RATES.personalAllowance) {
-                    tax = (SCOTTISH_RATES.starterThreshold - TAX_RATES.personalAllowance) * SCOTTISH_RATES.starterRate;
-                    tax += (taxableAmount - (SCOTTISH_RATES.starterThreshold - TAX_RATES.personalAllowance)) * SCOTTISH_RATES.basicRate;
-                } else if (taxableAmount <= SCOTTISH_RATES.intermediateThreshold - TAX_RATES.personalAllowance) {
-                    tax = (SCOTTISH_RATES.starterThreshold - TAX_RATES.personalAllowance) * SCOTTISH_RATES.starterRate;
-                    tax += (SCOTTISH_RATES.basicThreshold - SCOTTISH_RATES.starterThreshold) * SCOTTISH_RATES.basicRate;
-                    tax += (taxableAmount - (SCOTTISH_RATES.basicThreshold - TAX_RATES.personalAllowance)) * SCOTTISH_RATES.intermediateRate;
-                } else if (taxableAmount <= SCOTTISH_RATES.higherThreshold - TAX_RATES.personalAllowance) {
-                    tax = (SCOTTISH_RATES.starterThreshold - TAX_RATES.personalAllowance) * SCOTTISH_RATES.starterRate;
-                    tax += (SCOTTISH_RATES.basicThreshold - SCOTTISH_RATES.starterThreshold) * SCOTTISH_RATES.basicRate;
-                    tax += (SCOTTISH_RATES.intermediateThreshold - SCOTTISH_RATES.basicThreshold) * SCOTTISH_RATES.intermediateRate;
-                    tax += (taxableAmount - (SCOTTISH_RATES.intermediateThreshold - TAX_RATES.personalAllowance)) * SCOTTISH_RATES.higherRate;
-                } else {
-                    tax = (SCOTTISH_RATES.starterThreshold - TAX_RATES.personalAllowance) * SCOTTISH_RATES.starterRate;
-                    tax += (SCOTTISH_RATES.basicThreshold - SCOTTISH_RATES.starterThreshold) * SCOTTISH_RATES.basicRate;
-                    tax += (SCOTTISH_RATES.intermediateThreshold - SCOTTISH_RATES.basicThreshold) * SCOTTISH_RATES.intermediateRate;
-                    tax += (SCOTTISH_RATES.higherThreshold - SCOTTISH_RATES.intermediateThreshold) * SCOTTISH_RATES.higherRate;
-                    tax += (taxableAmount - (SCOTTISH_RATES.higherThreshold - TAX_RATES.personalAllowance)) * SCOTTISH_RATES.additionalRate;
-                }
-            } else {
-                if (taxableAmount <= TAX_RATES.basicRateThreshold - TAX_RATES.personalAllowance) {
-                    tax = taxableAmount * TAX_RATES.basicRate;
-                } else if (taxableAmount <= TAX_RATES.higherRateThreshold - TAX_RATES.personalAllowance) {
-                    tax = (TAX_RATES.basicRateThreshold - TAX_RATES.personalAllowance) * TAX_RATES.basicRate;
-                    tax += (taxableAmount - (TAX_RATES.basicRateThreshold - TAX_RATES.personalAllowance)) * TAX_RATES.higherRate;
-                } else {
-                    tax = (TAX_RATES.basicRateThreshold - TAX_RATES.personalAllowance) * TAX_RATES.basicRate;
-                    tax += (TAX_RATES.higherRateThreshold - TAX_RATES.basicRateThreshold) * TAX_RATES.higherRate;
-                    tax += (taxableAmount - (TAX_RATES.higherRateThreshold - TAX_RATES.personalAllowance)) * TAX_RATES.additionalRate;
-                }
-            }
-            
-            return Math.round(tax);
-        }
-
-        function calculateNI(salary) {
-            let ni = 0;
-            
-            if (salary > TAX_RATES.niThreshold) {
-                if (salary <= TAX_RATES.niUpperThreshold) {
-                    // 8% on earnings between £12,570 and £50,270
-                    ni = (salary - TAX_RATES.niThreshold) * TAX_RATES.niRate;
-                } else {
-                    // 8% on first band (£12,570 to £50,270) + 2% on anything above £50,270
-                    ni = (TAX_RATES.niUpperThreshold - TAX_RATES.niThreshold) * TAX_RATES.niRate;
-                    ni += (salary - TAX_RATES.niUpperThreshold) * TAX_RATES.niUpperRate;
-                }
-            }
-            
-            return Math.round(ni);
-        }
-
-        function calculateStudentLoan(grossSalary, studentLoanPlan) {
-            if (studentLoanPlan === 'none' || !STUDENT_LOAN_RATES[studentLoanPlan]) {
-                return 0;
-            }
-            
-            const plan = STUDENT_LOAN_RATES[studentLoanPlan];
-            if (grossSalary <= plan.threshold) {
-                return 0;
-            }
-            
-            return Math.round((grossSalary - plan.threshold) * plan.rate);
-        }
-
-        function calculateCarBiK(carValue, carType, co2, electricRange, grossSalary, isScottish) {
-            if (carValue === 0 || carType === 'none') {
-                return { bikRate: 0, bikValue: 0, bikTax: 0 };
-            }
-
-            let bikRate = 0;
-            
-            switch (carType) {
-                case 'electric':
-                    bikRate = BIK_RATES.electric;
-                    break;
-                case 'hybrid':
-                    bikRate = BIK_RATES.getHybridRate(co2, electricRange);
-                    break;
-                case 'petrol':
-                    bikRate = BIK_RATES.getPetrolRate(co2);
-                    break;
-                case 'diesel':
-                    bikRate = BIK_RATES.getDieselRate(co2);
-                    break;
-            }
-
-            const bikValue = Math.round(carValue * (bikRate / 100));
-            
-            let taxRate = 0;
-            if (grossSalary <= TAX_RATES.basicRateThreshold) {
-                taxRate = isScottish ? SCOTTISH_RATES.basicRate : TAX_RATES.basicRate;
-            } else {
-                taxRate = isScottish ? SCOTTISH_RATES.higherRate : TAX_RATES.higherRate;
-            }
-            
-            const bikTax = Math.round(bikValue * taxRate);
-
-            return { bikRate, bikValue, bikTax };
-        }
-
-        function formatCurrency(amount) {
-            return new Intl.NumberFormat('en-GB', {
-                style: 'currency',
-                currency: 'GBP',
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 0
-            }).format(amount);
-        }
-
-        function togglePensionInputs() {
-            const pensionType = document.querySelector('input[name="pensionType"]:checked').value;
-            const employerType = document.querySelector('input[name="employerType"]:checked').value;
-            const additionalType = document.querySelector('input[name="additionalType"]:checked').value;
-            
-            // Personal pension
-            if (pensionType === 'percent') {
-                document.getElementById('pensionContrib').style.display = 'none';
-                document.getElementById('pensionContribPercent').style.display = 'block';
-            } else {
-                document.getElementById('pensionContrib').style.display = 'block';
-                document.getElementById('pensionContribPercent').style.display = 'none';
-            }
-            
-            // Employer pension
-            if (employerType === 'percent') {
-                document.getElementById('employerPension').style.display = 'none';
-                document.getElementById('employerPensionPercent').style.display = 'block';
-            } else {
-                document.getElementById('employerPension').style.display = 'block';
-                document.getElementById('employerPensionPercent').style.display = 'none';
-            }
-            
-            // Additional pension
-            if (additionalType === 'percent') {
-                document.getElementById('additionalPension').style.display = 'none';
-                document.getElementById('additionalPensionPercent').style.display = 'block';
-            } else {
-                document.getElementById('additionalPension').style.display = 'block';
-                document.getElementById('additionalPensionPercent').style.display = 'none';
-            }
-        }
-
-        function calculateAll() {
-            const grossSalary = parseFloat(document.getElementById('grossSalary').value) || 0;
-            
-            // Calculate pension contributions based on input type
-            let pensionContrib, employerPension, additionalPension;
-            
-            if (document.querySelector('input[name="pensionType"]:checked').value === 'percent') {
-                const pensionPercent = parseFloat(document.getElementById('pensionContribPercent').value) || 0;
-                pensionContrib = (grossSalary * pensionPercent) / 100;
-            } else {
-                pensionContrib = parseFloat(document.getElementById('pensionContrib').value) || 0;
-            }
-            
-            if (document.querySelector('input[name="employerType"]:checked').value === 'percent') {
-                const employerPercent = parseFloat(document.getElementById('employerPensionPercent').value) || 0;
-                employerPension = (grossSalary * employerPercent) / 100;
-            } else {
-                employerPension = parseFloat(document.getElementById('employerPension').value) || 0;
-            }
-            
-            if (document.querySelector('input[name="additionalType"]:checked').value === 'percent') {
-                const additionalPercent = parseFloat(document.getElementById('additionalPensionPercent').value) || 0;
-                additionalPension = (grossSalary * additionalPercent) / 100;
-            } else {
-                additionalPension = parseFloat(document.getElementById('additionalPension').value) || 0;
-            }
-            
-            const cyclesToWork = parseFloat(document.getElementById('cyclesToWork').value) || 0;
-            const carLeasing = parseFloat(document.getElementById('carLeasing').value) || 0;
-            const studentLoanPlan = document.getElementById('studentLoanPlan').value;
-            const isScottish = document.getElementById('scotland').checked;
-
-            const carValue = parseFloat(document.getElementById('carValue').value) || 0;
-            const carType = document.getElementById('carType').value;
-            const carCO2 = parseFloat(document.getElementById('carCO2').value) || 0;
-            const electricRange = parseFloat(document.getElementById('electricRange').value) || 30;
-
-            const totalSalarySacrifice = cyclesToWork + additionalPension + carLeasing;
-            const totalPersonalPension = pensionContrib + additionalPension;
-            const totalPensionContributions = totalPersonalPension + employerPension;
-            const taxableIncome = grossSalary - pensionContrib - totalSalarySacrifice;
-
-            // Calculate adjusted income for pension allowance (includes employer pension)
-            const adjustedIncome = grossSalary + employerPension;
-            const taperedAllowance = calculateTaperedAllowance(adjustedIncome);
-            
-            // Pension allowance warning
-            const pensionWarning = document.getElementById('pensionAllowanceWarning');
-            document.getElementById('totalPensionAmount').textContent = totalPensionContributions.toLocaleString();
-            
-            if (totalPensionContributions > taperedAllowance) {
-                pensionWarning.style.display = 'block';
-            } else {
-                pensionWarning.style.display = 'none';
-            }
-
-            const adjustedNetIncome = grossSalary - pensionContrib - additionalPension;
-            
-            const highEarnerWarning = document.getElementById('highEarnerWarning');
-            if (adjustedNetIncome >= 95000) {
-                highEarnerWarning.style.display = 'block';
-            } else {
-                highEarnerWarning.style.display = 'none';
-            }
-
-            const incomeTax = calculateTax(taxableIncome, isScottish);
-            const nationalInsurance = calculateNI(grossSalary - totalSalarySacrifice);
-            const studentLoanPayment = calculateStudentLoan(grossSalary, studentLoanPlan);
-            
-            const carBikData = calculateCarBiK(carValue, carType, carCO2, electricRange, grossSalary, isScottish);
-            
-            const takeHome = grossSalary - pensionContrib - totalSalarySacrifice - incomeTax - nationalInsurance - carBikData.bikTax - studentLoanPayment;
-            const monthlyTakeHome = takeHome / 12;
-
-            // Calculate scenario WITHOUT car salary sacrifice (but keeping pension sacrifice)
-            const noCarSacrificeIncome = grossSalary - pensionContrib - (totalSalarySacrifice - carLeasing);
-            const noCarSacrificeIncomeTax = calculateTax(noCarSacrificeIncome, isScottish);
-            const noCarSacrificeNI = calculateNI(noCarSacrificeIncome);
-            const noCarSacrificeStudentLoan = calculateStudentLoan(grossSalary, studentLoanPlan);
-
-            // Take-home if NOT salary sacrificing for car
-            const noCarSacrificeTakeHome = grossSalary - pensionContrib - (totalSalarySacrifice - carLeasing) - noCarSacrificeIncomeTax - noCarSacrificeNI - noCarSacrificeStudentLoan;
-
-            // After paying for car with after-tax money
-            const noCarSacrificeNetPosition = noCarSacrificeTakeHome - carLeasing;
-
-            // The benefit of salary sacrificing for the car
-            const actualTaxSavings = (noCarSacrificeIncomeTax + noCarSacrificeNI) - (incomeTax + nationalInsurance);
-            const totalSavings = takeHome - noCarSacrificeNetPosition;
-
-            // Update display
-            document.getElementById('takeHome').textContent = formatCurrency(takeHome);
-            document.getElementById('monthlyTakeHome').textContent = formatCurrency(monthlyTakeHome);
-            document.getElementById('grossDisplay').textContent = formatCurrency(grossSalary);
-            document.getElementById('pensionDisplay').textContent = formatCurrency(pensionContrib);
-            document.getElementById('employerPensionDisplay').textContent = formatCurrency(employerPension);
-            document.getElementById('totalPensionDisplay').textContent = formatCurrency(totalPensionContributions);
-            document.getElementById('sacrificeTotal').textContent = formatCurrency(totalSalarySacrifice);
-            document.getElementById('taxableIncome').textContent = formatCurrency(taxableIncome);
-            document.getElementById('incomeTax').textContent = formatCurrency(incomeTax);
-            document.getElementById('nationalInsurance').textContent = formatCurrency(nationalInsurance);
-            document.getElementById('netTakeHome').textContent = formatCurrency(takeHome);
-            document.getElementById('totalSavings').textContent = formatCurrency(Math.max(0, totalSavings));
-            document.getElementById('monthlySavings').textContent = formatCurrency(Math.max(0, totalSavings / 12));
-
-            // Update benefit breakdown
-            document.getElementById('sacrificeCostDisplay').textContent = formatCurrency(totalSalarySacrifice);
-            document.getElementById('taxSavingsDisplay').textContent = formatCurrency(actualTaxSavings);
-            document.getElementById('netBenefitDisplay').textContent = formatCurrency(Math.max(0, totalSavings));
-
-            // Update scenario comparison
-            // Scenario A (With Salary Sacrifice)
-            document.getElementById('scenarioA_gross').textContent = formatCurrency(grossSalary);
-            document.getElementById('scenarioA_sacrifice').textContent = formatCurrency(totalSalarySacrifice);
-            document.getElementById('scenarioA_taxes').textContent = formatCurrency(incomeTax + nationalInsurance);
-            document.getElementById('scenarioA_bik').textContent = formatCurrency(carBikData.bikTax);
-            document.getElementById('scenarioA_final').textContent = formatCurrency(takeHome);
-
-            // Scenario B (Without Salary Sacrifice)
-            document.getElementById('scenarioB_gross').textContent = formatCurrency(grossSalary);
-            document.getElementById('scenarioB_taxes').textContent = formatCurrency(noCarSacrificeIncomeTax + noCarSacrificeNI);
-            document.getElementById('scenarioB_beforePurchases').textContent = formatCurrency(noCarSacrificeTakeHome);
-            document.getElementById('scenarioB_purchases').textContent = formatCurrency(totalSalarySacrifice);
-            document.getElementById('scenarioB_final').textContent = formatCurrency(noCarSacrificeNetPosition);
-
-            // Advantage summary
-            document.getElementById('advantageAmount').textContent = formatCurrency(Math.max(0, totalSavings));
-            document.getElementById('advantageA').textContent = takeHome.toLocaleString();
-            document.getElementById('advantageB').textContent = noCarSacrificeNetPosition.toLocaleString();
-
-            // Update student loan display
-            document.getElementById('studentLoanPayment').textContent = formatCurrency(studentLoanPayment);
-            if (studentLoanPayment > 0) {
-                document.getElementById('studentLoanRow').style.display = 'flex';
-            } else {
-                document.getElementById('studentLoanRow').style.display = 'none';
-            }
-
-            // Update mobile summary (only if elements exist)
-            const mobileTakeHome = document.getElementById('mobileTakeHome');
-            const mobileMonthlyTakeHome = document.getElementById('mobileMonthlyTakeHome');
-            
-            if (mobileTakeHome && mobileMonthlyTakeHome) {
-                mobileTakeHome.textContent = formatCurrency(takeHome);
-                mobileMonthlyTakeHome.textContent = formatCurrency(monthlyTakeHome);
-            }
-
-            // Update car BiK display
-            if (carValue > 0 && carType !== 'none' && carLeasing > 0) {
-                document.getElementById('carBikRow').style.display = 'flex';
-                document.getElementById('carBikTax').textContent = formatCurrency(carBikData.bikTax);
-                document.getElementById('carBreakdown').style.display = 'block';
-                document.getElementById('carValueDisplay').textContent = formatCurrency(carValue);
-                document.getElementById('carCO2Display').textContent = carCO2 + 'g/km';
-                document.getElementById('bikRateDisplay').textContent = carBikData.bikRate + '%';
-                document.getElementById('bikValueDisplay').textContent = formatCurrency(carBikData.bikValue);
-                document.getElementById('bikTaxDisplay').textContent = formatCurrency(carBikData.bikTax);
-                document.getElementById('carLeasingDisplay').textContent = carLeasing.toLocaleString();
-                
-                const taxRate = grossSalary > TAX_RATES.basicRateThreshold ? 
-                    (isScottish ? SCOTTISH_RATES.higherRate : TAX_RATES.higherRate) : 
-                    (isScottish ? SCOTTISH_RATES.basicRate : TAX_RATES.basicRate);
-                const niRate = grossSalary > TAX_RATES.niUpperThreshold ? TAX_RATES.niUpperRate : TAX_RATES.niRate;
-                const totalTaxSavingsRate = taxRate + niRate;
-                const netLeaseCost = carLeasing * (1 - totalTaxSavingsRate);
-                const netMonthlyCost = (netLeaseCost + carBikData.bikTax) / 12;
-                document.getElementById('netCarCost').textContent = formatCurrency(netMonthlyCost);
-            } else {
-                document.getElementById('carBikRow').style.display = 'none';
-                document.getElementById('carBreakdown').style.display = 'none';
-            }
-        }
-
         function shareCalculator() {
             if (navigator.share) {
                 navigator.share({
                     title: 'UK Tax & Salary Sacrifice Calculator 2025',
                     text: 'Check out this free calculator with current BiK rates and salary sacrifice schemes!',
                     url: window.location.href
+                }).catch((error) => {
+                    // User cancelled share or error occurred
+                    if (error.name !== 'AbortError') {
+                        showMessageBox('Share Error', 'Could not share the link. Please try copying it manually.');
+                    }
                 });
             } else {
-                navigator.clipboard.writeText(window.location.href);
-                alert('Link copied to clipboard!');
+                navigator.clipboard.writeText(window.location.href)
+                    .then(() => showMessageBox('Link Copied!', 'The calculator link has been copied to your clipboard.'))
+                    .catch(() => showMessageBox('Copy Error', 'Could not copy the link to clipboard. Please copy it manually.'));
             }
         }
 
@@ -1376,6 +1637,7 @@
             document.body.appendChild(element);
             element.click();
             document.body.removeChild(element);
+            showMessageBox('Download Complete!', 'The calculator HTML file has been downloaded.');
         }
 
         function toggleElectricRange() {
@@ -1395,23 +1657,14 @@
             input.addEventListener('change', calculateAll);
         });
 
-        // Add listeners for pension type toggles
-        document.querySelectorAll('input[name="pensionType"], input[name="employerType"], input[name="additionalType"]').forEach(radio => {
-            radio.addEventListener('change', function() {
-                togglePensionInputs();
-                calculateAll();
-            });
-        });
-
         document.getElementById('carType').addEventListener('change', function() {
             toggleElectricRange();
             calculateAll();
         });
 
-        // Initial setup
-        togglePensionInputs();
-        calculateAll();
-        toggleElectricRange();
+        // Initial setup on page load
+        toggleElectricRange(); // Set initial state of electric range input
+        calculateAll(); // Perform initial calculation
     </script>
 </body>
 </html>
