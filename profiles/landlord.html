@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Landlord Tax Calculator 2026/27 — UK Tax Calendar</title>
+  <meta name="description" content="Free UK landlord property income tax calculator for 2026/27. Calculate rental income tax, Section 24 mortgage interest restriction, capital gains on property disposal, student loans, and take-home pay with real-time results.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container">
+      <a href="../index.html" class="logo">UK<span class="accent">Tax</span>Cal</a>
+      <nav class="nav-links">
+        <a href="../index.html">All Profiles</a>
+        <a href="landlord.html" class="active">Landlord</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <span class="toggle-icon">&#9790;</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container">
+        <span class="badge">Tax Year 2026/27</span>
+        <h1>Landlord (Property Income) Calculator</h1>
+        <p>Calculate your take-home pay from rental income, including Section 24 mortgage interest restriction, capital gains on property disposal, student loans, and pension relief &mdash; updated for the 2026/27 tax year.</p>
+      </div>
+    </section>
+
+    <!-- Calculator Grid -->
+    <section class="container">
+      <div class="grid-2">
+
+        <!-- ============ LEFT COLUMN — Inputs ============ -->
+        <div class="input-column">
+
+          <!-- Card 1: Rental Income -->
+          <div class="result-section">
+            <h3>Rental Income</h3>
+
+            <div class="form-group">
+              <label for="rentalIncome">Annual Rental Income</label>
+              <div class="input-prefix">
+                <input type="text" id="rentalIncome" placeholder="30,000" inputmode="numeric">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="mortgageInterest">Mortgage Interest Paid</label>
+              <div class="input-prefix">
+                <input type="text" id="mortgageInterest" placeholder="8,000" inputmode="numeric">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="otherExpenses">Other Allowable Expenses</label>
+              <div class="input-prefix">
+                <input type="text" id="otherExpenses" placeholder="3,000" inputmode="numeric">
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: Other Income -->
+          <div class="result-section">
+            <h3>Other Income</h3>
+
+            <div class="form-group">
+              <label for="otherIncome">Employment/Other Income</label>
+              <div class="input-prefix">
+                <input type="text" id="otherIncome" placeholder="0" inputmode="numeric">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="checkbox-group">
+                <input type="checkbox" id="isScottish">
+                Scottish taxpayer
+              </label>
+            </div>
+          </div>
+
+          <!-- Card 3: Student Loans -->
+          <div class="result-section">
+            <h3>Student Loans</h3>
+
+            <div class="form-group">
+              <label for="studentLoan1">Student Loan Plan</label>
+              <select id="studentLoan1">
+                <option value="none">None</option>
+                <option value="plan1">Plan 1 (&pound;26,065)</option>
+                <option value="plan2">Plan 2 (&pound;29,385)</option>
+                <option value="plan4">Plan 4 Scotland (&pound;32,745)</option>
+                <option value="plan5">Plan 5 (&pound;25,000)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="studentLoan2">Additional Loan</label>
+              <select id="studentLoan2">
+                <option value="none">None</option>
+                <option value="postgraduate">Postgraduate Loan (&pound;21,000, 6%)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Card 4: Pension -->
+          <div class="result-section">
+            <h3>Pension</h3>
+
+            <div class="form-group">
+              <label for="pensionContribution">Personal Pension Contribution (&pound;/year)</label>
+              <div class="input-prefix">
+                <input type="text" id="pensionContribution" placeholder="0" inputmode="numeric">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="checkbox-group">
+                <input type="checkbox" id="hasChildcare">
+                I use Tax-Free Childcare or 30 hours free childcare
+              </label>
+            </div>
+          </div>
+
+          <!-- Card 5: Section 24 — Mortgage Interest -->
+          <div class="result-section">
+            <h3>Section 24 &mdash; Mortgage Interest</h3>
+
+            <div class="warning active blue" style="display:flex;">
+              <span class="warning-icon">&#9432;</span>
+              <div><strong>Section 24 Restriction:</strong> Since April 2020, mortgage interest is no longer deducted from rental income. Instead, you receive a 20% tax credit on mortgage interest paid. This means higher and additional rate taxpayers pay more tax on rental income than before the restriction.</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ============ RIGHT COLUMN — Results ============ -->
+        <div class="results-column">
+
+          <!-- Tax Breakdown -->
+          <div class="result-section">
+            <h3>Tax Breakdown</h3>
+
+            <div class="result-row">
+              <span class="label">Rental Income</span>
+              <span class="value" id="resRental">&pound;0</span>
+            </div>
+            <div class="result-row negative">
+              <span class="label">Other Expenses</span>
+              <span class="value" id="resExpenses">&minus;&pound;0</span>
+            </div>
+            <div class="result-row">
+              <span class="label">Rental Profit</span>
+              <span class="value" id="resProfit">&pound;0</span>
+            </div>
+            <div class="result-row">
+              <span class="label">Other Income</span>
+              <span class="value" id="resOtherIncome">&pound;0</span>
+            </div>
+            <div class="result-row">
+              <span class="label">Total Income</span>
+              <span class="value" id="resTotalIncome">&pound;0</span>
+            </div>
+            <div class="result-row negative">
+              <span class="label">Pension</span>
+              <span class="value" id="resPension">&minus;&pound;0</span>
+            </div>
+            <div class="result-row">
+              <span class="label">Personal Allowance</span>
+              <span class="value" id="resPA">&pound;12,570</span>
+            </div>
+            <div class="result-row negative">
+              <span class="label">Income Tax</span>
+              <span class="value" id="resTax">&minus;&pound;0</span>
+            </div>
+            <div class="result-row" style="color:var(--color-green);">
+              <span class="label">Mortgage Interest Tax Credit (20%)</span>
+              <span class="value" id="resMortCredit">&pound;0</span>
+            </div>
+            <div class="result-row negative">
+              <span class="label">Net Tax After Credit</span>
+              <span class="value" id="resNetTax">&minus;&pound;0</span>
+            </div>
+            <div class="result-row negative">
+              <span class="label">Student Loan</span>
+              <span class="value" id="resStudentLoan">&minus;&pound;0</span>
+            </div>
+            <div class="result-row total">
+              <span class="label">Annual Take-Home</span>
+              <span class="value" id="resTotalYear">&pound;0</span>
+            </div>
+            <div class="result-row total">
+              <span class="label">Monthly Take-Home</span>
+              <span class="value" id="resTotalMonth">&pound;0</span>
+            </div>
+
+            <div style="display:flex; gap:1.5rem; margin-top:1rem; font-size:0.88rem;">
+              <div><span class="text-muted">Effective Rate: </span><strong id="resEffective">0.0%</strong></div>
+              <div><span class="text-muted">Marginal Rate: </span><strong id="resMarginal">0.0%</strong></div>
+            </div>
+          </div>
+
+          <!-- Mortgage Interest Impact -->
+          <div class="result-section">
+            <h3>Mortgage Interest Impact</h3>
+
+            <div class="result-row">
+              <span class="label">Tax Without Section 24 (old rules)</span>
+              <span class="value" id="resOldTax">&pound;0</span>
+            </div>
+            <div class="result-row">
+              <span class="label">Tax With Section 24 (current)</span>
+              <span class="value" id="resNewTax">&pound;0</span>
+            </div>
+            <div class="result-row">
+              <span class="label">Extra Tax Due to Restriction</span>
+              <span class="value" id="resExtraTax">&pound;0</span>
+            </div>
+
+            <p style="margin-top:1rem; font-size:0.82rem; color:var(--text-muted); line-height:1.6;">
+              This shows the impact of the Section 24 mortgage interest restriction for higher rate taxpayers. Under the old rules, mortgage interest was deducted from rental income before tax. Under current rules, you pay tax on the full rental profit and receive a 20% tax credit instead.
+            </p>
+          </div>
+
+          <!-- Warnings -->
+          <div id="warningsContainer"></div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Capital Gains on Property Disposal -->
+    <section class="container" style="margin-top:2.5rem;">
+      <div class="result-section">
+        <div class="collapsible-header" role="button" tabindex="0">
+          <h3>Capital Gains on Property Disposal</h3>
+          <span class="chevron">&#9660;</span>
+        </div>
+        <div class="collapsible-body">
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem;">
+            <!-- CGT Inputs -->
+            <div>
+              <div class="form-group">
+                <label for="salePrice">Sale Price</label>
+                <div class="input-prefix">
+                  <input type="text" id="salePrice" placeholder="0" inputmode="numeric">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="purchasePrice">Purchase Price</label>
+                <div class="input-prefix">
+                  <input type="text" id="purchasePrice" placeholder="0" inputmode="numeric">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="saleCosts">Costs (stamp duty, legal, improvements)</label>
+                <div class="input-prefix">
+                  <input type="text" id="saleCosts" placeholder="0" inputmode="numeric">
+                </div>
+              </div>
+            </div>
+
+            <!-- CGT Results -->
+            <div>
+              <div class="result-row">
+                <span class="label">Gain</span>
+                <span class="value" id="cgtGain">&pound;0</span>
+              </div>
+              <div class="result-row">
+                <span class="label">Annual Exempt Amount</span>
+                <span class="value" id="cgtExempt">&pound;0</span>
+              </div>
+              <div class="result-row">
+                <span class="label">Taxable Gain</span>
+                <span class="value" id="cgtTaxable">&pound;0</span>
+              </div>
+              <div class="result-row">
+                <span class="label">CGT Rate</span>
+                <span class="value" id="cgtRate">0%</span>
+              </div>
+              <div class="result-row negative">
+                <span class="label">CGT Due</span>
+                <span class="value" id="cgtDue">&minus;&pound;0</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="warning active blue" style="display:flex; margin-top:1rem;">
+            <span class="warning-icon">&#9432;</span>
+            <div><strong>Important:</strong> You must report and pay CGT within 60 days of completion for UK residential property.</div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Calendar Section -->
+    <section class="container" style="margin-top:2.5rem;">
+      <h2>Your Tax Calendar</h2>
+      <div style="margin:1rem 0;">
+        <button class="btn-outline btn-sm" id="downloadICS">&#128197; Download .ics Calendar</button>
+      </div>
+      <div id="calendarContainer"></div>
+    </section>
+
+    <!-- Affiliate Section -->
+    <section class="container" style="margin-top:2.5rem;">
+      <div id="affiliateContainer"></div>
+    </section>
+
+    <!-- Disclaimer -->
+    <section class="container" style="margin-top:2rem; margin-bottom:2rem;">
+      <p style="font-size:0.82rem; color:var(--text-muted); line-height:1.7;">
+        This calculator is for illustrative purposes only and does not constitute financial or tax advice.
+        Calculations are based on announced HMRC rates for the 2026/27 tax year. Always consult a qualified
+        accountant or tax adviser for personalised guidance. Student loan repayment thresholds and rates
+        are subject to annual review by the Student Loans Company.
+      </p>
+    </section>
+  </main>
+
+  <!-- Mobile Summary Bar -->
+  <div class="mobile-summary" id="mobileSummary">
+    <div class="summary-row">
+      <span class="summary-label">Annual Take-Home</span>
+      <span class="summary-value summary-yearly">&pound;0</span>
+    </div>
+    <div class="summary-row">
+      <span class="summary-label">Monthly Take-Home</span>
+      <span class="summary-value summary-monthly">&pound;0</span>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>UKTaxCal is for illustrative purposes only and does not constitute financial or tax advice.<br>
+      Always consult a qualified accountant or tax adviser. Calculations are based on announced HMRC rates for 2026/27.</p>
+    </div>
+  </footer>
+
+  <!-- Calculator Script -->
+  <script type="module">
+    import {
+      calcIncomeTax,
+      calcPersonalAllowance,
+      calcCapitalGainsTax,
+      formatCurrency,
+      formatPercent,
+      RATES
+    } from '../js/tax-engine.js';
+    import { calcCombinedStudentLoans } from '../js/student-loans.js';
+    import { getWarnings } from '../js/warnings.js';
+    import { renderCalendar } from '../js/calendar.js';
+    import { downloadICS } from '../js/ical-export.js';
+    import { getRecommendations, renderAffiliates } from '../js/affiliate.js';
+    import {
+      setupTheme,
+      setupCollapsibles,
+      wireRealTimeCalc,
+      setResult,
+      getNumericInput,
+      getSelectValue,
+      getCheckbox,
+      renderWarnings,
+      showIf,
+      updateMobileSummary
+    } from '../js/ui.js';
+
+    // ── Setup ──
+    setupTheme();
+    setupCollapsibles();
+    renderCalendar('landlord', 'calendarContainer');
+
+    // ── Download ICS ──
+    const downloadBtn = document.getElementById('downloadICS');
+    if (downloadBtn) {
+      downloadBtn.addEventListener('click', () => {
+        downloadICS('landlord', 'Landlord (Property Income)');
+      });
+    }
+
+    // ── Main Calculation ──
+    function calcFn() {
+      // Read inputs
+      const rentalIncome = getNumericInput('rentalIncome');
+      const mortgageInterest = getNumericInput('mortgageInterest');
+      const otherExpenses = getNumericInput('otherExpenses');
+      const otherIncome = getNumericInput('otherIncome');
+      const isScottish = getCheckbox('isScottish');
+      const hasChildcare = getCheckbox('hasChildcare');
+      const studentLoan1 = getSelectValue('studentLoan1', 'none');
+      const studentLoan2 = getSelectValue('studentLoan2', 'none');
+      const pension = getNumericInput('pensionContribution');
+
+      // Build student loan plans array
+      const studentLoanPlans = [];
+      if (studentLoan1 !== 'none') studentLoanPlans.push(studentLoan1);
+      if (studentLoan2 !== 'none') studentLoanPlans.push(studentLoan2);
+
+      // 1. Rental profit — mortgage interest NOT deducted (Section 24)
+      const rentalProfit = Math.max(0, rentalIncome - otherExpenses);
+
+      // 2. Total income
+      const totalIncome = rentalProfit + otherIncome;
+
+      // 3. Taxable income (reduced by pension)
+      const taxableIncome = Math.max(0, totalIncome - pension);
+
+      // 4. Income tax
+      const taxResult = calcIncomeTax(taxableIncome, isScottish);
+
+      // 5. Mortgage interest tax credit — Section 24: 20% credit
+      const mortgageCredit = mortgageInterest * 0.20;
+
+      // 6. Net tax after credit
+      const netTax = Math.max(0, taxResult.tax - mortgageCredit);
+
+      // 7. Student loan on total income
+      const studentLoan = calcCombinedStudentLoans(totalIncome, studentLoanPlans);
+
+      // 8. Take-home
+      const takeHome = totalIncome - pension - netTax - studentLoan.total;
+      const takeHomeMonthly = takeHome / 12;
+
+      // 9. Effective rate
+      const totalDeductions = netTax + studentLoan.total;
+      const effectiveRate = totalIncome > 0 ? totalDeductions / totalIncome : 0;
+
+      // 10. Personal allowance
+      const personalAllowance = calcPersonalAllowance(taxableIncome);
+
+      // ── Mortgage interest impact comparison ──
+      // Old rules: mortgage interest deducted from income before tax
+      const oldTaxableIncome = Math.max(0, totalIncome - mortgageInterest - pension);
+      const oldTaxResult = calcIncomeTax(oldTaxableIncome, isScottish);
+      const oldTax = oldTaxResult.tax;
+
+      // New rules: tax on full income minus 20% credit
+      const newTax = netTax;
+
+      // Extra tax due to restriction
+      const extraTax = newTax - oldTax;
+
+      // ── CGT calculation (only if salePrice > 0) ──
+      const salePrice = getNumericInput('salePrice');
+      const purchasePrice = getNumericInput('purchasePrice');
+      const saleCosts = getNumericInput('saleCosts');
+
+      let cgtGain = 0;
+      let cgtExempt = 0;
+      let cgtTaxable = 0;
+      let cgtRate = 0;
+      let cgtDue = 0;
+
+      if (salePrice > 0) {
+        cgtGain = salePrice - purchasePrice - saleCosts;
+
+        if (cgtGain > 0) {
+          cgtExempt = RATES.capitalGains.annualExempt;
+          cgtTaxable = Math.max(0, cgtGain - cgtExempt);
+
+          const cgtResult = calcCapitalGainsTax(cgtGain, totalIncome, true, false);
+          cgtDue = cgtResult.tax;
+
+          // Determine effective CGT rate
+          if (cgtTaxable > 0) {
+            cgtRate = cgtDue / cgtTaxable;
+          }
+        }
+      }
+
+      // ── Update result elements ──
+
+      // Tax Breakdown
+      setResult('resRental', rentalIncome, { format: 'currency' });
+      setResult('resExpenses', otherExpenses, { format: 'currency' });
+      setResult('resProfit', rentalProfit, { format: 'currency' });
+      setResult('resOtherIncome', otherIncome, { format: 'currency' });
+      setResult('resTotalIncome', totalIncome, { format: 'currency' });
+      setResult('resPension', pension, { format: 'currency' });
+      setResult('resPA', personalAllowance, { format: 'currency' });
+      setResult('resTax', taxResult.tax, { format: 'currency' });
+      setResult('resMortCredit', mortgageCredit, { format: 'currency' });
+      setResult('resNetTax', netTax, { format: 'currency' });
+      setResult('resStudentLoan', studentLoan.total, { format: 'currency' });
+      setResult('resTotalYear', takeHome, { format: 'currency' });
+      setResult('resTotalMonth', takeHomeMonthly, { format: 'currency' });
+      setResult('resEffective', effectiveRate, { format: 'percent' });
+      setResult('resMarginal', taxResult.marginalRate, { format: 'percent' });
+
+      // Mortgage Interest Impact
+      setResult('resOldTax', oldTax, { format: 'currency' });
+      setResult('resNewTax', newTax, { format: 'currency' });
+      setResult('resExtraTax', extraTax, { format: 'currency' });
+
+      // Highlight extra tax in red if positive
+      const extraTaxEl = document.getElementById('resExtraTax');
+      if (extraTaxEl) {
+        extraTaxEl.style.color = extraTax > 0 ? 'var(--color-red, #ef4444)' : '';
+      }
+
+      // CGT Results
+      setResult('cgtGain', cgtGain, { format: 'currency' });
+      setResult('cgtExempt', cgtExempt, { format: 'currency' });
+      setResult('cgtTaxable', cgtTaxable, { format: 'currency' });
+      setResult('cgtRate', cgtRate, { format: 'percent' });
+      setResult('cgtDue', cgtDue, { format: 'currency' });
+
+      // Warnings
+      const adjustedNetIncome = totalIncome - pension;
+
+      const warnings = getWarnings({
+        profile: 'landlord',
+        grossSalary: totalIncome,
+        rentalIncome,
+        adjustedNetIncome,
+        hasChildcare,
+        isScottish
+      });
+
+      renderWarnings('warningsContainer', warnings);
+
+      // Affiliates
+      const recommendations = getRecommendations({
+        profile: 'landlord',
+        grossSalary: totalIncome,
+        hasPension: pension > 0
+      });
+
+      renderAffiliates('affiliateContainer', recommendations);
+
+      // Mobile summary
+      updateMobileSummary(takeHome, takeHomeMonthly);
+    }
+
+    // Wire up real-time calculation on all inputs
+    wireRealTimeCalc('#main', calcFn);
+  </script>
+
+</body>
+</html>
