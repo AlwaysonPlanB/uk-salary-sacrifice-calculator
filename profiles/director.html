@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Company Director Calculator 2026/27 — UK Tax Calendar</title>
+  <meta name="description" content="Free UK company director salary and dividend extraction calculator for 2026/27. Calculate corporation tax, dividend tax, optimal salary levels, employer NI, pension savings, and take-home pay.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container">
+      <a href="../index.html" class="logo">UK<span class="accent">Tax</span>Cal</a>
+      <nav class="nav-links">
+        <a href="../index.html">All Profiles</a>
+        <a href="director.html" class="active">Director</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <span class="toggle-icon">&#9790;</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container">
+        <span class="badge">Tax Year 2026/27</span>
+        <h1>Company Director Calculator</h1>
+        <p>Calculate your optimal salary/dividend extraction strategy as a company director. Includes corporation tax, dividend tax, employer NI, pension savings, and take-home pay — updated for the 2026/27 tax year.</p>
+      </div>
+    </section>
+
+    <!-- Calculator Grid -->
+    <section class="container">
+      <div class="grid-2">
+
+        <!-- ============ LEFT COLUMN — Inputs ============ -->
+        <div class="input-column">
+
+          <!-- Card 1: Company Profit -->
+          <div class="result-section">
+            <h3>Company Profit</h3>
+
+            <div class="form-group">
+              <label for="companyProfit">Annual Company Profit (before salary)</label>
+              <div class="input-prefix">
+                <input type="text" id="companyProfit" placeholder="100,000" inputmode="numeric">
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: Director's Salary -->
+          <div class="result-section">
+            <h3>Director's Salary</h3>
+
+            <div class="form-group">
+              <label for="directorSalary">Annual Salary</label>
+              <div class="input-prefix">
+                <input type="text" id="directorSalary" placeholder="12,570" inputmode="numeric">
+              </div>
+            </div>
+
+            <div class="warning active blue" style="display:flex;">
+              <span class="warning-icon">&#9432;</span>
+              <div><strong>Salary Tip:</strong> Most directors take a salary of &pound;12,570 (uses personal allowance) or &pound;5,000 (below employer NI threshold). The calculator shows optimal levels below.</div>
+            </div>
+          </div>
+
+          <!-- Card 3: Dividends -->
+          <div class="result-section">
+            <h3>Dividends</h3>
+
+            <div class="form-group">
+              <label for="dividendAmount">Dividend Amount</label>
+              <div class="input-prefix">
+                <input type="text" id="dividendAmount" placeholder="auto" inputmode="text">
+              </div>
+              <small style="color:var(--text-muted);">Leave blank or enter 'auto' to take maximum available dividends from retained profit</small>
+            </div>
+          </div>
+
+          <!-- Card 4: Pension & Benefits -->
+          <div class="result-section">
+            <h3>Pension &amp; Benefits</h3>
+
+            <div class="form-group">
+              <label for="employerPension">Employer Pension Contribution via Ltd (&pound;/year)</label>
+              <div class="input-prefix">
+                <input type="text" id="employerPension" placeholder="0" inputmode="numeric">
+              </div>
+              <small style="color:var(--text-muted);">Corporation tax deductible</small>
+            </div>
+
+            <div class="form-group">
+              <label for="studentLoan1">Student Loan Plan</label>
+              <select id="studentLoan1">
+                <option value="none">None</option>
+                <option value="plan1">Plan 1 (&pound;26,065)</option>
+                <option value="plan2">Plan 2 (&pound;29,385)</option>
+                <option value="plan4">Plan 4 Scotland (&pound;32,745)</option>
+                <option value="plan5">Plan 5 (&pound;25,000)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="studentLoan2">Additional Loan</label>
+              <select id="studentLoan2">
+                <option value="none">None</option>
+                <option value="postgraduate">Postgraduate Loan (&pound;21,000, 6%)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Card 5: EV via Company (collapsible) -->
+          <div class="result-section">
+            <div class="collapsible-header" role="button" tabindex="0">
+              <h3>EV via Company</h3>
+              <span class="chevron">&#9660;</span>
+            </div>
+            <div class="collapsible-body">
+
+              <div class="form-group">
+                <label for="evLease">EV Lease via Ltd (&pound;/year)</label>
+                <div class="input-prefix">
+                  <input type="text" id="evLease" placeholder="0" inputmode="numeric">
+                </div>
+              </div>
+
+              <!-- BIK Section — hidden by default, shown when evLease > 0 -->
+              <div id="bikSection" style="display:none;">
+
+                <h4 style="margin: 1.25rem 0 0.75rem; color: var(--text-heading);">Company Car Benefit-in-Kind</h4>
+
+                <div class="form-group">
+                  <label for="p11dValue">P11D Value (&pound;)</label>
+                  <div class="input-prefix">
+                    <input type="text" id="p11dValue" placeholder="0" inputmode="numeric">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="carCO2">CO2 Emissions (g/km)</label>
+                  <input type="number" id="carCO2" placeholder="0" min="0">
+                </div>
+
+                <div class="form-group">
+                  <label for="fuelType">Fuel Type</label>
+                  <select id="fuelType">
+                    <option value="electric">Electric</option>
+                    <option value="hybrid">Plug-in Hybrid</option>
+                    <option value="petrol">Petrol</option>
+                    <option value="diesel">Diesel</option>
+                  </select>
+                </div>
+
+                <div class="form-group" id="electricRangeGroup" style="display:none;">
+                  <label for="electricRange">Electric Range (miles)</label>
+                  <input type="number" id="electricRange" placeholder="0" min="0">
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ============ RIGHT COLUMN — Results ============ -->
+        <div class="results-column">
+
+          <!-- Company Tax -->
+          <div class="result-section">
+            <h3>Company Tax</h3>
+
+            <div class="result-row">
+              <span class="label">Company Profit</span>
+              <span class="value" id="resProfit">&pound;0</span>
+            </div>
+            <div class="result-row negative">
+              <span class="label">Salary Cost (Salary + Employer NI)</span>
+              <span class="value" id="resSalaryCost">&minus;&pound;0</span>
+            </div>
+            <div class="result-row negative">
+              <span class="label">Employer Pension</span>
+              <span class="value" id="resEmployerPension">&minus;&pound;0</span>
+            </div>
+            <div class="result-row">
+              <span class="label">Taxable Profit</span>
+              <span class="value" id="resTaxableProfit">&pound;0</span>
+            </div>
+            <div class="result-row negative">
+              <span class="label">Corporation Tax</span>
+              <span class="value" id="resCorpTax">&minus;&pound;0</span>
+            </div>
+            <div class="result-row">
+              <span class="label">Corp Tax Rate</span>
+              <span class="value" id="resCorpRate">0.0%</span>
+            </div>
+            <div class="result-row">
+              <span class="label">Retained Profit</span>
+              <span class="value" id="resRetained">&pound;0</span>
+            </div>
+            <div class="result-row">
+              <span class="label">Max Dividend Available</span>
+              <span class="value" id="resMaxDiv">&pound;0</span>
+            </div>
+          </div>
+
+          <!-- Personal Tax (Your Extraction) -->
+          <div class="result-section">
+            <h3>Personal Tax (Your Extraction)</h3>
+
+            <div class="result-row">
+              <span class="label">Salary</span>
+              <span class="value" id="resPersonalSalary">&pound;0</span>
+            </div>
+            <div class="result-row">
+              <span class="label">Dividends</span>
+              <span class="value" id="resPersonalDiv">&pound;0</span>
+            </div>
+            <div class="result-row negative">
+              <span class="label">Income Tax on Salary</span>
+              <span class="value" id="resIncomeTax">&minus;&pound;0</span>
+            </div>
+            <div class="result-row negative">
+              <span class="label">Employee NI</span>
+              <span class="value" id="resEmpNI">&minus;&pound;0</span>
+            </div>
+            <div class="result-row negative">
+              <span class="label">Dividend Tax</span>
+              <span class="value" id="resDivTax">&minus;&pound;0</span>
+            </div>
+            <div class="result-row negative">
+              <span class="label">Student Loan</span>
+              <span class="value" id="resStudentLoan">&minus;&pound;0</span>
+            </div>
+            <div class="result-row negative" id="resBiKRow" style="display:none;">
+              <span class="label">BIK Tax (Company Car)</span>
+              <span class="value" id="resBiKTax">&minus;&pound;0</span>
+            </div>
+
+            <div class="result-row total">
+              <span class="label">Annual Take-Home</span>
+              <span class="value" id="resTotalYear">&pound;0</span>
+            </div>
+            <div class="result-row total">
+              <span class="label">Monthly Take-Home</span>
+              <span class="value" id="resTotalMonth">&pound;0</span>
+            </div>
+
+            <div style="margin-top:1rem; font-size:0.88rem;">
+              <span class="text-muted">Total Combined Tax Burden: </span><strong id="resTotalBurden">0.0%</strong>
+            </div>
+          </div>
+
+          <!-- Optimal Extraction Comparison -->
+          <div class="result-section">
+            <h3>Optimal Extraction Comparison</h3>
+
+            <div style="overflow-x:auto;">
+              <!-- Header row -->
+              <div style="display:grid; grid-template-columns: 1.2fr repeat(6, 1fr); gap:0; font-size:0.82rem; font-weight:600; border-bottom:2px solid var(--border-color); padding:0.5rem 0; color:var(--text-heading);">
+                <div>Salary Level</div>
+                <div style="text-align:right;">Corp Tax</div>
+                <div style="text-align:right;">Employer NI</div>
+                <div style="text-align:right;">Personal Tax</div>
+                <div style="text-align:right;">Div Tax</div>
+                <div style="text-align:right;">Total Tax</div>
+                <div style="text-align:right;">Take-Home</div>
+              </div>
+
+              <!-- £0 salary row -->
+              <div class="opt-row" id="optRowA" style="display:grid; grid-template-columns: 1.2fr repeat(6, 1fr); gap:0; font-size:0.82rem; border-bottom:1px solid var(--border-color); padding:0.5rem 0;">
+                <div>&pound;0 salary</div>
+                <div style="text-align:right;" id="optA_corpTax">&pound;0</div>
+                <div style="text-align:right;" id="optA_empNI">&pound;0</div>
+                <div style="text-align:right;" id="optA_persTax">&pound;0</div>
+                <div style="text-align:right;" id="optA_divTax">&pound;0</div>
+                <div style="text-align:right;" id="optA_total">&pound;0</div>
+                <div style="text-align:right;" id="optA_takeHome">&pound;0</div>
+              </div>
+
+              <!-- £5,000 salary row -->
+              <div class="opt-row" id="optRowB" style="display:grid; grid-template-columns: 1.2fr repeat(6, 1fr); gap:0; font-size:0.82rem; border-bottom:1px solid var(--border-color); padding:0.5rem 0;">
+                <div>&pound;5,000 salary</div>
+                <div style="text-align:right;" id="optB_corpTax">&pound;0</div>
+                <div style="text-align:right;" id="optB_empNI">&pound;0</div>
+                <div style="text-align:right;" id="optB_persTax">&pound;0</div>
+                <div style="text-align:right;" id="optB_divTax">&pound;0</div>
+                <div style="text-align:right;" id="optB_total">&pound;0</div>
+                <div style="text-align:right;" id="optB_takeHome">&pound;0</div>
+              </div>
+
+              <!-- £12,570 salary row -->
+              <div class="opt-row" id="optRowC" style="display:grid; grid-template-columns: 1.2fr repeat(6, 1fr); gap:0; font-size:0.82rem; padding:0.5rem 0;">
+                <div>&pound;12,570 salary</div>
+                <div style="text-align:right;" id="optC_corpTax">&pound;0</div>
+                <div style="text-align:right;" id="optC_empNI">&pound;0</div>
+                <div style="text-align:right;" id="optC_persTax">&pound;0</div>
+                <div style="text-align:right;" id="optC_divTax">&pound;0</div>
+                <div style="text-align:right;" id="optC_total">&pound;0</div>
+                <div style="text-align:right;" id="optC_takeHome">&pound;0</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pension via Ltd — Tax Saving -->
+          <div class="result-section">
+            <h3>Pension via Ltd &mdash; Tax Saving</h3>
+
+            <div class="result-row">
+              <span class="label">Pension Amount</span>
+              <span class="value" id="resPensionAmt">&pound;0</span>
+            </div>
+            <div class="result-row" style="color:var(--green, #22c55e);">
+              <span class="label">Corp Tax Saved</span>
+              <span class="value" id="resPensionCorpSaved">&pound;0</span>
+            </div>
+            <div class="result-row">
+              <span class="label">Effective Cost</span>
+              <span class="value" id="resPensionEffCost">&pound;0</span>
+            </div>
+          </div>
+
+          <!-- Warnings -->
+          <div id="warningsContainer"></div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Calendar Section -->
+    <section class="container" style="margin-top:2.5rem;">
+      <h2>Your Tax Calendar</h2>
+      <div style="margin:1rem 0;">
+        <button class="btn-outline btn-sm" id="downloadICS">&#128197; Download .ics Calendar</button>
+      </div>
+      <div id="calendarContainer"></div>
+    </section>
+
+    <!-- Affiliate Section -->
+    <section class="container" style="margin-top:2.5rem;">
+      <div id="affiliateContainer"></div>
+    </section>
+
+    <!-- Disclaimer -->
+    <section class="container" style="margin-top:2rem; margin-bottom:2rem;">
+      <p style="font-size:0.82rem; color:var(--text-muted); line-height:1.7;">
+        This calculator is for illustrative purposes only and does not constitute financial or tax advice.
+        Calculations are based on announced HMRC rates for the 2026/27 tax year. Always consult a qualified
+        accountant or tax adviser for personalised guidance. Student loan repayment thresholds and rates
+        are subject to annual review by the Student Loans Company.
+      </p>
+    </section>
+  </main>
+
+  <!-- Mobile Summary Bar -->
+  <div class="mobile-summary" id="mobileSummary">
+    <div class="summary-row">
+      <span class="summary-label">Annual Take-Home</span>
+      <span class="summary-value summary-yearly">&pound;0</span>
+    </div>
+    <div class="summary-row">
+      <span class="summary-label">Monthly Take-Home</span>
+      <span class="summary-value summary-monthly">&pound;0</span>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>UKTaxCal is for illustrative purposes only and does not constitute financial or tax advice.<br>
+      Always consult a qualified accountant or tax adviser. Calculations are based on announced HMRC rates for 2026/27.</p>
+    </div>
+  </footer>
+
+  <!-- Calculator Script -->
+  <script type="module">
+    import {
+      calcIncomeTax,
+      calcEmployeeNI,
+      calcEmployerNI,
+      calcCorporationTax,
+      calcDividendTax,
+      calcTaperedAA,
+      RATES,
+      formatCurrency,
+      formatPercent
+    } from '../js/tax-engine.js';
+    import { calcCombinedStudentLoans } from '../js/student-loans.js';
+    import { calcBiKTax } from '../js/salary-sacrifice.js';
+    import { getWarnings } from '../js/warnings.js';
+    import { renderCalendar } from '../js/calendar.js';
+    import { downloadICS } from '../js/ical-export.js';
+    import { getRecommendations, renderAffiliates } from '../js/affiliate.js';
+    import {
+      setupTheme,
+      setupCollapsibles,
+      wireRealTimeCalc,
+      setResult,
+      getNumericInput,
+      getSelectValue,
+      getCheckbox,
+      renderWarnings,
+      showIf,
+      updateMobileSummary
+    } from '../js/ui.js';
+
+    // ── Setup ──
+    setupTheme();
+    setupCollapsibles();
+    renderCalendar('director', 'calendarContainer');
+
+    // ── Dynamic BIK visibility ──
+    const evLeaseInput = document.getElementById('evLease');
+    if (evLeaseInput) {
+      evLeaseInput.addEventListener('input', () => {
+        const val = getNumericInput('evLease');
+        showIf('bikSection', val > 0);
+      });
+    }
+
+    const fuelTypeSelect = document.getElementById('fuelType');
+    if (fuelTypeSelect) {
+      fuelTypeSelect.addEventListener('change', () => {
+        const val = getSelectValue('fuelType');
+        showIf('electricRangeGroup', val === 'hybrid');
+      });
+    }
+
+    // ── Download ICS ──
+    const downloadBtn = document.getElementById('downloadICS');
+    if (downloadBtn) {
+      downloadBtn.addEventListener('click', () => {
+        downloadICS('director', 'Company Director');
+      });
+    }
+
+    // ── Optimal scenario helper ──
+    function calcOptimalScenario(companyProfit, salaryLevel, employerPensionVal, studentLoanPlans) {
+      const erNI = calcEmployerNI(salaryLevel);
+      const salaryCost = salaryLevel + erNI;
+      const adjustedProfit = Math.max(0, companyProfit - salaryCost - employerPensionVal);
+      const corpTax = calcCorporationTax(adjustedProfit);
+      const retained = Math.max(0, adjustedProfit - corpTax.tax);
+      const dividends = retained;
+
+      const personalTax = calcIncomeTax(salaryLevel, false);
+      const empNI = calcEmployeeNI(salaryLevel);
+      const divTax = calcDividendTax(dividends, salaryLevel);
+      const studentLoan = calcCombinedStudentLoans(salaryLevel, studentLoanPlans);
+
+      const totalTax = corpTax.tax + erNI + personalTax.tax + empNI + divTax.tax + studentLoan.total;
+      const takeHome = salaryLevel + dividends - personalTax.tax - empNI - divTax.tax - studentLoan.total;
+
+      return {
+        corpTax: corpTax.tax,
+        employerNI: erNI,
+        personalTax: personalTax.tax,
+        divTax: divTax.tax,
+        totalTax,
+        takeHome
+      };
+    }
+
+    // ── Main Calculation ──
+    function calcFn() {
+      // Read inputs
+      const companyProfit = getNumericInput('companyProfit');
+      const salary = getNumericInput('directorSalary');
+      const employerPensionVal = getNumericInput('employerPension');
+      const studentLoan1 = getSelectValue('studentLoan1', 'none');
+      const studentLoan2 = getSelectValue('studentLoan2', 'none');
+      const evLease = getNumericInput('evLease');
+
+      // Dividend input — treat blank, 0, or 'auto' as auto
+      const dividendRaw = document.getElementById('dividendAmount').value.trim().toLowerCase();
+      const isAutoDividend = !dividendRaw || dividendRaw === 'auto' || dividendRaw === '0';
+
+      // Build student loan plans array
+      const studentLoanPlans = [];
+      if (studentLoan1 !== 'none') studentLoanPlans.push(studentLoan1);
+      if (studentLoan2 !== 'none') studentLoanPlans.push(studentLoan2);
+
+      // BIK details
+      let bikTaxAmount = 0;
+      const hasBiK = evLease > 0;
+      if (hasBiK) {
+        const p11dValue = getNumericInput('p11dValue');
+        const carCO2 = getNumericInput('carCO2');
+        const fuelType = getSelectValue('fuelType', 'electric');
+        const electricRange = getNumericInput('electricRange');
+
+        if (p11dValue > 0) {
+          const bikResult = calcBiKTax({
+            p11dValue,
+            co2: carCO2,
+            fuelType,
+            electricRange
+          }, salary);
+          bikTaxAmount = bikResult.bikTax || 0;
+        }
+      }
+
+      // 1. Employer NI on salary
+      const employerNI = calcEmployerNI(salary);
+
+      // 2. Salary cost (salary + employer NI)
+      const salaryCost = salary + employerNI;
+
+      // 3. Adjusted profit (company profit minus deductions)
+      const adjustedProfit = Math.max(0, companyProfit - salaryCost - employerPensionVal);
+
+      // 4. Corporation tax
+      const corpTax = calcCorporationTax(adjustedProfit);
+
+      // 5. Retained profit
+      const retained = Math.max(0, adjustedProfit - corpTax.tax);
+
+      // 6. Dividends — auto or manual, capped at retained
+      let dividends;
+      if (isAutoDividend) {
+        dividends = retained;
+      } else {
+        const manualDiv = parseFloat(dividendRaw.replace(/,/g, '')) || 0;
+        dividends = Math.min(manualDiv, retained);
+      }
+
+      // 7. Personal income tax on salary
+      const personalTax = calcIncomeTax(salary, false);
+
+      // 8. Employee NI on salary
+      const empNI = calcEmployeeNI(salary);
+
+      // 9. Dividend tax
+      const divTax = calcDividendTax(dividends, salary);
+
+      // 10. Student loan (on salary only — dividends don't count)
+      const studentLoan = calcCombinedStudentLoans(salary, studentLoanPlans);
+
+      // 11. Take-home
+      const takeHome = salary + dividends - personalTax.tax - empNI - divTax.tax - studentLoan.total - bikTaxAmount;
+      const takeHomeMonthly = takeHome / 12;
+
+      // 12. Total combined tax burden
+      const totalBurden = companyProfit > 0
+        ? (corpTax.tax + employerNI + personalTax.tax + empNI + divTax.tax) / companyProfit
+        : 0;
+
+      // ── Company Tax card ──
+      setResult('resProfit', companyProfit, { format: 'currency' });
+      setResult('resSalaryCost', salaryCost, { format: 'currency' });
+      setResult('resEmployerPension', employerPensionVal, { format: 'currency' });
+      setResult('resTaxableProfit', adjustedProfit, { format: 'currency' });
+      setResult('resCorpTax', corpTax.tax, { format: 'currency' });
+      setResult('resCorpRate', corpTax.effectiveRate || 0, { format: 'percent' });
+      setResult('resRetained', retained, { format: 'currency' });
+      setResult('resMaxDiv', retained, { format: 'currency' });
+
+      // ── Personal Tax card ──
+      setResult('resPersonalSalary', salary, { format: 'currency' });
+      setResult('resPersonalDiv', dividends, { format: 'currency' });
+      setResult('resIncomeTax', personalTax.tax, { format: 'currency' });
+      setResult('resEmpNI', empNI, { format: 'currency' });
+      setResult('resDivTax', divTax.tax, { format: 'currency' });
+      setResult('resStudentLoan', studentLoan.total, { format: 'currency' });
+
+      // BIK row
+      showIf('resBiKRow', hasBiK && bikTaxAmount > 0);
+      if (hasBiK) {
+        setResult('resBiKTax', bikTaxAmount, { format: 'currency' });
+      }
+
+      setResult('resTotalYear', takeHome, { format: 'currency' });
+      setResult('resTotalMonth', takeHomeMonthly, { format: 'currency' });
+      setResult('resTotalBurden', totalBurden, { format: 'percent' });
+
+      // ── Optimal Extraction Comparison ──
+      const scenarios = [
+        { level: 0, prefix: 'optA', rowId: 'optRowA' },
+        { level: 5000, prefix: 'optB', rowId: 'optRowB' },
+        { level: 12570, prefix: 'optC', rowId: 'optRowC' }
+      ];
+
+      let bestIdx = 0;
+      let lowestTax = Infinity;
+
+      scenarios.forEach(({ level, prefix, rowId }, idx) => {
+        const s = calcOptimalScenario(companyProfit, level, employerPensionVal, studentLoanPlans);
+
+        setResult(`${prefix}_corpTax`, s.corpTax, { format: 'currency' });
+        setResult(`${prefix}_empNI`, s.employerNI, { format: 'currency' });
+        setResult(`${prefix}_persTax`, s.personalTax, { format: 'currency' });
+        setResult(`${prefix}_divTax`, s.divTax, { format: 'currency' });
+        setResult(`${prefix}_total`, s.totalTax, { format: 'currency' });
+        setResult(`${prefix}_takeHome`, s.takeHome, { format: 'currency' });
+
+        if (s.totalTax < lowestTax) {
+          lowestTax = s.totalTax;
+          bestIdx = idx;
+        }
+      });
+
+      // Highlight best row
+      scenarios.forEach(({ rowId }, idx) => {
+        const row = document.getElementById(rowId);
+        if (row) {
+          if (idx === bestIdx && companyProfit > 0) {
+            row.style.background = 'var(--highlight-bg, rgba(59, 130, 246, 0.1))';
+            row.style.borderRadius = '0.375rem';
+            row.style.fontWeight = '600';
+          } else {
+            row.style.background = 'transparent';
+            row.style.fontWeight = 'normal';
+          }
+        }
+      });
+
+      // ── Pension via Ltd — Tax Saving ──
+      const pensionCorpTaxSaved = employerPensionVal * (corpTax.effectiveRate || 0);
+      const pensionEffCost = employerPensionVal - pensionCorpTaxSaved;
+
+      setResult('resPensionAmt', employerPensionVal, { format: 'currency' });
+      setResult('resPensionCorpSaved', pensionCorpTaxSaved, { format: 'currency' });
+      setResult('resPensionEffCost', pensionEffCost, { format: 'currency' });
+
+      // ── Warnings ──
+      const warnings = getWarnings({
+        profile: 'director',
+        grossSalary: salary + dividends,
+        dividendIncome: dividends,
+        totalPensionContributions: employerPensionVal
+      });
+
+      renderWarnings('warningsContainer', warnings);
+
+      // ── Affiliates ──
+      const recommendations = getRecommendations({
+        profile: 'director',
+        grossSalary: salary + dividends,
+        hasPension: employerPensionVal > 0,
+        hasEV: evLease > 0
+      });
+
+      renderAffiliates('affiliateContainer', recommendations);
+
+      // ── Mobile summary ──
+      updateMobileSummary(takeHome, takeHomeMonthly);
+    }
+
+    // Wire up real-time calculation on all inputs
+    wireRealTimeCalc('#main', calcFn);
+  </script>
+
+</body>
+</html>
