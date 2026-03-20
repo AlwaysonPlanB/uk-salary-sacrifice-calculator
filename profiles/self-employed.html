@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Self-Employed Tax Calculator 2026/27 — UK Tax Calendar</title>
+  <meta name="description" content="Free UK self-employed sole trader tax calculator for 2026/27. Calculate income tax, Class 2 &amp; 4 National Insurance, student loans, pension relief, and take-home pay with real-time results.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container">
+      <a href="../index.html" class="logo">UK<span class="accent">Tax</span>Cal</a>
+      <nav class="nav-links">
+        <a href="../index.html">All Profiles</a>
+        <a href="self-employed.html" class="active">Self-Employed</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <span class="toggle-icon">&#9790;</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container">
+        <span class="badge">Tax Year 2026/27</span>
+        <h1>Self-Employed (Sole Trader) Calculator</h1>
+        <p>Calculate your take-home pay, income tax bands, Class 2 &amp; 4 National Insurance, student loans, pension relief, and payment on account — updated for the 2026/27 tax year.</p>
+      </div>
+    </section>
+
+    <!-- Calculator Grid -->
+    <section class="container">
+      <div class="grid-2">
+
+        <!-- ============ LEFT COLUMN — Inputs ============ -->
+        <div class="input-column">
+
+          <!-- Card 1: Business Income -->
+          <div class="result-section">
+            <h3>Business Income</h3>
+
+            <div class="form-group">
+              <label for="turnover">Annual Turnover</label>
+              <div class="input-prefix">
+                <input type="text" id="turnover" placeholder="80,000" inputmode="numeric">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="expenses">Allowable Expenses</label>
+              <div class="input-prefix">
+                <input type="text" id="expenses" placeholder="15,000" inputmode="numeric">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="otherIncome">Other Income (employment, rental, etc.)</label>
+              <div class="input-prefix">
+                <input type="text" id="otherIncome" placeholder="0" inputmode="numeric">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="checkbox-group">
+                <input type="checkbox" id="isScottish">
+                Scottish taxpayer
+              </label>
+            </div>
+          </div>
+
+          <!-- Card 2: Student Loans -->
+          <div class="result-section">
+            <h3>Student Loans</h3>
+
+            <div class="form-group">
+              <label for="studentLoan1">Student Loan Plan</label>
+              <select id="studentLoan1">
+                <option value="none">None</option>
+                <option value="plan1">Plan 1 (&pound;26,065)</option>
+                <option value="plan2">Plan 2 (&pound;29,385)</option>
+                <option value="plan4">Plan 4 Scotland (&pound;32,745)</option>
+                <option value="plan5">Plan 5 (&pound;25,000)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="studentLoan2">Additional Loan</label>
+              <select id="studentLoan2">
+                <option value="none">None</option>
+                <option value="postgraduate">Postgraduate Loan (&pound;21,000, 6%)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Card 3: Pension -->
+          <div class="result-section">
+            <h3>Pension</h3>
+
+            <div class="form-group">
+              <label for="pensionContribution">Personal Pension Contribution (&pound;/year)</label>
+              <div class="input-prefix">
+                <input type="text" id="pensionContribution" placeholder="0" inputmode="numeric">
+              </div>
+            </div>
+
+            <div class="warning active blue" style="display:flex;">
+              <span class="warning-icon">&#9432;</span>
+              <div><strong>Pension Tax Relief:</strong> Your pension provider claims 20% basic rate relief automatically. If you're a higher/additional rate taxpayer, claim the extra relief via Self Assessment.</div>
+            </div>
+          </div>
+
+          <!-- Card 4: Childcare -->
+          <div class="result-section">
+            <div class="form-group">
+              <label class="checkbox-group">
+                <input type="checkbox" id="hasChildcare">
+                I use Tax-Free Childcare or 30 hours free childcare
+              </label>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ============ RIGHT COLUMN — Results ============ -->
+        <div class="results-column">
+
+          <!-- Tax Breakdown -->
+          <div class="result-section">
+            <h3>Tax Breakdown</h3>
+
+            <div class="result-row">
+              <span class="label">Turnover</span>
+              <span class="value" id="resTurnover">&pound;0</span>
+            </div>
+            <div class="result-row negative">
+              <span class="label">Expenses</span>
+              <span class="value" id="resExpenses">&minus;&pound;0</span>
+            </div>
+            <div class="result-row">
+              <span class="label">Taxable Profit</span>
+              <span class="value" id="resProfit">&pound;0</span>
+            </div>
+            <div class="result-row negative">
+              <span class="label">Pension</span>
+              <span class="value" id="resPension">&minus;&pound;0</span>
+            </div>
+            <div class="result-row">
+              <span class="label">Personal Allowance</span>
+              <span class="value" id="resPA">&pound;12,570</span>
+            </div>
+            <div class="result-row negative">
+              <span class="label">Income Tax</span>
+              <span class="value" id="resTax">&minus;&pound;0</span>
+            </div>
+            <div class="result-row negative">
+              <span class="label">Class 2 NI (&pound;3.45/week)</span>
+              <span class="value" id="resNIC2">&minus;&pound;0</span>
+            </div>
+            <div class="result-row negative">
+              <span class="label">Class 4 NI</span>
+              <span class="value" id="resNIC4">&minus;&pound;0</span>
+            </div>
+            <div class="result-row negative">
+              <span class="label">Student Loan</span>
+              <span class="value" id="resStudentLoan">&minus;&pound;0</span>
+            </div>
+            <div class="result-row total">
+              <span class="label">Annual Take-Home</span>
+              <span class="value" id="resTotalYear">&pound;0</span>
+            </div>
+            <div class="result-row total">
+              <span class="label">Monthly Take-Home</span>
+              <span class="value" id="resTotalMonth">&pound;0</span>
+            </div>
+
+            <div style="display:flex; gap:1.5rem; margin-top:1rem; font-size:0.88rem;">
+              <div><span class="text-muted">Effective Rate: </span><strong id="resEffective">0.0%</strong></div>
+              <div><span class="text-muted">Marginal Rate: </span><strong id="resMarginal">0.0%</strong></div>
+            </div>
+          </div>
+
+          <!-- Payment on Account -->
+          <div class="result-section">
+            <h3>Payment on Account</h3>
+
+            <div class="result-row">
+              <span class="label">Total Tax Bill</span>
+              <span class="value" id="resTotalBill">&pound;0</span>
+            </div>
+            <div class="result-row negative">
+              <span class="label">1st PoA &mdash; 31 Jan</span>
+              <span class="value" id="resPoA1">&minus;&pound;0</span>
+            </div>
+            <div class="result-row negative">
+              <span class="label">2nd PoA &mdash; 31 Jul</span>
+              <span class="value" id="resPoA2">&minus;&pound;0</span>
+            </div>
+
+            <p style="margin-top:1rem; font-size:0.82rem; color:var(--text-muted); line-height:1.6;">
+              HMRC requires two payments on account, each equal to 50% of your previous year's tax bill. These are due on 31 January and 31 July. A balancing payment (or refund) is made with your Self Assessment return.
+            </p>
+          </div>
+
+          <!-- Pension Contribution Benefit -->
+          <div class="result-section" id="pensionBenefitCard">
+            <h3>Pension Contribution Benefit</h3>
+
+            <div class="result-row">
+              <span class="label">Gross Contribution</span>
+              <span class="value" id="resPensionGross">&pound;0</span>
+            </div>
+            <div class="result-row">
+              <span class="label">Basic Rate Relief (auto)</span>
+              <span class="value" id="resPensionRelief20">&pound;0</span>
+            </div>
+            <div class="result-row">
+              <span class="label">Higher Rate Relief (via SA)</span>
+              <span class="value" id="resPensionReliefExtra">&pound;0</span>
+            </div>
+            <div class="result-row" style="color:var(--color-green);">
+              <span class="label">Total Tax Saving</span>
+              <span class="value" id="resPensionSaving">&pound;0</span>
+            </div>
+          </div>
+
+          <!-- Warnings -->
+          <div id="warningsContainer"></div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Calendar Section -->
+    <section class="container" style="margin-top:2.5rem;">
+      <h2>Your Tax Calendar</h2>
+      <div style="margin:1rem 0;">
+        <button class="btn-outline btn-sm" id="downloadICS">&#128197; Download .ics Calendar</button>
+      </div>
+      <div id="calendarContainer"></div>
+    </section>
+
+    <!-- Affiliate Section -->
+    <section class="container" style="margin-top:2.5rem;">
+      <div id="affiliateContainer"></div>
+    </section>
+
+    <!-- Disclaimer -->
+    <section class="container" style="margin-top:2rem; margin-bottom:2rem;">
+      <p style="font-size:0.82rem; color:var(--text-muted); line-height:1.7;">
+        This calculator is for illustrative purposes only and does not constitute financial or tax advice.
+        Calculations are based on announced HMRC rates for the 2026/27 tax year. Always consult a qualified
+        accountant or tax adviser for personalised guidance. Student loan repayment thresholds and rates
+        are subject to annual review by the Student Loans Company.
+      </p>
+    </section>
+  </main>
+
+  <!-- Mobile Summary Bar -->
+  <div class="mobile-summary" id="mobileSummary">
+    <div class="summary-row">
+      <span class="summary-label">Annual Take-Home</span>
+      <span class="summary-value summary-yearly">&pound;0</span>
+    </div>
+    <div class="summary-row">
+      <span class="summary-label">Monthly Take-Home</span>
+      <span class="summary-value summary-monthly">&pound;0</span>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>UKTaxCal is for illustrative purposes only and does not constitute financial or tax advice.<br>
+      Always consult a qualified accountant or tax adviser. Calculations are based on announced HMRC rates for 2026/27.</p>
+    </div>
+  </footer>
+
+  <!-- Calculator Script -->
+  <script type="module">
+    import {
+      calcIncomeTax,
+      calcSelfEmployedNI,
+      calcPersonalAllowance,
+      formatCurrency,
+      formatPercent,
+      RATES
+    } from '../js/tax-engine.js';
+    import { calcCombinedStudentLoans } from '../js/student-loans.js';
+    import { getWarnings } from '../js/warnings.js';
+    import { renderCalendar } from '../js/calendar.js';
+    import { downloadICS } from '../js/ical-export.js';
+    import { getRecommendations, renderAffiliates } from '../js/affiliate.js';
+    import {
+      setupTheme,
+      setupCollapsibles,
+      wireRealTimeCalc,
+      setResult,
+      getNumericInput,
+      getSelectValue,
+      getCheckbox,
+      renderWarnings,
+      showIf,
+      updateMobileSummary
+    } from '../js/ui.js';
+
+    // ── Setup ──
+    setupTheme();
+    setupCollapsibles();
+    renderCalendar('self-employed', 'calendarContainer');
+
+    // ── Download ICS ──
+    const downloadBtn = document.getElementById('downloadICS');
+    if (downloadBtn) {
+      downloadBtn.addEventListener('click', () => {
+        downloadICS('self-employed', 'Self-Employed (Sole Trader)');
+      });
+    }
+
+    // ── Main Calculation ──
+    function calcFn() {
+      // Read inputs
+      const turnover = getNumericInput('turnover');
+      const expenses = getNumericInput('expenses');
+      const otherIncome = getNumericInput('otherIncome');
+      const isScottish = getCheckbox('isScottish');
+      const hasChildcare = getCheckbox('hasChildcare');
+      const studentLoan1 = getSelectValue('studentLoan1', 'none');
+      const studentLoan2 = getSelectValue('studentLoan2', 'none');
+      const pension = getNumericInput('pensionContribution');
+
+      // Build student loan plans array
+      const studentLoanPlans = [];
+      if (studentLoan1 !== 'none') studentLoanPlans.push(studentLoan1);
+      if (studentLoan2 !== 'none') studentLoanPlans.push(studentLoan2);
+
+      // 1. Taxable profit
+      const profit = Math.max(0, turnover - expenses);
+
+      // 2. Total income
+      const totalIncome = profit + otherIncome;
+
+      // 3. Taxable income (reduced by pension)
+      const taxableIncome = Math.max(0, totalIncome - pension);
+
+      // 4. Income tax
+      const taxResult = calcIncomeTax(taxableIncome, isScottish);
+
+      // 5. Self-employed NI on profit (NOT reduced by pension)
+      const ni = calcSelfEmployedNI(profit);
+
+      // 6. Student loan on total income
+      const studentLoan = calcCombinedStudentLoans(totalIncome, studentLoanPlans);
+
+      // 7. Total tax bill
+      const totalTax = taxResult.tax + ni.total + studentLoan.total;
+
+      // 8. Take-home
+      const takeHome = totalIncome - pension - totalTax;
+      const takeHomeMonthly = takeHome / 12;
+
+      // 9. Payment on account
+      const totalBill = totalTax;
+      const poaEach = totalBill / 2;
+
+      // 10. Pension benefit
+      const basicRelief = pension * 0.20;
+      const marginalRate = taxResult.marginalRate || 0;
+      const extraRelief = pension * Math.max(0, marginalRate - 0.20);
+      const totalPensionSaving = basicRelief + extraRelief;
+
+      // Effective rate
+      const effectiveRate = totalIncome > 0 ? totalTax / totalIncome : 0;
+
+      // Personal allowance
+      const personalAllowance = calcPersonalAllowance(taxableIncome);
+
+      // ── Update result elements ──
+
+      // Tax Breakdown
+      setResult('resTurnover', turnover, { format: 'currency' });
+      setResult('resExpenses', expenses, { format: 'currency' });
+      setResult('resProfit', profit, { format: 'currency' });
+      setResult('resPension', pension, { format: 'currency' });
+      setResult('resPA', personalAllowance, { format: 'currency' });
+      setResult('resTax', taxResult.tax, { format: 'currency' });
+      setResult('resNIC2', ni.class2, { format: 'currency' });
+      setResult('resNIC4', ni.class4, { format: 'currency' });
+      setResult('resStudentLoan', studentLoan.total, { format: 'currency' });
+      setResult('resTotalYear', takeHome, { format: 'currency' });
+      setResult('resTotalMonth', takeHomeMonthly, { format: 'currency' });
+      setResult('resEffective', effectiveRate, { format: 'percent' });
+      setResult('resMarginal', marginalRate, { format: 'percent' });
+
+      // Payment on Account
+      setResult('resTotalBill', totalBill, { format: 'currency' });
+      setResult('resPoA1', poaEach, { format: 'currency' });
+      setResult('resPoA2', poaEach, { format: 'currency' });
+
+      // Pension Benefit
+      setResult('resPensionGross', pension, { format: 'currency' });
+      setResult('resPensionRelief20', basicRelief, { format: 'currency' });
+      setResult('resPensionReliefExtra', extraRelief, { format: 'currency' });
+      setResult('resPensionSaving', totalPensionSaving, { format: 'currency' });
+
+      // Show/hide pension benefit card
+      showIf('pensionBenefitCard', pension > 0);
+
+      // Warnings
+      const adjustedNetIncome = totalIncome - pension;
+
+      const warnings = getWarnings({
+        profile: 'self-employed',
+        grossSalary: totalIncome,
+        adjustedNetIncome,
+        hasChildcare,
+        isScottish
+      });
+
+      renderWarnings('warningsContainer', warnings);
+
+      // Affiliates
+      const recommendations = getRecommendations({
+        profile: 'self-employed',
+        grossSalary: totalIncome,
+        hasPension: pension > 0
+      });
+
+      renderAffiliates('affiliateContainer', recommendations);
+
+      // Mobile summary
+      updateMobileSummary(takeHome, takeHomeMonthly);
+    }
+
+    // Wire up real-time calculation on all inputs
+    wireRealTimeCalc('#main', calcFn);
+  </script>
+
+</body>
+</html>
