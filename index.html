@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UKTaxCal — UK Tax Calculator 2026/27</title>
+  <meta name="description" content="Free UK tax calculator for 2026/27. Calculate income tax, National Insurance, dividends, and take-home pay for employed, self-employed, contractors, landlords, directors and investors.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="logo">UK<span class="accent">Tax</span>Cal</a>
+      <nav class="nav-links">
+        <a href="index.html" class="active">Home</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <span class="toggle-icon">&#9790;</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container">
+        <span class="badge">Tax Year 2026/27</span>
+        <h1>UK Tax Calculator</h1>
+        <p>Estimate your income tax, National Insurance, dividends, and take-home pay. Choose your employment profile below to get started with accurate calculations based on the latest HMRC rates.</p>
+      </div>
+    </section>
+
+    <!-- Profile Grid -->
+    <section class="container">
+      <div class="profile-grid">
+
+        <a href="profiles/employed.html" class="profile-card">
+          <div class="icon" style="background: var(--accent-bg);">&#128188;</div>
+          <h3>Employed (PAYE)</h3>
+          <p>Calculate take-home pay, income tax bands, NI contributions, and pension deductions for salaried employees.</p>
+        </a>
+
+        <a href="profiles/self-employed.html" class="profile-card">
+          <div class="icon" style="background: var(--green-bg);">&#128200;</div>
+          <h3>Self-Employed</h3>
+          <p>Work out your Class 2 &amp; 4 NI, tax on profits, payments on account, and allowable expenses.</p>
+        </a>
+
+        <a href="profiles/outside-ir35.html" class="profile-card">
+          <div class="icon" style="background: var(--blue-bg);">&#127970;</div>
+          <h3>Outside IR35 Contractor</h3>
+          <p>Optimise salary and dividends through your limited company with corporation tax planning.</p>
+        </a>
+
+        <a href="profiles/inside-ir35.html" class="profile-card">
+          <div class="icon" style="background: var(--amber-bg);">&#9730;</div>
+          <h3>Inside IR35 Contractor</h3>
+          <p>Understand the deemed employment rules, umbrella PAYE deductions, and your net contractor rate.</p>
+        </a>
+
+        <a href="profiles/landlord.html" class="profile-card">
+          <div class="icon" style="background: var(--red-bg);">&#127968;</div>
+          <h3>Landlord</h3>
+          <p>Calculate rental income tax with mortgage interest restriction, allowable costs, and Section 24 impact.</p>
+        </a>
+
+        <a href="profiles/director.html" class="profile-card">
+          <div class="icon" style="background: var(--amber-bg);">&#128081;</div>
+          <h3>Company Director</h3>
+          <p>Plan your optimal salary-dividend split, corporation tax, employer NI, and extraction strategy.</p>
+        </a>
+
+        <a href="profiles/investor.html" class="profile-card">
+          <div class="icon" style="background: var(--green-bg);">&#128176;</div>
+          <h3>Investor</h3>
+          <p>Calculate tax on dividends, capital gains, savings interest, and ISA allowances for your portfolio.</p>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- Changes Banner -->
+    <section class="container">
+      <div class="changes-banner">
+        <h2>Key Changes from April 2026</h2>
+        <ul class="changes-list">
+          <li>Dividend tax rates increase by 2% across all bands (basic 9.25%, higher 34.25%, additional 40.25%)</li>
+          <li>Business Asset Disposal Relief (BADR) rate rises from 14% to 18%, matching the main CGT rate</li>
+          <li>Making Tax Digital (MTD) for Income Tax becomes mandatory for self-employed and landlords earning over &#163;50,000</li>
+          <li>Electric vehicle benefit-in-kind rate rises from 3% to 4%, increasing company car tax for EV drivers</li>
+          <li>Umbrella companies must account for Joint &amp; Several Liability on PAYE deductions</li>
+          <li>Income tax and NI thresholds remain frozen, continuing fiscal drag into higher tax bands</li>
+          <li>Student loan Plan 1 repayment threshold rises with inflation, reducing repayments for some borrowers</li>
+          <li>New ISA cash subscription cap takes effect from April 2027 &mdash; plan contributions now</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>UKTaxCal is for illustrative purposes only and does not constitute financial or tax advice.<br>
+      Always consult a qualified accountant or tax adviser. Calculations are based on announced HMRC rates for 2026/27.</p>
+    </div>
+  </footer>
+
+  <!-- Theme Toggle Script -->
+  <script>
+    (function() {
+      var toggle = document.getElementById('themeToggle');
+      var iconEl = toggle.querySelector('.toggle-icon');
+      var html = document.documentElement;
+      var moonChar = '\u263E';
+      var sunChar = '\u263C';
+
+      // Restore saved theme
+      var saved = localStorage.getItem('uktaxcal-theme');
+      if (saved) {
+        html.setAttribute('data-theme', saved);
+      }
+
+      function updateIcon() {
+        var theme = html.getAttribute('data-theme');
+        iconEl.textContent = theme === 'light' ? sunChar : moonChar;
+      }
+
+      updateIcon();
+
+      toggle.addEventListener('click', function() {
+        var current = html.getAttribute('data-theme');
+        var next = current === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', next);
+        localStorage.setItem('uktaxcal-theme', next);
+        updateIcon();
+      });
+    })();
+  </script>
+
+</body>
+</html>
