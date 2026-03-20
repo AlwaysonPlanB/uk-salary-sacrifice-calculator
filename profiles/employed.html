@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PAYE Employee Tax Calculator 2026/27 — UK Tax Calendar</title>
+  <meta name="description" content="Free UK PAYE employee tax calculator for 2026/27. Calculate income tax, National Insurance, student loans, salary sacrifice, pension, and take-home pay with real-time results.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container">
+      <a href="../index.html" class="logo">UK<span class="accent">Tax</span>Cal</a>
+      <nav class="nav-links">
+        <a href="../index.html">All Profiles</a>
+        <a href="employed.html" class="active">Employed</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <span class="toggle-icon">&#9790;</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container">
+        <span class="badge">Tax Year 2026/27</span>
+        <h1>Employed (PAYE) Calculator</h1>
+        <p>Calculate your take-home pay, income tax bands, National Insurance, student loans, pension deductions, and salary sacrifice benefits — updated for the 2026/27 tax year.</p>
+      </div>
+    </section>
+
+    <!-- Calculator Grid -->
+    <section class="container">
+      <div class="grid-2">
+
+        <!-- ============ LEFT COLUMN — Inputs ============ -->
+        <div class="input-column">
+
+          <!-- Card 1: Income -->
+          <div class="result-section">
+            <h3>Income</h3>
+
+            <div class="form-group">
+              <label for="grossSalary">Annual Gross Salary</label>
+              <div class="input-prefix">
+                <input type="text" id="grossSalary" placeholder="55,000" inputmode="numeric">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="checkbox-group">
+                <input type="checkbox" id="isScottish">
+                Scottish taxpayer
+              </label>
+            </div>
+
+            <div class="form-group">
+              <label class="checkbox-group">
+                <input type="checkbox" id="hasChildcare">
+                I use Tax-Free Childcare or 30 hours free childcare
+              </label>
+            </div>
+          </div>
+
+          <!-- Card 2: Student Loans -->
+          <div class="result-section">
+            <h3>Student Loans</h3>
+
+            <div class="form-group">
+              <label for="studentLoan1">Student Loan Plan</label>
+              <select id="studentLoan1">
+                <option value="none">None</option>
+                <option value="plan1">Plan 1 (&pound;26,065)</option>
+                <option value="plan2">Plan 2 (&pound;29,385)</option>
+                <option value="plan4">Plan 4 Scotland (&pound;32,745)</option>
+                <option value="plan5">Plan 5 (&pound;25,000)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="studentLoan2">Additional Loan</label>
+              <select id="studentLoan2">
+                <option value="none">None</option>
+                <option value="postgraduate">Postgraduate Loan (&pound;21,000, 6%)</option>
+              </select>
+            </div>
+
+            <div class="warning active blue" style="display:flex;">
+              <span class="warning-icon">&#9432;</span>
+              <div><strong>Student Loan Note:</strong> Repayments are calculated on your original gross salary (before salary sacrifice), per HMRC rules.</div>
+            </div>
+          </div>
+
+          <!-- Card 3: Pension -->
+          <div class="result-section">
+            <h3>Pension</h3>
+
+            <div class="form-group">
+              <label for="personalPension">Your Pension Contribution (salary sacrifice, &pound;/year)</label>
+              <div class="input-prefix">
+                <input type="text" id="personalPension" placeholder="0" inputmode="numeric">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="employerPension">Employer Pension Contribution (&pound;/year)</label>
+              <div class="input-prefix">
+                <input type="text" id="employerPension" placeholder="0" inputmode="numeric">
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 4: Salary Sacrifice Schemes (collapsible, open by default) -->
+          <div class="result-section">
+            <div class="collapsible-header open" role="button" tabindex="0">
+              <h3>Salary Sacrifice Schemes</h3>
+              <span class="chevron">&#9660;</span>
+            </div>
+            <div class="collapsible-body open">
+
+              <div class="form-group">
+                <label for="additionalPension">Additional Pension (salary sacrifice, &pound;/year)</label>
+                <div class="input-prefix">
+                  <input type="text" id="additionalPension" placeholder="0" inputmode="numeric">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="cycleToWork">Cycle to Work Scheme (&pound;/year)</label>
+                <div class="input-prefix">
+                  <input type="text" id="cycleToWork" placeholder="0" inputmode="numeric">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="evLease">EV Car Lease (salary sacrifice, &pound;/year)</label>
+                <div class="input-prefix">
+                  <input type="text" id="evLease" placeholder="0" inputmode="numeric">
+                </div>
+              </div>
+
+              <!-- BIK Section — hidden by default, shown when evLease > 0 -->
+              <div id="bikSection" style="display:none;">
+
+                <h4 style="margin: 1.25rem 0 0.75rem; color: var(--text-heading);">Company Car Benefit-in-Kind</h4>
+
+                <div class="form-group">
+                  <label for="p11dValue">P11D Value (&pound;)</label>
+                  <div class="input-prefix">
+                    <input type="text" id="p11dValue" placeholder="0" inputmode="numeric">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="carCO2">CO2 Emissions (g/km)</label>
+                  <input type="number" id="carCO2" placeholder="0" min="0">
+                </div>
+
+                <div class="form-group">
+                  <label for="fuelType">Fuel Type</label>
+                  <select id="fuelType">
+                    <option value="electric">Electric</option>
+                    <option value="hybrid">Plug-in Hybrid</option>
+                    <option value="petrol">Petrol</option>
+                    <option value="diesel">Diesel</option>
+                  </select>
+                </div>
+
+                <div class="form-group" id="electricRangeGroup" style="display:none;">
+                  <label for="electricRange">Electric Range (miles)</label>
+                  <input type="number" id="electricRange" placeholder="0" min="0">
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ============ RIGHT COLUMN — Results ============ -->
+        <div class="results-column">
+
+          <!-- Tax Breakdown -->
+          <div class="result-section">
+            <h3>Tax Breakdown (With Salary Sacrifice)</h3>
+
+            <div class="result-row">
+              <span class="label">Gross Salary</span>
+              <span class="value" id="resGross">&pound;0</span>
+            </div>
+            <div class="result-row negative">
+              <span class="label">Total Salary Sacrifice</span>
+              <span class="value" id="resSacrifice">&minus;&pound;0</span>
+            </div>
+            <div class="result-row">
+              <span class="label">Taxable Income</span>
+              <span class="value" id="resTaxable">&pound;0</span>
+            </div>
+            <div class="result-row">
+              <span class="label">Personal Allowance</span>
+              <span class="value" id="resPA">&pound;12,570</span>
+            </div>
+            <div class="result-row negative">
+              <span class="label">Income Tax</span>
+              <span class="value" id="resTax">&minus;&pound;0</span>
+            </div>
+            <div class="result-row negative">
+              <span class="label">National Insurance</span>
+              <span class="value" id="resNI">&minus;&pound;0</span>
+            </div>
+            <div class="result-row negative">
+              <span class="label">Student Loan</span>
+              <span class="value" id="resStudentLoan">&minus;&pound;0</span>
+            </div>
+            <div class="result-row negative" id="resBiKRow" style="display:none;">
+              <span class="label">BIK Tax (Company Car)</span>
+              <span class="value" id="resBiKTax">&minus;&pound;0</span>
+            </div>
+            <div class="result-row total">
+              <span class="label">Annual Take-Home</span>
+              <span class="value" id="resTotalYear">&pound;0</span>
+            </div>
+            <div class="result-row total">
+              <span class="label">Monthly Take-Home</span>
+              <span class="value" id="resTotalMonth">&pound;0</span>
+            </div>
+
+            <div style="display:flex; gap:1.5rem; margin-top:1rem; font-size:0.88rem;">
+              <div><span class="text-muted">Effective Rate: </span><strong id="resEffective">0.0%</strong></div>
+              <div><span class="text-muted">Marginal Rate: </span><strong id="resMarginal">0.0%</strong></div>
+            </div>
+          </div>
+
+          <!-- BIK Breakdown (hidden unless car) -->
+          <div class="result-section" id="bikBreakdown" style="display:none;">
+            <h3>Company Car BIK Breakdown</h3>
+
+            <div class="result-row">
+              <span class="label">P11D Value</span>
+              <span class="value" id="bikP11D">&pound;0</span>
+            </div>
+            <div class="result-row">
+              <span class="label">BIK Rate</span>
+              <span class="value" id="bikRate">0%</span>
+            </div>
+            <div class="result-row">
+              <span class="label">Annual BIK Value</span>
+              <span class="value" id="bikValue">&pound;0</span>
+            </div>
+            <div class="result-row negative">
+              <span class="label">BIK Tax (Annual)</span>
+              <span class="value" id="bikTaxAnnual">&minus;&pound;0</span>
+            </div>
+            <div class="result-row negative">
+              <span class="label">BIK Tax (Monthly)</span>
+              <span class="value" id="bikTaxMonthly">&minus;&pound;0</span>
+            </div>
+          </div>
+
+          <!-- Salary Sacrifice Benefit -->
+          <div class="result-section">
+            <h3>Salary Sacrifice Benefit</h3>
+
+            <div class="scenario-grid">
+              <div class="scenario-card best">
+                <h4>With Sacrifice</h4>
+                <div class="big-number" id="scenarioA">&pound;0</div>
+                <div class="text-muted" style="font-size:0.82rem;" id="scenarioAMonth">&pound;0/mo</div>
+              </div>
+              <div class="scenario-card">
+                <h4>Without Sacrifice</h4>
+                <div class="big-number" id="scenarioB">&pound;0</div>
+                <div class="text-muted" style="font-size:0.82rem;" id="scenarioBMonth">&pound;0/mo</div>
+              </div>
+            </div>
+
+            <div id="savingsBadge" style="display:none; text-align:center;">
+              <span class="savings-badge">Annual saving: <strong id="annualSaving">&pound;0</strong></span>
+            </div>
+
+            <div style="display:flex; gap:1.5rem; margin-top:1rem; font-size:0.88rem; justify-content:center;">
+              <div><span class="text-muted">Tax saving: </span><strong id="taxSaving">&pound;0</strong></div>
+              <div><span class="text-muted">NI saving: </span><strong id="niSaving">&pound;0</strong></div>
+            </div>
+          </div>
+
+          <!-- Warnings -->
+          <div id="warningsContainer"></div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Calendar Section -->
+    <section class="container" style="margin-top:2.5rem;">
+      <h2>Your Tax Calendar</h2>
+      <div style="margin:1rem 0;">
+        <button class="btn-outline btn-sm" id="downloadICS">&#128197; Download .ics Calendar</button>
+      </div>
+      <div id="calendarContainer"></div>
+    </section>
+
+    <!-- Affiliate Section -->
+    <section class="container" style="margin-top:2.5rem;">
+      <div id="affiliateContainer"></div>
+    </section>
+
+    <!-- Tax Rates Reference (collapsible) -->
+    <section class="container" style="margin-top:2.5rem;">
+      <div class="result-section">
+        <div class="collapsible-header" role="button" tabindex="0">
+          <h3>2026/27 Tax Rates Reference</h3>
+          <span class="chevron">&#9660;</span>
+        </div>
+        <div class="collapsible-body">
+          <div style="padding:0.5rem 0; font-size:0.9rem; color:var(--text-muted); line-height:1.8;">
+            <p><strong>Personal Allowance:</strong> &pound;12,570 (tapers &pound;1 per &pound;2 above &pound;100,000)</p>
+            <p><strong>Basic Rate (20%):</strong> &pound;12,571 &ndash; &pound;50,270</p>
+            <p><strong>Higher Rate (40%):</strong> &pound;50,271 &ndash; &pound;125,140</p>
+            <p><strong>Additional Rate (45%):</strong> Over &pound;125,140</p>
+            <p style="margin-top:0.75rem;"><strong>Employee NI:</strong> 8% on &pound;12,570 &ndash; &pound;50,270 | 2% above &pound;50,270</p>
+            <p><strong>Employer NI:</strong> 15% above &pound;5,000</p>
+            <p style="margin-top:0.75rem;"><strong>Scottish Rates:</strong> Starter 19% | Basic 20% | Intermediate 21% | Higher 42% | Advanced 45% | Top 48%</p>
+            <p style="margin-top:0.75rem;"><strong>Pension Annual Allowance:</strong> &pound;60,000 (tapers above &pound;200,000 adjusted income, min &pound;10,000)</p>
+            <p><strong>EV BIK Rate:</strong> 4% for zero-emission vehicles</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Disclaimer -->
+    <section class="container" style="margin-top:2rem; margin-bottom:2rem;">
+      <p style="font-size:0.82rem; color:var(--text-muted); line-height:1.7;">
+        This calculator is for illustrative purposes only and does not constitute financial or tax advice.
+        Calculations are based on announced HMRC rates for the 2026/27 tax year. Always consult a qualified
+        accountant or tax adviser for personalised guidance. Student loan repayment thresholds and rates
+        are subject to annual review by the Student Loans Company.
+      </p>
+    </section>
+  </main>
+
+  <!-- Mobile Summary Bar -->
+  <div class="mobile-summary" id="mobileSummary">
+    <div class="summary-row">
+      <span class="summary-label">Annual Take-Home</span>
+      <span class="summary-value summary-yearly">&pound;0</span>
+    </div>
+    <div class="summary-row">
+      <span class="summary-label">Monthly Take-Home</span>
+      <span class="summary-value summary-monthly">&pound;0</span>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>UKTaxCal is for illustrative purposes only and does not constitute financial or tax advice.<br>
+      Always consult a qualified accountant or tax adviser. Calculations are based on announced HMRC rates for 2026/27.</p>
+    </div>
+  </footer>
+
+  <!-- Calculator Script -->
+  <script type="module">
+    import { formatCurrency, formatPercent } from '../js/tax-engine.js';
+    import { calcSalarySacrifice, calcBiKTax } from '../js/salary-sacrifice.js';
+    import { getWarnings } from '../js/warnings.js';
+    import { renderCalendar } from '../js/calendar.js';
+    import { downloadICS } from '../js/ical-export.js';
+    import { getRecommendations, renderAffiliates } from '../js/affiliate.js';
+    import {
+      setupTheme,
+      setupCollapsibles,
+      wireRealTimeCalc,
+      setResult,
+      getNumericInput,
+      getSelectValue,
+      getCheckbox,
+      renderWarnings,
+      showIf,
+      updateMobileSummary
+    } from '../js/ui.js';
+
+    // ── Setup ──
+    setupTheme();
+    setupCollapsibles();
+    renderCalendar('employed', 'calendarContainer');
+
+    // ── Dynamic BIK visibility ──
+    const evLeaseInput = document.getElementById('evLease');
+    if (evLeaseInput) {
+      evLeaseInput.addEventListener('input', () => {
+        const val = getNumericInput('evLease');
+        showIf('bikSection', val > 0);
+      });
+    }
+
+    const fuelTypeSelect = document.getElementById('fuelType');
+    if (fuelTypeSelect) {
+      fuelTypeSelect.addEventListener('change', () => {
+        const val = getSelectValue('fuelType');
+        showIf('electricRangeGroup', val === 'hybrid');
+      });
+    }
+
+    // ── Download ICS ──
+    const downloadBtn = document.getElementById('downloadICS');
+    if (downloadBtn) {
+      downloadBtn.addEventListener('click', () => {
+        downloadICS('employed', 'Employed (PAYE)');
+      });
+    }
+
+    // ── Main Calculation ──
+    function calcFn() {
+      // Read inputs
+      const grossSalary = getNumericInput('grossSalary');
+      const isScottish = getCheckbox('isScottish');
+      const hasChildcare = getCheckbox('hasChildcare');
+      const studentLoan1 = getSelectValue('studentLoan1', 'none');
+      const studentLoan2 = getSelectValue('studentLoan2', 'none');
+      const personalPension = getNumericInput('personalPension');
+      const employerPension = getNumericInput('employerPension');
+      const additionalPension = getNumericInput('additionalPension');
+      const cycleToWork = getNumericInput('cycleToWork');
+      const evLease = getNumericInput('evLease');
+
+      // Build student loan plans array
+      const studentLoanPlans = [];
+      if (studentLoan1 !== 'none') studentLoanPlans.push(studentLoan1);
+      if (studentLoan2 !== 'none') studentLoanPlans.push(studentLoan2);
+
+      // Build BIK details if EV lease is active
+      let bikDetails = null;
+      if (evLease > 0) {
+        const p11dValue = getNumericInput('p11dValue');
+        const carCO2 = getNumericInput('carCO2');
+        const fuelType = getSelectValue('fuelType', 'electric');
+        const electricRange = getNumericInput('electricRange');
+
+        if (p11dValue > 0) {
+          bikDetails = {
+            p11dValue,
+            co2: carCO2,
+            fuelType,
+            electricRange
+          };
+        }
+      }
+
+      // Run salary sacrifice calculation
+      const result = calcSalarySacrifice({
+        grossSalary,
+        personalPension,
+        employerPension,
+        cycleToWork,
+        additionalPension,
+        evLease,
+        studentLoanPlans,
+        isScottish,
+        bikDetails
+      });
+
+      const { scenarioA, scenarioB, comparison } = result;
+
+      // Update result elements
+      setResult('resGross', grossSalary, { format: 'currency' });
+      setResult('resSacrifice', scenarioA.totalSacrifice, { format: 'currency' });
+      setResult('resTaxable', scenarioA.reducedGross, { format: 'currency' });
+      setResult('resPA', scenarioA.personalAllowance, { format: 'currency' });
+      setResult('resTax', scenarioA.incomeTax, { format: 'currency' });
+      setResult('resNI', scenarioA.nationalInsurance, { format: 'currency' });
+      setResult('resStudentLoan', scenarioA.studentLoan.total, { format: 'currency' });
+      setResult('resTotalYear', scenarioA.takeHome, { format: 'currency' });
+      setResult('resTotalMonth', scenarioA.takeHomeMonthly, { format: 'currency' });
+      setResult('resEffective', scenarioA.effectiveRate, { format: 'percent' });
+      setResult('resMarginal', scenarioA.marginalRate, { format: 'percent' });
+
+      // BIK rows
+      const hasBiK = scenarioA.bikInfo !== null;
+      showIf('resBiKRow', hasBiK);
+      showIf('bikBreakdown', hasBiK);
+
+      if (hasBiK) {
+        const bik = scenarioA.bikInfo;
+        setResult('resBiKTax', bik.bikTax, { format: 'currency' });
+        setResult('bikP11D', bik.p11dValue, { format: 'currency' });
+        setResult('bikRate', bik.bikRate, { format: 'percent' });
+        setResult('bikValue', bik.annualBiKValue, { format: 'currency' });
+        setResult('bikTaxAnnual', bik.bikTax, { format: 'currency' });
+        setResult('bikTaxMonthly', bik.monthlyBiKTax, { format: 'currency' });
+      }
+
+      // Scenario comparison
+      setResult('scenarioA', scenarioA.takeHome, { format: 'currency' });
+      setResult('scenarioAMonth', scenarioA.takeHomeMonthly, { format: 'currencyMonthly' });
+      setResult('scenarioB', scenarioB.takeHome, { format: 'currency' });
+      setResult('scenarioBMonth', scenarioB.takeHomeMonthly, { format: 'currencyMonthly' });
+
+      // Savings badge
+      const showSavings = comparison.annualBenefit > 0;
+      showIf('savingsBadge', showSavings);
+      if (showSavings) {
+        setResult('annualSaving', comparison.annualBenefit, { format: 'currency' });
+      }
+
+      setResult('taxSaving', comparison.taxSaving, { format: 'currency' });
+      setResult('niSaving', comparison.niSaving, { format: 'currency' });
+
+      // Warnings
+      const adjustedNetIncome = grossSalary - personalPension - additionalPension;
+      const totalPensionContributions = personalPension + employerPension + additionalPension;
+
+      const warnings = getWarnings({
+        profile: 'employed',
+        grossSalary,
+        adjustedNetIncome,
+        totalPensionContributions,
+        employerPension,
+        hasChildcare,
+        isScottish
+      });
+
+      renderWarnings('warningsContainer', warnings);
+
+      // Affiliates
+      const recommendations = getRecommendations({
+        profile: 'employed',
+        grossSalary,
+        hasPension: personalPension > 0 || additionalPension > 0,
+        hasEV: evLease > 0,
+        hasCycleToWork: cycleToWork > 0
+      });
+
+      renderAffiliates('affiliateContainer', recommendations);
+
+      // Mobile summary
+      updateMobileSummary(scenarioA.takeHome, scenarioA.takeHomeMonthly);
+    }
+
+    // Wire up real-time calculation on all inputs
+    wireRealTimeCalc('#main', calcFn);
+  </script>
+
+</body>
+</html>
