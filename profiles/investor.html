@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Investor Tax Calculator 2026/27 — UK Tax Calendar</title>
+  <meta name="description" content="Free UK investor tax calculator for 2026/27. Calculate capital gains tax, dividend tax, ISA vs GIA comparison, and BADR relief — updated for the 2026/27 tax year.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container">
+      <a href="../index.html" class="logo">UK<span class="accent">Tax</span>Cal</a>
+      <nav class="nav-links">
+        <a href="../index.html">All Profiles</a>
+        <a href="investor.html" class="active">Investor</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <span class="toggle-icon">&#9790;</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container">
+        <span class="badge">Tax Year 2026/27</span>
+        <h1>Investor Tax Calculator</h1>
+        <p>Calculate capital gains tax, dividend tax, and compare ISA vs GIA performance over time. Includes BADR relief, residential property CGT rates, and the £500 dividend allowance — updated for 2026/27.</p>
+      </div>
+    </section>
+
+    <!-- Calculator Grid -->
+    <section class="container">
+      <div class="grid-2">
+
+        <!-- ============ LEFT COLUMN — Inputs ============ -->
+        <div class="input-column">
+
+          <!-- Card 1: Your Income -->
+          <div class="result-section">
+            <h3>Your Income</h3>
+
+            <div class="form-group">
+              <label for="otherIncome">Other Taxable Income (employment, etc.)</label>
+              <div class="input-prefix">
+                <input type="text" id="otherIncome" placeholder="50,000" inputmode="numeric">
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: Dividend Income -->
+          <div class="result-section">
+            <h3>Dividend Income</h3>
+
+            <div class="form-group">
+              <label for="dividendIncome">Annual Dividend Income (outside ISA)</label>
+              <div class="input-prefix">
+                <input type="text" id="dividendIncome" placeholder="5,000" inputmode="numeric">
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3: Capital Gains -->
+          <div class="result-section">
+            <h3>Capital Gains</h3>
+
+            <div class="form-group">
+              <label for="disposalProceeds">Disposal Proceeds</label>
+              <div class="input-prefix">
+                <input type="text" id="disposalProceeds" placeholder="50,000" inputmode="numeric">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="originalCost">Original Cost</label>
+              <div class="input-prefix">
+                <input type="text" id="originalCost" placeholder="20,000" inputmode="numeric">
+              </div>
+            </div>
+
+            <div class="form-group" style="display:flex; align-items:center; gap:0.5rem;">
+              <input type="checkbox" id="isResidential">
+              <label for="isResidential" style="margin:0;">Residential Property</label>
+            </div>
+
+            <div class="form-group" style="display:flex; align-items:center; gap:0.5rem;">
+              <input type="checkbox" id="isBADR">
+              <label for="isBADR" style="margin:0;">Business Asset Disposal Relief (BADR)</label>
+            </div>
+          </div>
+
+          <!-- Card 4: ISA vs GIA Comparison -->
+          <div class="result-section">
+            <h3>ISA vs GIA Comparison</h3>
+
+            <div class="form-group">
+              <label for="investmentAmount">Investment Amount</label>
+              <div class="input-prefix">
+                <input type="text" id="investmentAmount" placeholder="20,000" inputmode="numeric">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="expectedReturn">Expected Annual Return (%)</label>
+              <input type="number" id="expectedReturn" placeholder="7" min="0" max="100" step="0.1">
+            </div>
+
+            <div class="form-group">
+              <label for="holdingPeriod">Holding Period (years)</label>
+              <input type="number" id="holdingPeriod" placeholder="10" min="1" max="50" step="1">
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ============ RIGHT COLUMN — Results ============ -->
+        <div class="results-column">
+
+          <!-- Dividend Tax -->
+          <div class="result-section">
+            <h3>Dividend Tax</h3>
+
+            <div class="result-row">
+              <span class="label">Dividend Income</span>
+              <span class="value" id="resDivIncome">&pound;0</span>
+            </div>
+            <div class="result-row">
+              <span class="label">Dividend Allowance</span>
+              <span class="value" id="resDivAllowance">&pound;0</span>
+            </div>
+            <div class="result-row">
+              <span class="label">Taxable Dividends</span>
+              <span class="value" id="resDivTaxable">&pound;0</span>
+            </div>
+            <div class="result-row negative">
+              <span class="label">Dividend Tax</span>
+              <span class="value" id="resDivTax">&minus;&pound;0</span>
+            </div>
+
+            <div id="resDivBreakdown" style="margin-top:0.75rem;"></div>
+
+            <p style="margin-top:0.75rem; font-size:0.82rem; color:var(--text-muted); line-height:1.6;">
+              &pound;500 dividend allowance for 2026/27. Rates: 10.75% basic, 35.75% higher, 40.64% additional.
+            </p>
+          </div>
+
+          <!-- Capital Gains Tax -->
+          <div class="result-section">
+            <h3>Capital Gains Tax</h3>
+
+            <div class="result-row">
+              <span class="label">Disposal Proceeds</span>
+              <span class="value" id="resCgtProceeds">&pound;0</span>
+            </div>
+            <div class="result-row">
+              <span class="label">Original Cost</span>
+              <span class="value" id="resCgtCost">&pound;0</span>
+            </div>
+            <div class="result-row">
+              <span class="label">Total Gain</span>
+              <span class="value" id="resCgtGain">&pound;0</span>
+            </div>
+            <div class="result-row">
+              <span class="label">Annual Exempt Amount</span>
+              <span class="value" id="resCgtExempt">&pound;0</span>
+            </div>
+            <div class="result-row">
+              <span class="label">Taxable Gain</span>
+              <span class="value" id="resCgtTaxable">&pound;0</span>
+            </div>
+            <div class="result-row">
+              <span class="label">CGT Rate</span>
+              <span class="value" id="resCgtRate">0.0%</span>
+            </div>
+            <div class="result-row negative">
+              <span class="label">CGT Due</span>
+              <span class="value" id="resCgtDue">&minus;&pound;0</span>
+            </div>
+
+            <p style="margin-top:0.75rem; font-size:0.82rem; color:var(--text-muted); line-height:1.6;">
+              BADR rate is now 18% (up from 14% in 2025/26). Lifetime limit &pound;1m.
+            </p>
+          </div>
+
+          <!-- ISA vs GIA — Tax Saved -->
+          <div class="result-section">
+            <h3>ISA vs GIA &mdash; Tax Saved</h3>
+
+            <div class="result-row">
+              <span class="label">ISA Value after <span id="resIsaYears">0</span> years</span>
+              <span class="value" id="resIsaValue">&pound;0</span>
+            </div>
+            <div class="result-row">
+              <span class="label">GIA Value after <span id="resGiaYears">0</span> years</span>
+              <span class="value" id="resGiaValue">&pound;0</span>
+            </div>
+            <div class="result-row total" style="color:var(--green, #22c55e);">
+              <span class="label">Tax Saved by Using ISA</span>
+              <span class="value" id="resTaxSaved">&pound;0</span>
+            </div>
+
+            <p style="margin-top:0.75rem; font-size:0.82rem; color:var(--text-muted); line-height:1.6;" id="resIsaAssumptions">
+              Assumes 7% annual return, 2% yield as dividends, remainder as growth. GIA applies dividend tax annually and CGT on disposal.
+            </p>
+          </div>
+
+          <!-- Warnings -->
+          <div id="warningsContainer"></div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Calendar Section -->
+    <section class="container" style="margin-top:2.5rem;">
+      <h2>Your Tax Calendar</h2>
+      <div style="margin:1rem 0;">
+        <button class="btn-outline btn-sm" id="downloadICS">&#128197; Download .ics Calendar</button>
+      </div>
+      <div id="calendarContainer"></div>
+    </section>
+
+    <!-- Affiliate Section -->
+    <section class="container" style="margin-top:2.5rem;">
+      <div id="affiliateContainer"></div>
+    </section>
+
+    <!-- Disclaimer -->
+    <section class="container" style="margin-top:2rem; margin-bottom:2rem;">
+      <p style="font-size:0.82rem; color:var(--text-muted); line-height:1.7;">
+        This calculator is for illustrative purposes only and does not constitute financial or tax advice.
+        Calculations are based on announced HMRC rates for the 2026/27 tax year. Always consult a qualified
+        accountant or tax adviser for personalised guidance.
+      </p>
+    </section>
+  </main>
+
+  <!-- Mobile Summary Bar -->
+  <div class="mobile-summary" id="mobileSummary">
+    <div class="summary-row">
+      <span class="summary-label">Tax Saved (ISA)</span>
+      <span class="summary-value summary-yearly">&pound;0</span>
+    </div>
+    <div class="summary-row">
+      <span class="summary-label">Total Tax Due</span>
+      <span class="summary-value summary-monthly">&pound;0</span>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>UKTaxCal is for illustrative purposes only and does not constitute financial or tax advice.<br>
+      Always consult a qualified accountant or tax adviser. Calculations are based on announced HMRC rates for 2026/27.</p>
+    </div>
+  </footer>
+
+  <!-- Calculator Script -->
+  <script type="module">
+    import {
+      calcIncomeTax,
+      calcDividendTax,
+      calcCapitalGainsTax,
+      RATES,
+      formatCurrency,
+      formatPercent
+    } from '../js/tax-engine.js';
+    import { getWarnings } from '../js/warnings.js';
+    import { renderCalendar } from '../js/calendar.js';
+    import { downloadICS } from '../js/ical-export.js';
+    import { getRecommendations, renderAffiliates } from '../js/affiliate.js';
+    import {
+      setupTheme,
+      setupCollapsibles,
+      wireRealTimeCalc,
+      setResult,
+      getNumericInput,
+      getSelectValue,
+      getCheckbox,
+      renderWarnings,
+      showIf,
+      updateMobileSummary
+    } from '../js/ui.js';
+
+    // ── Setup ──
+    setupTheme();
+    setupCollapsibles();
+    renderCalendar('investor', 'calendarContainer');
+
+    // ── Download ICS ──
+    const downloadBtn = document.getElementById('downloadICS');
+    if (downloadBtn) {
+      downloadBtn.addEventListener('click', () => {
+        downloadICS('investor', 'Investor');
+      });
+    }
+
+    // ── Main Calculation ──
+    function calcFn() {
+      // Read inputs
+      const otherIncome = getNumericInput('otherIncome');
+      const dividendIncome = getNumericInput('dividendIncome');
+      const disposalProceeds = getNumericInput('disposalProceeds');
+      const originalCost = getNumericInput('originalCost');
+      const isResidential = getCheckbox('isResidential');
+      const isBADR = getCheckbox('isBADR');
+      const investmentAmount = getNumericInput('investmentAmount');
+      const expectedReturn = getNumericInput('expectedReturn', 7);
+      const holdingPeriod = getNumericInput('holdingPeriod', 10);
+      const years = Math.max(1, Math.round(holdingPeriod));
+
+      // ── 1. Dividend Tax ──
+      const divTaxResult = calcDividendTax(dividendIncome, otherIncome);
+      const taxableDividends = Math.max(0, dividendIncome - RATES.dividends.allowance);
+
+      setResult('resDivIncome', dividendIncome, { format: 'currency' });
+      setResult('resDivAllowance', RATES.dividends.allowance, { format: 'currency' });
+      setResult('resDivTaxable', taxableDividends, { format: 'currency' });
+      setResult('resDivTax', divTaxResult.tax, { format: 'currency' });
+
+      // Render dividend breakdown by band
+      const breakdownEl = document.getElementById('resDivBreakdown');
+      if (breakdownEl) {
+        while (breakdownEl.firstChild) breakdownEl.removeChild(breakdownEl.firstChild);
+
+        if (divTaxResult.breakdown && divTaxResult.breakdown.length > 0) {
+          divTaxResult.breakdown.forEach((b) => {
+            const row = document.createElement('div');
+            row.className = 'result-row';
+            row.style.fontSize = '0.85rem';
+
+            const label = document.createElement('span');
+            label.className = 'label';
+            label.textContent = `${b.band.charAt(0).toUpperCase() + b.band.slice(1)} rate (${(b.rate * 100).toFixed(2)}%) on ${formatCurrency(b.taxableAmount)}`;
+
+            const val = document.createElement('span');
+            val.className = 'value';
+            val.textContent = formatCurrency(b.tax);
+
+            row.appendChild(label);
+            row.appendChild(val);
+            breakdownEl.appendChild(row);
+          });
+        }
+      }
+
+      // ── 2. Capital Gains Tax ──
+      const gain = Math.max(0, disposalProceeds - originalCost);
+      const totalIncomeForCGT = otherIncome + dividendIncome;
+      const cgtResult = calcCapitalGainsTax(gain, totalIncomeForCGT, isResidential, isBADR);
+      const taxableGain = Math.max(0, gain - RATES.capitalGains.annualExempt);
+
+      // Determine effective CGT rate
+      let effectiveCgtRate = 0;
+      if (taxableGain > 0 && cgtResult.tax > 0) {
+        effectiveCgtRate = cgtResult.tax / taxableGain;
+      }
+
+      setResult('resCgtProceeds', disposalProceeds, { format: 'currency' });
+      setResult('resCgtCost', originalCost, { format: 'currency' });
+      setResult('resCgtGain', gain, { format: 'currency' });
+      setResult('resCgtExempt', RATES.capitalGains.annualExempt, { format: 'currency' });
+      setResult('resCgtTaxable', taxableGain, { format: 'currency' });
+      setResult('resCgtRate', effectiveCgtRate, { format: 'percent' });
+      setResult('resCgtDue', cgtResult.tax, { format: 'currency' });
+
+      // ── 3. ISA vs GIA Comparison ──
+      const rate = expectedReturn / 100;
+      const dividendYield = 0.02;
+      const growthRate = Math.max(0, rate - dividendYield);
+
+      // ISA: compound growth, no tax
+      const isaValue = investmentAmount * Math.pow(1 + rate, years);
+
+      // GIA: annual dividend tax + CGT on disposal
+      let giaValue = investmentAmount;
+      for (let y = 0; y < years; y++) {
+        const annualDividends = giaValue * dividendYield;
+        const divTaxAnnual = calcDividendTax(annualDividends, otherIncome).tax;
+        const growth = giaValue * growthRate;
+        giaValue = giaValue + growth + annualDividends - divTaxAnnual;
+      }
+
+      // CGT on disposal
+      const giaGain = Math.max(0, giaValue - investmentAmount);
+      const cgtOnDisposal = calcCapitalGainsTax(giaGain, totalIncomeForCGT).tax;
+      const giaFinalValue = giaValue - cgtOnDisposal;
+
+      const taxSaved = isaValue - giaFinalValue;
+
+      // Update year labels
+      const isaYearsEl = document.getElementById('resIsaYears');
+      const giaYearsEl = document.getElementById('resGiaYears');
+      if (isaYearsEl) isaYearsEl.textContent = years;
+      if (giaYearsEl) giaYearsEl.textContent = years;
+
+      setResult('resIsaValue', isaValue, { format: 'currency' });
+      setResult('resGiaValue', giaFinalValue, { format: 'currency' });
+      setResult('resTaxSaved', taxSaved, { format: 'currency' });
+
+      // Update assumptions text
+      const assumptionsEl = document.getElementById('resIsaAssumptions');
+      if (assumptionsEl) {
+        assumptionsEl.textContent =
+          `Assumes ${expectedReturn}% annual return, 2% yield as dividends, remainder as growth. ` +
+          `GIA applies dividend tax annually and CGT on disposal.`;
+      }
+
+      // ── Warnings ──
+      const warnings = getWarnings({
+        profile: 'investor',
+        grossSalary: otherIncome,
+        dividendIncome: dividendIncome,
+        capitalGains: gain
+      });
+
+      renderWarnings('warningsContainer', warnings);
+
+      // ── Affiliates ──
+      const recommendations = getRecommendations({
+        profile: 'investor',
+        capitalGains: gain
+      });
+
+      renderAffiliates('affiliateContainer', recommendations);
+
+      // ── Mobile summary ──
+      const totalTaxDue = divTaxResult.tax + cgtResult.tax;
+      updateMobileSummary(taxSaved, totalTaxDue);
+    }
+
+    // Wire up real-time calculation on all inputs
+    wireRealTimeCalc('#main', calcFn);
+  </script>
+
+</body>
+</html>
