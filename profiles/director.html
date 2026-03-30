@@ -245,7 +245,7 @@
 
           <!-- Personal Tax (Your Extraction) -->
           <div class="result-section">
-            <h3>Personal Tax (Your Extraction)</h3>
+            <h3 id="personalTaxHeading">Personal Tax (Your Extraction)</h3>
 
             <div class="result-row">
               <span class="label">Salary</span>
@@ -660,19 +660,25 @@
         const d2DivTax = calcDividendTax(divPerPerson, salary);
         const d2TakeHome = salary + divPerPerson - d2IncomeTax.tax - d2EmpNI - d2DivTax.tax;
 
-        personalTax = { tax: d1IncomeTax.tax + d2IncomeTax.tax };
-        empNI = d1EmpNI + d2EmpNI;
-        divTax = { tax: d1DivTax.tax + d2DivTax.tax };
+        // Director 1 figures for the Personal Tax card
+        personalTax = d1IncomeTax;
+        empNI = d1EmpNI;
+        divTax = d1DivTax;
         studentLoan = d1StudentLoan;
         takeHome = d1TakeHome + d2TakeHome;
         takeHomeMonthly = takeHome / 12;
 
+        const combinedPersonalTax = d1IncomeTax.tax + d2IncomeTax.tax;
+        const combinedEmpNI = d1EmpNI + d2EmpNI;
+        const combinedDivTax = d1DivTax.tax + d2DivTax.tax;
+
         totalBurden = companyProfit > 0
-          ? (corpTax.tax + employerNI + personalTax.tax + empNI + divTax.tax) / companyProfit
+          ? (corpTax.tax + employerNI + combinedPersonalTax + combinedEmpNI + combinedDivTax) / companyProfit
           : 0;
 
         // Update spouse breakdown
         showIf('spouseSection', true);
+        document.getElementById('personalTaxHeading').textContent = 'Personal Tax — Director 1';
         setResult('sp1Salary', salary, { format: 'currency' });
         setResult('sp2Salary', salary, { format: 'currency' });
         setResult('sp1Div', divPerPerson, { format: 'currency' });
@@ -685,6 +691,7 @@
         setResult('resHouseholdMonth', takeHomeMonthly, { format: 'currency' });
       } else {
         showIf('spouseSection', false);
+        document.getElementById('personalTaxHeading').textContent = 'Personal Tax (Your Extraction)';
 
         personalTax = calcIncomeTax(salary, false);
         empNI = calcEmployeeNI(salary);
@@ -708,13 +715,30 @@
       setResult('resRetained', retained, { format: 'currency' });
       setResult('resMaxDiv', retained, { format: 'currency' });
 
-      // ── Personal Tax card ──
-      setResult('resPersonalSalary', totalSalaries, { format: 'currency' });
-      setResult('resPersonalDiv', dividends, { format: 'currency' });
-      setResult('resIncomeTax', personalTax.tax, { format: 'currency' });
-      setResult('resEmpNI', empNI, { format: 'currency' });
-      setResult('resDivTax', divTax.tax, { format: 'currency' });
-      setResult('resStudentLoan', studentLoan.total, { format: 'currency' });
+      // ── Personal Tax card (Director 1 only when spouse enabled) ──
+      if (includeSpouse) {
+        const divPerPerson = dividends / 2;
+        setResult('resMaxDiv', divPerPerson, { format: 'currency' });
+        setResult('resPersonalSalary', salary, { format: 'currency' });
+        setResult('resPersonalDiv', divPerPerson, { format: 'currency' });
+        setResult('resIncomeTax', personalTax.tax, { format: 'currency' });
+        setResult('resEmpNI', empNI, { format: 'currency' });
+        setResult('resDivTax', divTax.tax, { format: 'currency' });
+        setResult('resStudentLoan', studentLoan.total, { format: 'currency' });
+        // Director 1 take-home
+        const d1Take = salary + divPerPerson - personalTax.tax - empNI - divTax.tax - studentLoan.total - bikTaxAmount;
+        setResult('resTotalYear', d1Take, { format: 'currency' });
+        setResult('resTotalMonth', d1Take / 12, { format: 'currency' });
+      } else {
+        setResult('resPersonalSalary', salary, { format: 'currency' });
+        setResult('resPersonalDiv', dividends, { format: 'currency' });
+        setResult('resIncomeTax', personalTax.tax, { format: 'currency' });
+        setResult('resEmpNI', empNI, { format: 'currency' });
+        setResult('resDivTax', divTax.tax, { format: 'currency' });
+        setResult('resStudentLoan', studentLoan.total, { format: 'currency' });
+        setResult('resTotalYear', takeHome, { format: 'currency' });
+        setResult('resTotalMonth', takeHomeMonthly, { format: 'currency' });
+      }
 
       // BIK row
       showIf('resBiKRow', hasBiK && bikTaxAmount > 0);
@@ -722,8 +746,6 @@
         setResult('resBiKTax', bikTaxAmount, { format: 'currency' });
       }
 
-      setResult('resTotalYear', takeHome, { format: 'currency' });
-      setResult('resTotalMonth', takeHomeMonthly, { format: 'currency' });
       setResult('resTotalBurden', totalBurden, { format: 'percent' });
 
       // ── Optimal Extraction Comparison ──
