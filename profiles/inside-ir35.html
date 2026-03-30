@@ -129,10 +129,20 @@
           <div class="result-section">
             <h3>Pension</h3>
 
+            <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:1rem; font-size:0.85rem;">
+              <span class="text-muted">Input as:</span>
+              <label style="cursor:pointer; display:flex; align-items:center; gap:0.3rem;">
+                <input type="radio" name="pensionMode" value="percent" checked> % of salary
+              </label>
+              <label style="cursor:pointer; display:flex; align-items:center; gap:0.3rem;">
+                <input type="radio" name="pensionMode" value="fixed"> &pound; per year
+              </label>
+            </div>
+
             <div class="form-group">
-              <label for="pensionSacrifice">Pension via Umbrella (salary sacrifice, &pound;/year)</label>
-              <div class="input-prefix">
-                <input type="text" id="pensionSacrifice" placeholder="0" inputmode="numeric">
+              <label for="pensionSacrifice" id="pensionSacrificeLabel">Pension via Umbrella (salary sacrifice, % of salary)</label>
+              <div class="input-suffix-percent" id="pensionSacrificePrefix">
+                <input type="text" id="pensionSacrifice" placeholder="5" inputmode="numeric">
               </div>
             </div>
 
@@ -364,13 +374,39 @@
       });
     }
 
+    // ── Pension mode toggle ──
+    const pensionRadios = document.querySelectorAll('input[name="pensionMode"]');
+    const pensionSacrificeLabel = document.getElementById('pensionSacrificeLabel');
+    const pensionSacrificePrefix = document.getElementById('pensionSacrificePrefix');
+
+    function getPensionMode() {
+      const checked = document.querySelector('input[name="pensionMode"]:checked');
+      return checked ? checked.value : 'percent';
+    }
+
+    function updatePensionLabels() {
+      const mode = getPensionMode();
+      if (mode === 'percent') {
+        pensionSacrificeLabel.textContent = 'Pension via Umbrella (salary sacrifice, % of salary)';
+        pensionSacrificePrefix.classList.remove('input-prefix');
+        pensionSacrificePrefix.classList.add('input-suffix-percent');
+      } else {
+        pensionSacrificeLabel.textContent = 'Pension via Umbrella (salary sacrifice, \u00a3/year)';
+        pensionSacrificePrefix.classList.remove('input-suffix-percent');
+        pensionSacrificePrefix.classList.add('input-prefix');
+      }
+    }
+
+    pensionRadios.forEach(r => r.addEventListener('change', updatePensionLabels));
+    updatePensionLabels();
+
     // ── Main Calculation ──
     function calcFn() {
       // Read inputs
       const assignmentRate = getNumericInput('assignmentRate');
       const workingDays = getNumericInput('workingDays') || 220;
       const umbrellaMargin = getNumericInput('umbrellaMargin');
-      const pensionSacrifice = getNumericInput('pensionSacrifice');
+      const pensionSacrificeRaw = getNumericInput('pensionSacrifice');
       const isScottish = getCheckbox('isScottish');
       const studentLoan1 = getSelectValue('studentLoan1', 'none');
       const studentLoan2 = getSelectValue('studentLoan2', 'none');
@@ -416,6 +452,8 @@
       const apprenticeshipLevy = grossSalary * 0.005;
 
       // 5. Pension sacrifice reduces gross before tax/NI
+      const pensionMode = getPensionMode();
+      const pensionSacrifice = pensionMode === 'percent' ? Math.round(grossSalary * pensionSacrificeRaw / 100) : pensionSacrificeRaw;
       const taxableGross = Math.max(0, grossSalary - pensionSacrifice);
 
       // 6. Income tax on taxable gross

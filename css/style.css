@@ -327,6 +327,28 @@ code, .mono {
   padding-left: 2.25rem;
 }
 
+.input-suffix-percent {
+  position: relative;
+}
+
+.input-suffix-percent::after {
+  content: "%";
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 0.95rem;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.input-suffix-percent input[type="text"],
+.input-suffix-percent input[type="number"] {
+  padding-right: 2.25rem;
+}
+
 input[type="text"],
 input[type="number"],
 input[type="email"],

@@ -125,17 +125,27 @@
           <div class="result-section">
             <h3>Pension</h3>
 
+            <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:1rem; font-size:0.85rem;">
+              <span class="text-muted">Input as:</span>
+              <label style="cursor:pointer; display:flex; align-items:center; gap:0.3rem;">
+                <input type="radio" name="pensionMode" value="percent" checked> % of salary
+              </label>
+              <label style="cursor:pointer; display:flex; align-items:center; gap:0.3rem;">
+                <input type="radio" name="pensionMode" value="fixed"> &pound; per year
+              </label>
+            </div>
+
             <div class="form-group">
-              <label for="personalPension">Your Pension Contribution (salary sacrifice, &pound;/year)</label>
-              <div class="input-prefix">
-                <input type="text" id="personalPension" placeholder="0" inputmode="numeric">
+              <label for="personalPension" id="personalPensionLabel">Your Pension Contribution (salary sacrifice, % of salary)</label>
+              <div class="input-suffix-percent" id="personalPensionPrefix">
+                <input type="text" id="personalPension" placeholder="5" inputmode="numeric">
               </div>
             </div>
 
             <div class="form-group">
-              <label for="employerPension">Employer Pension Contribution (&pound;/year)</label>
-              <div class="input-prefix">
-                <input type="text" id="employerPension" placeholder="0" inputmode="numeric">
+              <label for="employerPension" id="employerPensionLabel">Employer Pension Contribution (% of salary)</label>
+              <div class="input-suffix-percent" id="employerPensionPrefix">
+                <input type="text" id="employerPension" placeholder="3" inputmode="numeric">
               </div>
             </div>
           </div>
@@ -461,6 +471,40 @@
       });
     }
 
+    // ── Pension mode toggle ──
+    const pensionRadios = document.querySelectorAll('input[name="pensionMode"]');
+    const personalPensionLabel = document.getElementById('personalPensionLabel');
+    const employerPensionLabel = document.getElementById('employerPensionLabel');
+    const personalPensionPrefix = document.getElementById('personalPensionPrefix');
+    const employerPensionPrefix = document.getElementById('employerPensionPrefix');
+
+    function getPensionMode() {
+      const checked = document.querySelector('input[name="pensionMode"]:checked');
+      return checked ? checked.value : 'percent';
+    }
+
+    function updatePensionLabels() {
+      const mode = getPensionMode();
+      if (mode === 'percent') {
+        personalPensionLabel.textContent = 'Your Pension Contribution (salary sacrifice, % of salary)';
+        employerPensionLabel.textContent = 'Employer Pension Contribution (% of salary)';
+        personalPensionPrefix.classList.remove('input-prefix');
+        personalPensionPrefix.classList.add('input-suffix-percent');
+        employerPensionPrefix.classList.remove('input-prefix');
+        employerPensionPrefix.classList.add('input-suffix-percent');
+      } else {
+        personalPensionLabel.textContent = 'Your Pension Contribution (salary sacrifice, \u00a3/year)';
+        employerPensionLabel.textContent = 'Employer Pension Contribution (\u00a3/year)';
+        personalPensionPrefix.classList.remove('input-suffix-percent');
+        personalPensionPrefix.classList.add('input-prefix');
+        employerPensionPrefix.classList.remove('input-suffix-percent');
+        employerPensionPrefix.classList.add('input-prefix');
+      }
+    }
+
+    pensionRadios.forEach(r => r.addEventListener('change', updatePensionLabels));
+    updatePensionLabels();
+
     // ── Main Calculation ──
     function calcFn() {
       // Read inputs
@@ -469,8 +513,13 @@
       const hasChildcare = getCheckbox('hasChildcare');
       const studentLoan1 = getSelectValue('studentLoan1', 'none');
       const studentLoan2 = getSelectValue('studentLoan2', 'none');
-      const personalPension = getNumericInput('personalPension');
-      const employerPension = getNumericInput('employerPension');
+
+      // Pension: convert % to £ if in percent mode
+      const pensionMode = getPensionMode();
+      const personalPensionRaw = getNumericInput('personalPension');
+      const employerPensionRaw = getNumericInput('employerPension');
+      const personalPension = pensionMode === 'percent' ? Math.round(grossSalary * personalPensionRaw / 100) : personalPensionRaw;
+      const employerPension = pensionMode === 'percent' ? Math.round(grossSalary * employerPensionRaw / 100) : employerPensionRaw;
       const additionalPension = getNumericInput('additionalPension');
       const cycleToWork = getNumericInput('cycleToWork');
       const evLease = getNumericInput('evLease');
