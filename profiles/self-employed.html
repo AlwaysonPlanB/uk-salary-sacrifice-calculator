@@ -5,6 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Self-Employed Tax Calculator 2026/27 — UK Tax Calendar</title>
   <meta name="description" content="Free UK self-employed sole trader tax calculator for 2026/27. Calculate income tax, Class 2 &amp; 4 National Insurance, student loans, pension relief, and take-home pay with real-time results.">
+  <meta name="keywords" content="self-employed tax calculator 2026/27, sole trader tax, Class 2 NI, Class 4 NI, self assessment calculator, payment on account, MTD income tax">
+  <link rel="canonical" href="https://uktaxcal.com/profiles/self-employed.html">
+  <meta property="og:title" content="Self-Employed Tax Calculator 2026/27 — Sole Trader Income Tax & NI">
+  <meta property="og:description" content="Free UK self-employed sole trader tax calculator for 2026/27. Calculate income tax, Class 2 &amp; 4 National Insurance, student loans, pension relief, and take-home pay with real-time results.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://uktaxcal.com/profiles/self-employed.html">
+  <meta property="og:site_name" content="UKTaxCal">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Self-Employed Tax Calculator 2026/27 — Sole Trader Income Tax & NI">
+  <meta name="twitter:description" content="Free UK self-employed sole trader tax calculator for 2026/27. Calculate income tax, Class 2 &amp; 4 National Insurance, student loans, pension relief, and take-home pay with real-time results.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -161,13 +171,14 @@
               <span class="value" id="resTax">&minus;&pound;0</span>
             </div>
             <div class="result-row negative">
-              <span class="label">Class 2 NI (&pound;3.45/week)</span>
+              <span class="label">Class 2 NI (&pound;3.65/week)</span>
               <span class="value" id="resNIC2">&minus;&pound;0</span>
             </div>
             <div class="result-row negative">
               <span class="label">Class 4 NI</span>
               <span class="value" id="resNIC4">&minus;&pound;0</span>
             </div>
+            <p style="font-size:0.82rem; color:var(--text-muted); margin-top:0.25rem; margin-bottom:0;">Class 2 (&pound;3.65/week if profit exceeds &pound;12,570) and Class 4 (6%/2%) are standard self-employed rates. <a href="https://www.gov.uk/self-employed-national-insurance-rates" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Self-employed NI rates &rarr;</a></p>
             <div class="result-row negative">
               <span class="label">Student Loan</span>
               <span class="value" id="resStudentLoan">&minus;&pound;0</span>
@@ -250,6 +261,26 @@
     <!-- Affiliate Section -->
     <section class="container" style="margin-top:2.5rem;">
       <div id="affiliateContainer"></div>
+    </section>
+
+    <!-- Assumptions -->
+    <section class="container" style="margin-top:2rem;">
+      <div class="result-section">
+        <div class="collapsible-header" role="button" tabindex="0">
+          <h3>Assumptions &amp; Limitations</h3>
+          <span class="chevron">&#9660;</span>
+        </div>
+        <div class="collapsible-body">
+          <ul style="font-size:0.85rem; color:var(--text-muted); line-height:1.9; padding-left:1.2rem;">
+            <li><strong>Self-employed NI:</strong> Class 2 at &pound;3.65/week (if profit exceeds &pound;12,570) and Class 4 at 6% (&pound;12,570&ndash;&pound;50,270) / 2% above. Rates may differ if you have a deferment certificate. <a href="https://www.gov.uk/self-employed-national-insurance-rates" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Self-employed NI rates &rarr;</a></li>
+            <li><strong>Tax region:</strong> England, Wales &amp; NI rates by default. Tick &ldquo;Scottish taxpayer&rdquo; for Scottish bands. <a href="https://www.gov.uk/income-tax-rates" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Income Tax rates &rarr;</a></li>
+            <li><strong>Allowable expenses:</strong> Only genuine business expenses are deductible. This calculator does not validate what qualifies as an allowable expense. <a href="https://www.gov.uk/expenses-if-youre-self-employed" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Allowable expenses &rarr;</a></li>
+            <li><strong>Payment on account:</strong> Calculated as 50% of total tax bill. You may reduce payments on account if you expect a lower bill next year. <a href="https://www.gov.uk/understand-self-assessment-bill/payments-on-account" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Payments on account &rarr;</a></li>
+            <li><strong>Pension relief:</strong> Personal contributions receive basic-rate relief at source; higher/additional rate relief must be claimed via Self Assessment. <a href="https://www.gov.uk/tax-on-your-private-pension/pension-tax-relief" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Pension tax relief &rarr;</a></li>
+            <li><strong>MTD:</strong> Making Tax Digital for Income Tax is mandatory from April 2026 for those with qualifying income above &pound;50,000. <a href="https://www.gov.uk/guidance/use-making-tax-digital-for-income-tax" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: MTD for Income Tax &rarr;</a></li>
+          </ul>
+        </div>
+      </div>
     </section>
 
     <!-- Disclaimer -->

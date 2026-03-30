@@ -39,7 +39,7 @@ export const RATES = {
   },
 
   selfEmployedNI: {
-    class2WeeklyRate: 3.45,
+    class2WeeklyRate: 3.65,
     class2Threshold: 12570,
     class4LowerProfit: 12570,
     class4UpperProfit: 50270,
@@ -59,7 +59,7 @@ export const RATES = {
     allowance: 500,
     basic: 0.1075,
     higher: 0.3575,
-    additional: 0.4064,
+    additional: 0.3935,
   },
 
   capitalGains: {
@@ -333,11 +333,10 @@ export function calcCorporationTax(profit) {
     tax = round2(profit * mainRate);
   } else {
     // Marginal relief band
+    // HMRC formula: MR = (upper limit - profit) × 3/200
+    // See: gov.uk/guidance/corporation-tax-marginal-relief
     const mainTax = profit * mainRate;
-    const marginalRelief =
-      (mainRateLimit - profit) *
-      (mainRate - smallProfitsRate) *
-      (profit / mainRateLimit);
+    const marginalRelief = (mainRateLimit - profit) * 3 / 200;
     tax = round2(mainTax - marginalRelief);
   }
 

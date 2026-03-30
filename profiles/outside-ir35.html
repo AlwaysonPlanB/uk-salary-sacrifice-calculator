@@ -5,6 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Outside IR35 Contractor Calculator 2026/27 — UK Tax Calendar</title>
   <meta name="description" content="Free UK Outside IR35 contractor Ltd company tax calculator for 2026/27. Calculate corporation tax, dividend tax, director's salary, employer NI, and take-home pay with real-time results.">
+  <meta name="keywords" content="outside IR35 calculator, contractor tax calculator, limited company tax, corporation tax calculator, dividend tax, optimal salary calculator, IR35 contractor">
+  <link rel="canonical" href="https://uktaxcal.com/profiles/outside-ir35.html">
+  <meta property="og:title" content="Outside IR35 Contractor Calculator 2026/27 — Ltd Company Tax Calculator">
+  <meta property="og:description" content="Free UK Outside IR35 contractor Ltd company tax calculator for 2026/27. Calculate corporation tax, dividend tax, director's salary, employer NI, and take-home pay with real-time results.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://uktaxcal.com/profiles/outside-ir35.html">
+  <meta property="og:site_name" content="UKTaxCal">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Outside IR35 Contractor Calculator 2026/27 — Ltd Company Tax Calculator">
+  <meta name="twitter:description" content="Free UK Outside IR35 contractor Ltd company tax calculator for 2026/27. Calculate corporation tax, dividend tax, director's salary, employer NI, and take-home pay with real-time results.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -167,6 +177,10 @@
               <span class="label">Corp Tax Rate</span>
               <span class="value" id="resCorpRate">0.0%</span>
             </div>
+            <div class="warning active blue" style="display:flex; margin-top:0.5rem;">
+              <span class="warning-icon">&#9432;</span>
+              <div><strong>Note:</strong> Corporation tax rates (19% for profits under &pound;50,000, 25% over &pound;250,000, with marginal relief between) apply to all UK limited companies regardless of industry or sector. These are <em>not</em> specific to IT or contracting. <a href="https://www.gov.uk/corporation-tax-rates" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Corporation Tax rates &rarr;</a></div>
+            </div>
             <div class="result-row">
               <span class="label">Retained Profit</span>
               <span class="value" id="resRetained">&pound;0</span>
@@ -286,6 +300,26 @@
     <!-- Affiliate Section -->
     <section class="container" style="margin-top:2.5rem;">
       <div id="affiliateContainer"></div>
+    </section>
+
+    <!-- Assumptions -->
+    <section class="container" style="margin-top:2rem;">
+      <div class="result-section">
+        <div class="collapsible-header" role="button" tabindex="0">
+          <h3>Assumptions &amp; Limitations</h3>
+          <span class="chevron">&#9660;</span>
+        </div>
+        <div class="collapsible-body">
+          <ul style="font-size:0.85rem; color:var(--text-muted); line-height:1.9; padding-left:1.2rem;">
+            <li><strong>Corporation tax:</strong> Rates of 19% (profits under &pound;50k) and 25% (over &pound;250k) with marginal relief apply to <em>all</em> UK limited companies regardless of industry. <a href="https://www.gov.uk/corporation-tax-rates" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Corporation Tax rates &rarr;</a></li>
+            <li><strong>Dividend extraction:</strong> This calculator assumes all retained profit is taken as dividends. In practice, you may retain profit in the company for working capital or future investment.</li>
+            <li><strong>IR35 status:</strong> This calculator assumes you are genuinely outside IR35. If HMRC determines you are inside IR35, your tax position changes significantly. <a href="https://www.gov.uk/guidance/understanding-off-payroll-working-ir35" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Understanding IR35 &rarr;</a></li>
+            <li><strong>Employer NI:</strong> 15% above &pound;5,000 secondary threshold. The Employment Allowance (&pound;10,500) is <em>not</em> available to single-director companies. <a href="https://www.gov.uk/claim-employment-allowance" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Employment Allowance &rarr;</a></li>
+            <li><strong>Optimal salary:</strong> The comparison table shows common salary levels. The most tax-efficient level depends on your individual circumstances including other income sources.</li>
+            <li><strong>VAT:</strong> This calculator does not include VAT. If your taxable turnover exceeds &pound;90,000, you must register for VAT. <a href="https://www.gov.uk/vat-registration/when-to-register" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: VAT registration &rarr;</a></li>
+          </ul>
+        </div>
+      </div>
     </section>
 
     <!-- Disclaimer -->

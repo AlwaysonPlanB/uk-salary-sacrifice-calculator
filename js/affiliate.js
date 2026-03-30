@@ -1,143 +1,38 @@
 const AFFILIATES = {
-  freeagent: {
-    name: 'FreeAgent',
-    description: 'MTD-compatible accounting',
-    url: '#freeagent',
-    icon: '📊',
-    category: 'accounting'
-  },
   xero: {
     name: 'Xero',
-    description: 'Cloud accounting MTD compliant',
-    url: '#xero',
+    description: 'Cloud accounting — MTD compliant',
+    url: 'https://referrals.xero.com/c1coeuntspow',
     icon: '📊',
     category: 'accounting'
   },
-  quickbooks: {
-    name: 'QuickBooks',
-    description: 'Self-employed accounting MTD ready',
-    url: '#quickbooks',
-    icon: '📊',
-    category: 'accounting'
-  },
-  pensionbee: {
-    name: 'PensionBee',
-    description: 'Simple online pension',
-    url: '#pensionbee',
-    icon: '🏦',
-    category: 'pension'
-  },
-  vanguardPension: {
-    name: 'Vanguard SIPP',
-    description: 'Low-cost SIPP',
-    url: '#vanguard-sipp',
-    icon: '🏦',
-    category: 'pension'
-  },
-  hargreavesLansdown: {
-    name: 'Hargreaves Lansdown',
-    description: 'UK largest ISA platform',
-    url: '#hl',
-    icon: '💰',
-    category: 'isa'
-  },
-  vanguardISA: {
-    name: 'Vanguard ISA',
-    description: 'Low-cost passive ISA',
-    url: '#vanguard-isa',
-    icon: '💰',
-    category: 'isa'
-  },
-  ajBell: {
-    name: 'AJ Bell',
-    description: 'Award-winning ISA',
-    url: '#ajbell',
-    icon: '💰',
-    category: 'isa'
-  },
-  electricCarScheme: {
-    name: 'The Electric Car Scheme',
-    description: 'Salary sacrifice EV leasing save up to 60%',
-    url: '#ev-scheme',
-    icon: '⚡',
-    category: 'ev'
-  },
-  octopusEV: {
-    name: 'Octopus EV',
-    description: 'Salary sacrifice EV leasing',
-    url: '#octopus-ev',
-    icon: '⚡',
-    category: 'ev'
-  },
-  qdos: {
-    name: 'Qdos',
-    description: 'IR35 contract reviews and tax investigation insurance',
-    url: '#qdos',
-    icon: '🛡️',
-    category: 'insurance'
-  },
-  dinghy: {
-    name: 'Dinghy',
-    description: 'PI and PL insurance pay by day',
-    url: '#dinghy',
-    icon: '🛡️',
-    category: 'insurance'
-  },
-  parasol: {
-    name: 'Parasol',
-    description: 'FCSA-accredited umbrella',
-    url: '#parasol',
-    icon: '☂️',
-    category: 'umbrella'
-  },
-  brookson: {
-    name: 'Brookson',
-    description: 'Established umbrella FCSA member',
-    url: '#brookson',
-    icon: '☂️',
-    category: 'umbrella'
-  },
-  starling: {
-    name: 'Starling Business',
-    description: 'Free business bank account',
-    url: '#starling',
-    icon: '🏦',
+  wise: {
+    name: 'Wise',
+    description: 'Low-cost international transfers and multi-currency accounts',
+    url: 'https://wise.com/invite/mic/venkatap179',
+    icon: '💱',
     category: 'banking'
   },
-  tide: {
-    name: 'Tide',
-    description: 'Free business bank with invoicing',
-    url: '#tide',
-    icon: '🏦',
-    category: 'banking'
+  vitality: {
+    name: 'Vitality Health Insurance',
+    description: 'Business health insurance — we both get a £100 voucher when you sign up',
+    url: 'https://tinyurl.com/yh49t2xu',
+    icon: '🏥',
+    category: 'insurance'
+  },
+  milelog: {
+    name: 'MileLog',
+    description: 'HMRC mileage tracker — log trips, calculate tax relief, export reports for your accountant. £2 on the App Store.',
+    url: '#milelog',
+    icon: '🚗',
+    category: 'mileage'
   },
   accountant: {
     name: 'Find a Chartered Accountant',
-    description: 'ICAEW directory',
+    description: 'ICAEW directory — free search',
     url: 'https://find.icaew.com/',
     icon: '👤',
     category: 'accountant'
-  },
-  contractorMortgage: {
-    name: 'CMME Contractor Mortgages',
-    description: 'Specialist contractor mortgage broker',
-    url: '#cmme',
-    icon: '🏠',
-    category: 'mortgage'
-  },
-  landlordInsurance: {
-    name: 'Simply Business',
-    description: 'Landlord insurance',
-    url: '#simply-business',
-    icon: '🏠',
-    category: 'property'
-  },
-  cyclescheme: {
-    name: 'Cyclescheme',
-    description: 'Save 25-39% on bike via salary sacrifice',
-    url: '#cyclescheme',
-    icon: '🚲',
-    category: 'cycle'
   }
 };
 
@@ -166,78 +61,60 @@ export function getRecommendations(input) {
 
   switch (profile) {
     case 'employed':
-      if (hasEV) {
-        recs.push(makeRec('electricCarScheme', 'You indicated interest in an EV — salary sacrifice leasing can save up to 60% on a new electric car.'));
-        recs.push(makeRec('octopusEV', 'Another salary sacrifice EV option to compare quotes and maximise your savings.'));
-      }
-      if (hasCycleToWork) {
-        recs.push(makeRec('cyclescheme', 'You selected Cycle to Work — save 25-39% on a new bike through salary sacrifice.'));
-      }
-      recs.push(makeRec('pensionbee', 'Consolidate old workplace pensions into one simple online plan to track your retirement savings.'));
+      recs.push(makeRec('xero', 'Track your payslips, pension contributions, and expenses — useful if you complete self-assessment alongside PAYE.'));
       if (grossSalary >= 50000) {
-        recs.push(makeRec('vanguardISA', `With a salary of £${grossSalary.toLocaleString()}, a low-cost ISA helps shelter investment growth from tax.`));
+        recs.push(makeRec('wise', 'If you receive income or bonuses in foreign currency, Wise offers the real exchange rate with low fees.'));
       }
+      recs.push(makeRec('vitality', 'Get private health cover for you and your family — some employers offer it as a salary sacrifice benefit. We both get a £100 voucher when you sign up.'));
+      recs.push(makeRec('accountant', 'A chartered accountant can help with salary sacrifice planning, pension contributions, and the £100k tax trap.'));
       break;
 
     case 'self-employed':
-      if (grossSalary > 50000) {
-        recs.push(makeRec('freeagent', `With turnover above £50k, MTD-compatible accounting software is essential for your self-assessment.`));
-        recs.push(makeRec('xero', 'Cloud accounting that integrates with HMRC for Making Tax Digital compliance.'));
-      }
-      recs.push(makeRec('quickbooks', 'Straightforward MTD-ready accounting built for self-employed sole traders.'));
-      recs.push(makeRec('starling', 'Keep business finances separate with a free business bank account — makes self-assessment easier.'));
-      recs.push(makeRec('accountant', 'A chartered accountant can help optimise your self-employed tax position and ensure compliance.'));
+      recs.push(makeRec('xero', 'MTD-compatible cloud accounting for self-employed — invoicing, expenses, and self-assessment in one place.'));
+      recs.push(makeRec('wise', 'Accept payments from international clients at the real exchange rate — no hidden fees.'));
+      recs.push(makeRec('milelog', 'Claim HMRC mileage allowance on business trips — log journeys, calculate tax relief at 45p/25p per mile, and export reports for your self-assessment.'));
+      recs.push(makeRec('vitality', 'Protect yourself with health insurance — as a sole trader, you are your business. We both get a £100 voucher when you sign up.'));
+      recs.push(makeRec('accountant', 'A chartered accountant can help optimise your self-employed tax position and ensure MTD compliance.'));
       break;
 
     case 'outside-ir35':
-      recs.push(makeRec('accountant', 'As an outside-IR35 contractor, a specialist accountant helps maximise tax efficiency through your limited company.'));
-      recs.push(makeRec('qdos', 'Protect yourself with IR35 contract reviews and tax investigation insurance.'));
-      recs.push(makeRec('dinghy', 'Flexible professional indemnity and public liability insurance — pay only for the days you work.'));
-      recs.push(makeRec('starling', 'A dedicated business bank account is a requirement for your limited company.'));
-      recs.push(makeRec('vanguardPension', 'A low-cost SIPP lets you make tax-efficient pension contributions through your company.'));
+      recs.push(makeRec('xero', 'Cloud accounting for your limited company — manage invoices, corporation tax, and dividend records.'));
+      recs.push(makeRec('wise', 'Multi-currency business account for international contracts — hold, send, and receive in 40+ currencies.'));
+      recs.push(makeRec('milelog', 'Track business mileage through your Ltd company — log trips at HMRC rates and export reports straight to your accountant.'));
+      recs.push(makeRec('vitality', 'Get health insurance through your Ltd company as a tax-efficient business expense. We both get a £100 voucher when you sign up.'));
+      recs.push(makeRec('accountant', 'A specialist contractor accountant helps maximise tax efficiency through your limited company.'));
       break;
 
     case 'inside-ir35':
-      recs.push(makeRec('parasol', 'An FCSA-accredited umbrella company handles your payroll and compliance inside IR35.'));
-      recs.push(makeRec('brookson', 'An established FCSA-member umbrella — compare options to find the best fit.'));
-      recs.push(makeRec('contractorMortgage', 'Specialist contractor mortgage brokers understand umbrella and contract income for mortgage applications.'));
-      recs.push(makeRec('qdos', 'Get your IR35 status reviewed and protect yourself with tax investigation insurance.'));
+      recs.push(makeRec('wise', 'If your agency pays in a different currency, Wise gives you the real exchange rate on every transfer.'));
+      recs.push(makeRec('milelog', 'Log your commute and business mileage — some umbrella companies let you claim HMRC mileage relief on qualifying journeys.'));
+      recs.push(makeRec('vitality', 'As a contractor, you don\'t get employer sick pay — private health insurance keeps you covered. We both get a £100 voucher when you sign up.'));
+      recs.push(makeRec('accountant', 'A chartered accountant can review your IR35 status and advise on pension strategies inside IR35.'));
       break;
 
     case 'landlord':
-      if (rentalIncome > 50000) {
-        recs.push(makeRec('freeagent', `With rental income above £50k, accounting software helps manage MTD obligations for your property portfolio.`));
-        recs.push(makeRec('xero', 'Cloud accounting to track rental income, expenses and generate tax returns efficiently.'));
-      }
-      recs.push(makeRec('landlordInsurance', 'Protect your rental property with comprehensive landlord insurance.'));
-      recs.push(makeRec('accountant', 'A chartered accountant can advise on property tax reliefs, incorporation and mortgage interest restrictions.'));
+      recs.push(makeRec('xero', 'Track rental income, mortgage interest, and expenses — essential when MTD applies to your rental profits.'));
+      recs.push(makeRec('milelog', 'Claim mileage for property visits, viewings, and maintenance trips — log journeys at HMRC rates and add to your rental expenses.'));
+      recs.push(makeRec('vitality', 'Health insurance for you as a property business owner — protect your ability to manage your portfolio. We both get a £100 voucher when you sign up.'));
+      recs.push(makeRec('accountant', 'A chartered accountant can advise on Section 24 mortgage interest relief, incorporation, and property tax planning.'));
       break;
 
     case 'director':
+      recs.push(makeRec('xero', 'Cloud accounting for your company — manage payroll, corporation tax, dividends, and VAT in one platform.'));
+      recs.push(makeRec('wise', 'Multi-currency business account — ideal if your company invoices or pays international suppliers.'));
+      recs.push(makeRec('vitality', 'Offer health insurance as an employee benefit through your company — a tax-efficient perk for you and your team. We both get a £100 voucher when you sign up.'));
       recs.push(makeRec('accountant', 'A chartered accountant helps optimise your salary/dividend split and corporation tax planning.'));
-      recs.push(makeRec('vanguardPension', 'Make tax-efficient employer pension contributions through your company to reduce corporation tax.'));
-      recs.push(makeRec('starling', 'A free business bank account for your limited company with easy bookkeeping integration.'));
-      if (hasEV) {
-        recs.push(makeRec('electricCarScheme', 'Lease an electric car through your company — one of the most tax-efficient benefits available to directors.'));
-      }
       break;
 
     case 'investor':
-      recs.push(makeRec('hargreavesLansdown', 'The UK\'s largest investment platform with a wide range of ISA and SIPP options.'));
-      recs.push(makeRec('vanguardISA', 'Low-cost passive index funds inside a tax-free ISA wrapper.'));
-      recs.push(makeRec('ajBell', 'An award-winning platform with competitive fees for ISA and SIPP investing.'));
+      recs.push(makeRec('wise', 'Transfer funds internationally at the real exchange rate — useful for overseas investments and dividend income.'));
+      recs.push(makeRec('vitality', 'Private health insurance to protect your most important asset — yourself. We both get a £100 voucher when you sign up.'));
       if (capitalGains > 3000) {
-        recs.push(makeRec('accountant', `With £${capitalGains.toLocaleString()} in capital gains, a chartered accountant can help with CGT planning and reliefs.`));
+        recs.push(makeRec('accountant', 'With capital gains above the annual exempt amount, a chartered accountant can help with CGT planning and reliefs.'));
+      } else {
+        recs.push(makeRec('accountant', 'A chartered accountant can help with dividend tax planning, ISA strategy, and CGT reliefs.'));
       }
       break;
-  }
-
-  // Cross-profile: add vanguardPension if grossSalary >= 90000 and no pension rec already
-  if (grossSalary >= 90000) {
-    const hasPensionRec = recs.some(r => r.category === 'pension');
-    if (!hasPensionRec) {
-      recs.push(makeRec('vanguardPension', `With a salary of £${grossSalary.toLocaleString()}, pension contributions can reduce your effective tax rate and recover lost personal allowance.`));
-    }
   }
 
   return recs;
@@ -262,7 +139,7 @@ export function renderAffiliates(containerId, recommendations) {
   // Affiliate disclosure label
   const disclosure = document.createElement('p');
   disclosure.className = 'affiliate-disclosure';
-  disclosure.textContent = 'Affiliate links';
+  disclosure.textContent = 'We are not sponsored by or associated with any of the tools listed below. If you sign up using these links, we may receive a commission at no extra cost to you.';
   container.appendChild(disclosure);
 
   // Cards container

@@ -150,15 +150,29 @@ export function setupTheme() {
   const toggle = document.getElementById('themeToggle');
   if (!toggle) return;
 
-  const saved = localStorage.getItem('theme') || 'light';
-  document.documentElement.setAttribute('data-theme', saved);
-  toggle.textContent = saved === 'dark' ? 'Light Mode' : 'Dark Mode';
+  const iconEl = toggle.querySelector('.toggle-icon');
+  const moonChar = '\u263E';
+  const sunChar = '\u263C';
+
+  // Restore saved theme (use same key as index.html)
+  const saved = localStorage.getItem('uktaxcal-theme');
+  if (saved) {
+    document.documentElement.setAttribute('data-theme', saved);
+  }
+
+  function updateIcon() {
+    if (!iconEl) return;
+    const theme = document.documentElement.getAttribute('data-theme');
+    iconEl.textContent = theme === 'light' ? sunChar : moonChar;
+  }
+
+  updateIcon();
 
   toggle.addEventListener('click', () => {
     const current = document.documentElement.getAttribute('data-theme');
     const next = current === 'dark' ? 'light' : 'dark';
     document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem('theme', next);
-    toggle.textContent = next === 'dark' ? 'Light Mode' : 'Dark Mode';
+    localStorage.setItem('uktaxcal-theme', next);
+    updateIcon();
   });
 }

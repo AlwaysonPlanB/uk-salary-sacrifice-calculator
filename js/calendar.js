@@ -252,17 +252,21 @@ export function renderCalendar(profile, containerId) {
 
     item.appendChild(badge);
 
+    // Content wrapper for title, description, and link
+    const content = document.createElement('div');
+    content.className = 'deadline-content';
+
     // Title
     const title = document.createElement('strong');
     title.className = 'deadline-title';
     title.textContent = deadline.title;
-    item.appendChild(title);
+    content.appendChild(title);
 
     // Description
     const desc = document.createElement('p');
     desc.className = 'deadline-description';
     desc.textContent = deadline.description;
-    item.appendChild(desc);
+    content.appendChild(desc);
 
     // HMRC Link
     const link = document.createElement('a');
@@ -270,8 +274,10 @@ export function renderCalendar(profile, containerId) {
     link.href = deadline.hmrcLink;
     link.target = '_blank';
     link.rel = 'noopener noreferrer';
-    link.textContent = 'HMRC Guidance';
-    item.appendChild(link);
+    link.textContent = 'HMRC Guidance \u2192';
+    content.appendChild(link);
+
+    item.appendChild(content);
 
     list.appendChild(item);
   }

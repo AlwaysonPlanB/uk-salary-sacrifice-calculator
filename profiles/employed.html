@@ -5,6 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PAYE Employee Tax Calculator 2026/27 — UK Tax Calendar</title>
   <meta name="description" content="Free UK PAYE employee tax calculator for 2026/27. Calculate income tax, National Insurance, student loans, salary sacrifice, pension, and take-home pay with real-time results.">
+  <meta name="keywords" content="PAYE calculator 2026/27, employee tax calculator, take-home pay calculator UK, salary sacrifice calculator, pension tax relief, income tax bands, national insurance rates">
+  <link rel="canonical" href="https://uktaxcal.com/profiles/employed.html">
+  <meta property="og:title" content="PAYE Employee Tax Calculator 2026/27 — UK Take-Home Pay Calculator">
+  <meta property="og:description" content="Free UK PAYE employee tax calculator for 2026/27. Calculate income tax, National Insurance, student loans, salary sacrifice, pension, and take-home pay with real-time results.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://uktaxcal.com/profiles/employed.html">
+  <meta property="og:site_name" content="UKTaxCal">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="PAYE Employee Tax Calculator 2026/27 — UK Take-Home Pay Calculator">
+  <meta name="twitter:description" content="Free UK PAYE employee tax calculator for 2026/27. Calculate income tax, National Insurance, student loans, salary sacrifice, pension, and take-home pay with real-time results.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -215,6 +225,7 @@
               <span class="label">National Insurance</span>
               <span class="value" id="resNI">&minus;&pound;0</span>
             </div>
+            <p style="font-size:0.82rem; color:var(--text-muted); margin-top:0.25rem; margin-bottom:0;">NI uses Category A (standard employee) rates. Different rates apply for other categories. <a href="https://www.gov.uk/national-insurance-rates-letters" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: NI categories &rarr;</a></p>
             <div class="result-row negative">
               <span class="label">Student Loan</span>
               <span class="value" id="resStudentLoan">&minus;&pound;0</span>
@@ -331,6 +342,26 @@
             <p style="margin-top:0.75rem;"><strong>Pension Annual Allowance:</strong> &pound;60,000 (tapers above &pound;200,000 adjusted income, min &pound;10,000)</p>
             <p><strong>EV BIK Rate:</strong> 4% for zero-emission vehicles</p>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Assumptions -->
+    <section class="container" style="margin-top:2rem;">
+      <div class="result-section">
+        <div class="collapsible-header" role="button" tabindex="0">
+          <h3>Assumptions &amp; Limitations</h3>
+          <span class="chevron">&#9660;</span>
+        </div>
+        <div class="collapsible-body">
+          <ul style="font-size:0.85rem; color:var(--text-muted); line-height:1.9; padding-left:1.2rem;">
+            <li><strong>Tax region:</strong> England, Wales &amp; Northern Ireland rates are used by default. Tick &ldquo;Scottish taxpayer&rdquo; for Scottish income tax bands. <a href="https://www.gov.uk/income-tax-rates" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Income Tax rates &rarr;</a></li>
+            <li><strong>National Insurance:</strong> Category A (standard employee) rates are assumed. Other NI categories (B, C, H, M, Z) have different rates. <a href="https://www.gov.uk/national-insurance-rates-letters" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: NI categories &rarr;</a></li>
+            <li><strong>Personal Allowance:</strong> Standard &pound;12,570 assumed. Marriage Allowance transfers and Blind Person&rsquo;s Allowance are not included. <a href="https://www.gov.uk/income-tax-rates/income-tax-rates" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Personal Allowance &rarr;</a></li>
+            <li><strong>Student loans:</strong> Repayments are calculated on original gross salary (pre salary-sacrifice), as per SLC rules. <a href="https://www.gov.uk/repaying-your-student-loan" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Student loan repayments &rarr;</a></li>
+            <li><strong>Pension tax relief:</strong> Salary sacrifice pension contributions reduce both income tax and NI. Personal contributions receive basic-rate relief at source; higher-rate relief must be claimed via Self Assessment. <a href="https://www.gov.uk/tax-on-your-private-pension/pension-tax-relief" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Pension tax relief &rarr;</a></li>
+            <li><strong>BIK rates:</strong> Electric vehicle BIK at 4% for 2026/27. Hybrid and petrol rates vary by CO2 emissions. <a href="https://www.gov.uk/tax-on-company-benefits/tax-on-benefit-in-kind" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Company car tax &rarr;</a></li>
+          </ul>
         </div>
       </div>
     </section>
