@@ -61,10 +61,11 @@ export function getWarnings(input) {
     warnings.push({
       id: 'childcare-trap',
       severity: 'red',
-      title: 'Childcare Benefits Lost',
+      title: 'Tax-Free Childcare Lost',
       message:
         `Adjusted net income above \u00A3100,000 means you lose access to Tax-Free Childcare ` +
-        `(\u00A32,000/child/year) and 30 hours free childcare (worth ~\u00A39,400/year). ` +
+        `(\u00A32,000/child/year, \u00A34,000 for disabled children). ` +
+        `Note: the 30 hours free childcare entitlement is not affected by income. ` +
         `Pension contributions could bring you below the threshold.`,
       profiles: childcareProfiles,
     });
@@ -72,11 +73,11 @@ export function getWarnings(input) {
     warnings.push({
       id: 'childcare-trap-approaching',
       severity: 'amber',
-      title: 'Approaching Childcare Benefits Cliff Edge',
+      title: 'Approaching Tax-Free Childcare Cliff Edge',
       message:
         `Your adjusted net income of ${fmt(adjustedNetIncome)} is close to \u00A3100,000. ` +
-        `Exceeding this threshold means losing Tax-Free Childcare (\u00A32,000/child/year) ` +
-        `and 30 hours free childcare (worth ~\u00A39,400/year).`,
+        `Exceeding this threshold means losing Tax-Free Childcare (\u00A32,000/child/year). ` +
+        `The 30 hours free childcare entitlement is not affected by income.`,
       profiles: childcareProfiles,
     });
   }
