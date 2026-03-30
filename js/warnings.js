@@ -176,8 +176,8 @@ export function getWarnings(input) {
       severity: 'blue',
       title: 'Dividend Tax Rates Increased (April 2026)',
       message:
-        `Dividend tax rates have increased by 2% across all bands: basic rate 9.25%, ` +
-        `higher rate 34.25%, additional rate 39.35%. ` +
+        `Dividend tax rates have increased by 2% across all bands: basic rate 10.75%, ` +
+        `higher rate 35.75%, additional rate 39.35%. ` +
         `The dividend allowance is now \u00A3500.`,
       profiles: dividendProfiles,
     });

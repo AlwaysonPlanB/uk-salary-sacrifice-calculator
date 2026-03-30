@@ -19,6 +19,19 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Company Director Tax Calculator 2026/27",
+    "url": "https://uktaxcal.com/profiles/director.html",
+    "description": "Free UK company director salary and dividend extraction calculator for 2026/27. Calculate corporation tax, dividend tax, optimal salary levels, employer NI, and take-home pay.",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
+    "provider": { "@type": "Organization", "name": "UKTaxCal", "url": "https://uktaxcal.com" }
+  }
+  </script>
 </head>
 <body>
 
@@ -81,6 +94,14 @@
               <div><strong>Salary Tip:</strong> Most directors take a salary of &pound;12,570 (uses personal allowance) or &pound;5,000 (below employer NI threshold). The calculator shows optimal levels below.</div>
             </div>
             <p style="font-size:0.82rem; color:var(--text-muted); margin-top:0.5rem;">The suggested optimal salary of &pound;12,570 assumes no other employment income. If you have other PAYE income, adjust accordingly. <a href="https://www.gov.uk/tax-on-dividends" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Tax on dividends &rarr;</a></p>
+
+            <div class="form-group" style="margin-top:1rem;">
+              <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+                <input type="checkbox" id="includeSpouse">
+                Include spouse/partner as second director
+              </label>
+              <small style="color:var(--text-muted);">Both directors take the same salary. Dividends split 50/50.</small>
+            </div>
           </div>
 
           <!-- Card 3: Dividends -->
@@ -266,6 +287,62 @@
 
             <div style="margin-top:1rem; font-size:0.88rem;">
               <span class="text-muted">Total Combined Tax Burden: </span><strong id="resTotalBurden">0.0%</strong>
+            </div>
+          </div>
+
+          <!-- Spouse Breakdown (hidden by default) -->
+          <div class="result-section" id="spouseSection" style="display:none;">
+            <h3>Household Breakdown (50/50 Split)</h3>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:0; font-size:0.82rem; font-weight:600; border-bottom:2px solid var(--border-color); padding:0.5rem 0; color:var(--text-heading);">
+              <div></div>
+              <div style="display:grid; grid-template-columns:1fr 1fr; text-align:right;">
+                <div>Director 1</div>
+                <div>Director 2</div>
+              </div>
+            </div>
+
+            <div class="result-row" style="display:grid; grid-template-columns:1fr 1fr; font-size:0.85rem;">
+              <span class="label">Salary</span>
+              <div style="display:grid; grid-template-columns:1fr 1fr; text-align:right;">
+                <span id="sp1Salary">&pound;0</span>
+                <span id="sp2Salary">&pound;0</span>
+              </div>
+            </div>
+            <div class="result-row" style="display:grid; grid-template-columns:1fr 1fr; font-size:0.85rem;">
+              <span class="label">Dividends (50%)</span>
+              <div style="display:grid; grid-template-columns:1fr 1fr; text-align:right;">
+                <span id="sp1Div">&pound;0</span>
+                <span id="sp2Div">&pound;0</span>
+              </div>
+            </div>
+            <div class="result-row" style="display:grid; grid-template-columns:1fr 1fr; font-size:0.85rem;">
+              <span class="label">Dividend Tax</span>
+              <div style="display:grid; grid-template-columns:1fr 1fr; text-align:right;">
+                <span id="sp1DivTax">&pound;0</span>
+                <span id="sp2DivTax">&pound;0</span>
+              </div>
+            </div>
+            <div class="result-row" style="display:grid; grid-template-columns:1fr 1fr; font-size:0.85rem;">
+              <span class="label">Take-Home</span>
+              <div style="display:grid; grid-template-columns:1fr 1fr; text-align:right;">
+                <span id="sp1TakeHome">&pound;0</span>
+                <span id="sp2TakeHome">&pound;0</span>
+              </div>
+            </div>
+
+            <div class="result-row total" style="margin-top:0.5rem;">
+              <span class="label">Household Take-Home</span>
+              <span class="value" id="resHouseholdYear">&pound;0</span>
+            </div>
+            <div class="result-row total">
+              <span class="label">Household Monthly</span>
+              <span class="value" id="resHouseholdMonth">&pound;0</span>
+            </div>
+
+            <div style="margin-top:0.75rem; font-size:0.82rem; color:var(--text-muted); line-height:1.6;">
+              <span class="warning-icon">&#9432;</span>
+              Assumes equal shareholding (50/50 dividend split) and no other income for either director. Individual circumstances vary &mdash; always check with a qualified accountant.
             </div>
           </div>
 
@@ -508,6 +585,7 @@
       const studentLoan1 = getSelectValue('studentLoan1', 'none');
       const studentLoan2 = getSelectValue('studentLoan2', 'none');
       const evLease = getNumericInput('evLease');
+      const includeSpouse = getCheckbox('includeSpouse');
 
       // Dividend input — treat blank, 0, or 'auto' as auto
       const dividendRaw = document.getElementById('dividendAmount').value.trim().toLowerCase();
@@ -538,11 +616,12 @@
         }
       }
 
-      // 1. Employer NI on salary
-      const employerNI = calcEmployerNI(salary);
+      // 1. Total salaries and employer NI
+      const totalSalaries = includeSpouse ? salary * 2 : salary;
+      const employerNI = includeSpouse ? calcEmployerNI(salary) * 2 : calcEmployerNI(salary);
 
-      // 2. Salary cost (salary + employer NI)
-      const salaryCost = salary + employerNI;
+      // 2. Salary cost (salaries + employer NI)
+      const salaryCost = totalSalaries + employerNI;
 
       // 3. Adjusted profit (company profit minus deductions)
       const adjustedProfit = Math.max(0, companyProfit - salaryCost - employerPensionVal);
@@ -562,26 +641,62 @@
         dividends = Math.min(manualDiv, retained);
       }
 
-      // 7. Personal income tax on salary
-      const personalTax = calcIncomeTax(salary, false);
+      // 7-11: Personal tax depends on spouse split
+      let personalTax, empNI, divTax, studentLoan, takeHome, takeHomeMonthly, totalBurden;
 
-      // 8. Employee NI on salary
-      const empNI = calcEmployeeNI(salary);
+      if (includeSpouse) {
+        const divPerPerson = dividends / 2;
 
-      // 9. Dividend tax
-      const divTax = calcDividendTax(dividends, salary);
+        // Director 1
+        const d1IncomeTax = calcIncomeTax(salary, false);
+        const d1EmpNI = calcEmployeeNI(salary);
+        const d1DivTax = calcDividendTax(divPerPerson, salary);
+        const d1StudentLoan = calcCombinedStudentLoans(salary, studentLoanPlans);
+        const d1TakeHome = salary + divPerPerson - d1IncomeTax.tax - d1EmpNI - d1DivTax.tax - d1StudentLoan.total - bikTaxAmount;
 
-      // 10. Student loan (on salary only — dividends don't count)
-      const studentLoan = calcCombinedStudentLoans(salary, studentLoanPlans);
+        // Director 2 (spouse) — same salary, no student loan, no BIK
+        const d2IncomeTax = calcIncomeTax(salary, false);
+        const d2EmpNI = calcEmployeeNI(salary);
+        const d2DivTax = calcDividendTax(divPerPerson, salary);
+        const d2TakeHome = salary + divPerPerson - d2IncomeTax.tax - d2EmpNI - d2DivTax.tax;
 
-      // 11. Take-home
-      const takeHome = salary + dividends - personalTax.tax - empNI - divTax.tax - studentLoan.total - bikTaxAmount;
-      const takeHomeMonthly = takeHome / 12;
+        personalTax = { tax: d1IncomeTax.tax + d2IncomeTax.tax };
+        empNI = d1EmpNI + d2EmpNI;
+        divTax = { tax: d1DivTax.tax + d2DivTax.tax };
+        studentLoan = d1StudentLoan;
+        takeHome = d1TakeHome + d2TakeHome;
+        takeHomeMonthly = takeHome / 12;
 
-      // 12. Total combined tax burden
-      const totalBurden = companyProfit > 0
-        ? (corpTax.tax + employerNI + personalTax.tax + empNI + divTax.tax) / companyProfit
-        : 0;
+        totalBurden = companyProfit > 0
+          ? (corpTax.tax + employerNI + personalTax.tax + empNI + divTax.tax) / companyProfit
+          : 0;
+
+        // Update spouse breakdown
+        showIf('spouseSection', true);
+        setResult('sp1Salary', salary, { format: 'currency' });
+        setResult('sp2Salary', salary, { format: 'currency' });
+        setResult('sp1Div', divPerPerson, { format: 'currency' });
+        setResult('sp2Div', divPerPerson, { format: 'currency' });
+        setResult('sp1DivTax', d1DivTax.tax, { format: 'currency' });
+        setResult('sp2DivTax', d2DivTax.tax, { format: 'currency' });
+        setResult('sp1TakeHome', d1TakeHome, { format: 'currency' });
+        setResult('sp2TakeHome', d2TakeHome, { format: 'currency' });
+        setResult('resHouseholdYear', takeHome, { format: 'currency' });
+        setResult('resHouseholdMonth', takeHomeMonthly, { format: 'currency' });
+      } else {
+        showIf('spouseSection', false);
+
+        personalTax = calcIncomeTax(salary, false);
+        empNI = calcEmployeeNI(salary);
+        divTax = calcDividendTax(dividends, salary);
+        studentLoan = calcCombinedStudentLoans(salary, studentLoanPlans);
+        takeHome = salary + dividends - personalTax.tax - empNI - divTax.tax - studentLoan.total - bikTaxAmount;
+        takeHomeMonthly = takeHome / 12;
+
+        totalBurden = companyProfit > 0
+          ? (corpTax.tax + employerNI + personalTax.tax + empNI + divTax.tax) / companyProfit
+          : 0;
+      }
 
       // ── Company Tax card ──
       setResult('resProfit', companyProfit, { format: 'currency' });
@@ -594,7 +709,7 @@
       setResult('resMaxDiv', retained, { format: 'currency' });
 
       // ── Personal Tax card ──
-      setResult('resPersonalSalary', salary, { format: 'currency' });
+      setResult('resPersonalSalary', totalSalaries, { format: 'currency' });
       setResult('resPersonalDiv', dividends, { format: 'currency' });
       setResult('resIncomeTax', personalTax.tax, { format: 'currency' });
       setResult('resEmpNI', empNI, { format: 'currency' });
@@ -622,7 +737,24 @@
       let lowestTax = Infinity;
 
       scenarios.forEach(({ level, prefix, rowId }, idx) => {
-        const s = calcOptimalScenario(companyProfit, level, employerPensionVal, studentLoanPlans);
+        let s;
+        if (includeSpouse) {
+          const erNI2 = calcEmployerNI(level) * 2;
+          const totalSal2 = level * 2;
+          const adjProf2 = Math.max(0, companyProfit - totalSal2 - erNI2 - employerPensionVal);
+          const ct2 = calcCorporationTax(adjProf2);
+          const ret2 = Math.max(0, adjProf2 - ct2.tax);
+          const divPP = ret2 / 2;
+          const d1Tax = calcIncomeTax(level, false).tax + calcEmployeeNI(level) + calcDividendTax(divPP, level).tax;
+          const d2Tax = calcIncomeTax(level, false).tax + calcEmployeeNI(level) + calcDividendTax(divPP, level).tax;
+          const sloan = calcCombinedStudentLoans(level, studentLoanPlans);
+          const personalTax2 = d1Tax + d2Tax;
+          const totalTax2 = ct2.tax + erNI2 + personalTax2 + sloan.total;
+          const takeHome2 = totalSal2 + ret2 - personalTax2 - sloan.total;
+          s = { corpTax: ct2.tax, employerNI: erNI2, personalTax: personalTax2 - (calcDividendTax(divPP, level).tax * 2), divTax: calcDividendTax(divPP, level).tax * 2, totalTax: totalTax2, takeHome: takeHome2 };
+        } else {
+          s = calcOptimalScenario(companyProfit, level, employerPensionVal, studentLoanPlans);
+        }
 
         setResult(`${prefix}_corpTax`, s.corpTax, { format: 'currency' });
         setResult(`${prefix}_empNI`, s.employerNI, { format: 'currency' });
