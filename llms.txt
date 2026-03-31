@@ -1,0 +1,35 @@
+# UKTaxCal — UK Tax Calculator 2026/27
+
+> Free UK tax calculator covering 7 employment profiles with real-time results based on HMRC rates for the 2026/27 tax year.
+
+## Calculators
+
+- [PAYE Employee Calculator](https://uktaxcal.com/profiles/employed.html): Income tax, NI, salary sacrifice, pension, student loans, and take-home pay for salaried employees.
+- [Self-Employed Calculator](https://uktaxcal.com/profiles/self-employed.html): Income tax, Class 2 & 4 NI, payments on account, and take-home pay for sole traders.
+- [Outside IR35 Contractor Calculator](https://uktaxcal.com/profiles/outside-ir35.html): Corporation tax, dividend tax, optimal salary/dividend split, employer NI, and spouse/second director option.
+- [Inside IR35 Umbrella Calculator](https://uktaxcal.com/profiles/inside-ir35.html): Day rate erosion breakdown including employer NI, apprenticeship levy, umbrella margin, and take-home pay.
+- [Landlord Calculator](https://uktaxcal.com/profiles/landlord.html): Rental income tax, Section 24 mortgage interest restriction, capital gains on property disposal.
+- [Company Director Calculator](https://uktaxcal.com/profiles/director.html): Salary and dividend extraction strategy, corporation tax, dividend tax, spouse/second director option.
+- [Investor Calculator](https://uktaxcal.com/profiles/investor.html): Capital gains tax, dividend tax, ISA vs GIA comparison, BADR relief.
+
+## Tax Year 2026/27 Key Rates
+
+- Personal Allowance: £12,570
+- Basic Rate (20%): £12,571 to £50,270
+- Higher Rate (40%): £50,271 to £125,140
+- Additional Rate (45%): Over £125,140
+- Employee NI: 8% (£12,570–£50,270), 2% above
+- Employer NI: 15% above £5,000
+- Corporation Tax: 19% (under £50k profit), 25% (over £250k)
+- Dividend Tax: 10.75% basic, 35.75% higher, 39.35% additional
+- Dividend Allowance: £500
+- Capital Gains Tax: 18% basic, 24% higher (residential property: 18%/24%)
+- BADR Rate: 18%
+
+## Blog Articles
+
+- [The £100k Tax Trap](https://uktaxcal.com/blog/100k-tax-trap.html): 60% effective marginal rate analysis and pension strategies.
+- [Dividend Tax +2% Impact](https://uktaxcal.com/blog/dividend-tax-increase-2026.html): Real impact on directors extracting £50k–£120k.
+- [MTD for Income Tax](https://uktaxcal.com/blog/mtd-income-tax-2026.html): Making Tax Digital requirements from April 2026.
+- [Inside IR35 True Cost](https://uktaxcal.com/blog/ir35-umbrella-impact-2026.html): Umbrella company rate erosion for IT contractors.
+- [Fiscal Drag](https://uktaxcal.com/blog/fiscal-drag-frozen-thresholds.html): Impact of frozen thresholds since 2021.
