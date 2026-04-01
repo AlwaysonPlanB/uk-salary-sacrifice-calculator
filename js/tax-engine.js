@@ -48,9 +48,9 @@ export const RATES = {
   },
 
   studentLoan: {
-    plan1:        { threshold: 26065, rate: 0.09 },
+    plan1:        { threshold: 26900, rate: 0.09 },
     plan2:        { threshold: 29385, rate: 0.09 },
-    plan4:        { threshold: 32745, rate: 0.09 },
+    plan4:        { threshold: 33795, rate: 0.09 },
     plan5:        { threshold: 25000, rate: 0.09 },
     postgraduate: { threshold: 21000, rate: 0.06 },
   },

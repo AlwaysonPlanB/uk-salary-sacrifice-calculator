@@ -1,6 +1,6 @@
 /**
  * Student Loan Repayment Calculator
- * Calculates repayments for UK student loan plans using ORIGINAL gross salary.
+ * Calculates repayments for UK student loan plans using post-sacrifice gross salary.
  */
 
 import { RATES } from './tax-engine.js';
@@ -19,9 +19,7 @@ function round2(x) {
 
 /**
  * Calculate student loan repayment for a single plan.
- * Uses ORIGINAL gross salary (pre salary-sacrifice).
- *
- * @param {number} grossSalary - Annual gross salary before any sacrifice
+ * @param {number} grossSalary - Annual gross salary (post salary-sacrifice if applicable)
  * @param {string} planType - 'plan1','plan2','plan4','plan5','postgraduate', or 'none'
  * @returns {number} Annual repayment rounded to 2dp, or 0 if none/below threshold
  */
@@ -49,7 +47,7 @@ export function calcStudentLoan(grossSalary, planType) {
 /**
  * Calculate student loan repayments across multiple plans.
  *
- * @param {number} grossSalary - Annual gross salary before any sacrifice
+ * @param {number} grossSalary - Annual gross salary (post salary-sacrifice if applicable)
  * @param {string[]} plans - Array of planType strings
  * @returns {{ total: number, monthly: number, breakdown: Array<{ plan: string, threshold: number, rate: number, annual: number, monthly: number }> }}
  */

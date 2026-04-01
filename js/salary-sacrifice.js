@@ -130,7 +130,7 @@ export function calcSalarySacrifice(input) {
 
   const taxA = calcIncomeTax(reducedGross, isScottish);
   const niA = calcEmployeeNI(reducedGross);
-  const studentLoanA = calcCombinedStudentLoans(grossSalary, studentLoanPlans);
+  const studentLoanA = calcCombinedStudentLoans(reducedGross, studentLoanPlans);
 
   let bikTaxA = 0;
   let bikInfo = null;
