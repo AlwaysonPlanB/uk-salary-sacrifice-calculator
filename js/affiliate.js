@@ -23,7 +23,7 @@ const AFFILIATES = {
   milelog: {
     name: 'MileLog',
     description: 'HMRC mileage tracker — log trips, calculate tax relief, export reports for your accountant. £2 on the App Store.',
-    url: '#milelog',
+    url: 'https://apps.apple.com/app/id6761419413',
     icon: '🚗',
     category: 'mileage'
   },
