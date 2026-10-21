@@ -216,6 +216,7 @@
               <span class="label">Mortgage Interest Tax Credit (20%)</span>
               <span class="value" id="resMortCredit">&pound;0</span>
             </div>
+            <p id="mortCarryNote" style="display:none; font-size:0.82rem; color:var(--text-muted); margin-top:0.25rem; margin-bottom:0;">The credit is limited to 20% of the lowest of your mortgage interest, your property profit and your income above the Personal Allowance. <span id="mortCarryAmount"></span> of interest is carried forward to next year. <a href="https://www.gov.uk/guidance/changes-to-tax-relief-for-residential-landlords-how-its-worked-out-including-case-studies" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: How it's worked out &rarr;</a></p>
             <div class="result-row negative">
               <span class="label">Net Tax After Credit</span>
               <span class="value" id="resNetTax">&minus;&pound;0</span>
@@ -471,8 +472,12 @@
       // 4. Income tax
       const taxResult = calcIncomeTax(taxableIncome, isScottish);
 
-      // 5. Mortgage interest tax credit — Section 24: 20% credit
-      const mortgageCredit = mortgageInterest * 0.20;
+      // 5. Mortgage interest tax credit (Section 24): 20% of the lowest of finance costs,
+      // property profits and income above the Personal Allowance (GOV.UK). The rest is carried forward.
+      const incomeAbovePA = Math.max(0, taxableIncome - taxResult.personalAllowance);
+      const relievableInterest = Math.min(mortgageInterest, rentalProfit, incomeAbovePA);
+      const mortgageCredit = relievableInterest * 0.20;
+      const interestCarriedForward = Math.max(0, mortgageInterest - relievableInterest);
 
       // 6. Net tax after credit
       const netTax = Math.max(0, taxResult.tax - mortgageCredit);
@@ -543,6 +548,8 @@
       setResult('resPA', personalAllowance, { format: 'currency' });
       setResult('resTax', taxResult.tax, { format: 'currency' });
       setResult('resMortCredit', mortgageCredit, { format: 'currency' });
+      showIf('mortCarryNote', interestCarriedForward > 0);
+      setResult('mortCarryAmount', interestCarriedForward, { format: 'currency' });
       setResult('resNetTax', netTax, { format: 'currency' });
       setResult('resStudentLoan', studentLoan.total, { format: 'currency' });
       setResult('resTotalYear', takeHome, { format: 'currency' });
