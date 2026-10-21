@@ -8,6 +8,8 @@ export const TAX_YEAR = '2026/27';
 export const RATES = {
   personalAllowance: 12570,
   paTaperThreshold: 100000,
+  // Top of the higher (rUK) and advanced (Scotland) bands, as income after allowances
+  additionalRateLimit: 125140,
 
   // England, Wales & NI income tax bands
   incomeTax: {
@@ -176,10 +178,15 @@ export function calcIncomeTax(taxableIncome, isScottish = false) {
 
     // Width of this band: from (band.lower - PA offset) to band.upper
     // We work on income-after-PA, so bands are relative to 0.
+    // Band edges are stored as gross income with the full PA, except the £125,140
+    // limit, which GOV.UK sets on income after allowances.
     const bandStart = band.lower - RATES.personalAllowance - 1; // offset from 0
-    const bandWidth = band.upper
-      ? band.upper - band.lower + 1
-      : Infinity;
+    let bandWidth = Infinity;
+    if (band.upper === RATES.additionalRateLimit) {
+      bandWidth = RATES.additionalRateLimit - bandStart;
+    } else if (band.upper) {
+      bandWidth = band.upper - band.lower + 1;
+    }
 
     const taxableInBand = Math.min(remaining, bandWidth);
     const taxForBand = round2(taxableInBand * band.rate);
