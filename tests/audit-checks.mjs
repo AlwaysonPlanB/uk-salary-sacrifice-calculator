@@ -9,7 +9,7 @@ import {
   calcTaperedAA,
 } from '../js/tax-engine.js';
 import { getWarnings } from '../js/warnings.js';
-import { calcSalarySacrifice } from '../js/salary-sacrifice.js';
+import { calcSalarySacrifice, calcBiKTax } from '../js/salary-sacrifice.js';
 
 const hasWarning = (w, id) => (w.some((x) => x.id === id) ? 1 : 0);
 
@@ -62,6 +62,22 @@ check('L7', 'Employed £240,000, employer pension £45,000: AA warning shown (1 
   employerPension: 45000, pensionThresholdIncome: 240000, pensionAdjustedIncome: 285000,
 }), 'pension-aa'), 0);
 check('L7', 'Salary sacrifice module AA, £240,000 salary, £45,000 employer', calcSalarySacrifice({ grossSalary: 240000, employerPension: 45000 }).pensionCheck.annualAllowance, 47500);
+
+// L9: company car percentages 2026/27 (GOV.UK HMRC 480 appendix 2)
+const bikPct = (co2, fuelType, electricRange = 0) => Math.round(calcBiKTax({ p11dValue: 10000, co2, fuelType, electricRange }, 0).bikRate * 100);
+check('L9', 'Petrol 120 g/km', bikPct(120, 'petrol'), 30);
+check('L9', 'Petrol 120 g/km, P11D £30,000, 40% taxpayer: tax', calcBiKTax({ p11dValue: 30000, co2: 120, fuelType: 'petrol', electricRange: 0 }, 0.4).bikTax, 3600);
+check('L9', 'Hybrid 40 g/km, 75 mile range', bikPct(40, 'hybrid', 75), 7);
+check('L9', 'Hybrid 40 g/km, 50 mile range', bikPct(40, 'hybrid', 50), 10);
+check('L9', 'Hybrid 40 g/km, 130 mile range', bikPct(40, 'hybrid', 130), 4);
+check('L9', 'Petrol-labelled car at 45 g/km, 20 mile range', bikPct(45, 'petrol', 20), 16);
+check('L9', 'Petrol 54 g/km', bikPct(54, 'petrol'), 17);
+check('L9', 'Petrol 55 g/km', bikPct(55, 'petrol'), 18);
+check('L9', 'Petrol 77 g/km', bikPct(77, 'petrol'), 21);
+check('L9', 'Petrol 154 g/km', bikPct(154, 'petrol'), 36);
+check('L9', 'Petrol 155 g/km', bikPct(155, 'petrol'), 37);
+check('L9', 'Electric', bikPct(0, 'electric'), 4);
+check('U1', 'Diesel 120 g/km keeps existing 4% supplement (unverified, unchanged)', bikPct(120, 'diesel'), 34);
 
 console.log(`\n${passed} passed, ${failed} failed`);
 process.exit(failed ? 1 : 0);

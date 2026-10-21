@@ -32,8 +32,8 @@ export function calcBiKTax(details, marginalRate) {
   if (fuelType === 'electric' || co2 === 0) {
     // Zero-emission: flat electric rate
     bikRate = RATES.bik.electric;
-  } else if (fuelType === 'hybrid' && co2 <= 50) {
-    // Plugin hybrid with CO2 <= 50: lookup by electric range
+  } else if (co2 >= 1 && co2 <= 50) {
+    // Any car with CO2 of 1 to 50 g/km: lookup by electric range (GOV.UK)
     const ranges = RATES.bik.pluginHybrid[0].ranges;
     const match = ranges.find((r) => electricRange >= r.minRange);
     bikRate = match ? match.rate : ranges[ranges.length - 1].rate;
@@ -41,11 +41,11 @@ export function calcBiKTax(details, marginalRate) {
     // Petrol or diesel: lookup by CO2 emissions
     const band = RATES.bik.petrol.find((b) => co2 <= b.maxCO2);
     bikRate = band ? band.rate : RATES.bik.petrol[RATES.bik.petrol.length - 1].rate;
+  }
 
-    // Diesel supplement, capped at maximum BIK rate
-    if (fuelType === 'diesel') {
-      bikRate = Math.min(bikRate + RATES.bik.dieselSupplement, RATES.bik.maxBikRate);
-    }
+  // Diesel supplement, capped at maximum BIK rate
+  if (fuelType === 'diesel') {
+    bikRate = Math.min(bikRate + RATES.bik.dieselSupplement, RATES.bik.maxBikRate);
   }
 
   const annualBiKValue = Math.round(p11dValue * bikRate);
