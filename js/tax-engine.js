@@ -41,8 +41,8 @@ export const RATES = {
   },
 
   selfEmployedNI: {
-    class2WeeklyRate: 3.65,
-    class2Threshold: 12570,
+    class2WeeklyRate: 3.65,     // voluntary rate only (below the small profits threshold)
+    smallProfitsThreshold: 7105, // at or above this, Class 2 is treated as paid (nothing to pay)
     class4LowerProfit: 12570,
     class4UpperProfit: 50270,
     class4LowerRate: 0.06,
@@ -285,16 +285,15 @@ export function calcEmployerNI(salary) {
 
 /**
  * Self-employed NI: Class 2 + Class 4.
+ * Class 2 is never compulsory: at profits of £7,105 or more it is treated as paid,
+ * and below that it is voluntary (not included here).
  * Returns { class2, class4, total }
  */
 export function calcSelfEmployedNI(profit) {
   const se = RATES.selfEmployedNI;
 
-  // Class 2: flat weekly rate if profit >= threshold
-  const class2 =
-    profit >= se.class2Threshold
-      ? round2(se.class2WeeklyRate * 52)
-      : 0;
+  // Class 2: nothing to pay (treated as paid, or voluntary below £7,105)
+  const class2 = 0;
 
   // Class 4: 6% on £12,570-£50,270, 2% above £50,270
   let class4 = 0;

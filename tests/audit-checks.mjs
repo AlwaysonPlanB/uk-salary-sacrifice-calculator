@@ -5,6 +5,7 @@
 import {
   calcIncomeTax,
   calcDividendTax,
+  calcSelfEmployedNI,
 } from '../js/tax-engine.js';
 
 let passed = 0;
@@ -41,6 +42,10 @@ check('L6', 'Salary £12,570 + dividends £50,000', calcDividendTax(50000, 12570
 check('OK', 'Salary £12,570 + dividends £30,000', calcDividendTax(30000, 12570).tax, 3171.25);
 check('OK', 'Dividends within allowance', calcDividendTax(500, 12570).tax, 0);
 check('OK', 'Salary income tax, no dividends, default PA', calcIncomeTax(12570).tax, 0);
+
+// L3: Class 2 is not payable at profits of £7,105 or more
+check('L3', 'Self-employed NI on £40,000 profit: Class 2', calcSelfEmployedNI(40000).class2, 0);
+check('L3', 'Self-employed NI on £40,000 profit: total', calcSelfEmployedNI(40000).total, 1645.80);
 
 console.log(`\n${passed} passed, ${failed} failed`);
 process.exit(failed ? 1 : 0);
