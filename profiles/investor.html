@@ -393,9 +393,10 @@
       const isResidential = getCheckbox('isResidential');
       const isBADR = getCheckbox('isBADR');
       const investmentAmount = getNumericInput('investmentAmount');
-      const expectedReturn = getNumericInput('expectedReturn', 7);
+      // Keep within the inputs' own limits (0 to 100% return, 1 to 50 years)
+      const expectedReturn = Math.min(100, Math.max(0, getNumericInput('expectedReturn', 7)));
       const holdingPeriod = getNumericInput('holdingPeriod', 10);
-      const years = Math.max(1, Math.round(holdingPeriod));
+      const years = Math.min(50, Math.max(1, Math.round(holdingPeriod)));
 
       // ── 1. Dividend Tax ──
       const divTaxResult = calcDividendTax(dividendIncome, otherIncome);
