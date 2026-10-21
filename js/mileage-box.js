@@ -81,7 +81,7 @@ function build(config) {
 
   const app = document.createElement('p');
   app.className = 'mileage-box-note';
-  app.textContent = 'MileLog, our own £1.99 iPhone app, logs each trip at HMRC rates and exports a report for your records.';
+  app.textContent = 'MileLog, our own £1.99 iPhone app, logs each business trip and exports a report for your records.';
   body.appendChild(app);
 
   const link = document.createElement('a');
