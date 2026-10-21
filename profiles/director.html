@@ -604,6 +604,7 @@
 
       // BIK details
       let bikTaxAmount = 0;
+      let bikValue = 0;
       const hasBiK = evLease > 0;
       if (hasBiK) {
         const p11dValue = getNumericInput('p11dValue');
@@ -617,8 +618,8 @@
             co2: carCO2,
             fuelType,
             electricRange
-          }, salary);
-          bikTaxAmount = bikResult.bikTax || 0;
+          }, 0);
+          bikValue = bikResult.annualBiKValue || 0;
         }
       }
 
@@ -650,8 +651,19 @@
       // 7-11: Personal tax depends on spouse split
       let personalTax, empNI, divTax, studentLoan, takeHome, takeHomeMonthly, totalBurden;
 
+      // Car benefit tax: the extra personal tax from adding the benefit to director 1's
+      // salary, with dividends taxed on top
+      const bikExtraTax = (div) => {
+        if (bikValue <= 0) return 0;
+        const base = calcIncomeTax(salary, false, salary + div).tax + calcDividendTax(div, salary).tax;
+        const withBiK = calcIncomeTax(salary + bikValue, false, salary + bikValue + div).tax +
+          calcDividendTax(div, salary + bikValue).tax;
+        return Math.max(0, withBiK - base);
+      };
+
       if (includeSpouse) {
         const divPerPerson = dividends / 2;
+        bikTaxAmount = bikExtraTax(divPerPerson);
 
         // Director 1
         const d1IncomeTax = calcIncomeTax(salary, false, salary + divPerPerson);
@@ -699,6 +711,7 @@
         showIf('spouseSection', false);
         document.getElementById('personalTaxHeading').textContent = 'Personal Tax (Your Extraction)';
 
+        bikTaxAmount = bikExtraTax(dividends);
         personalTax = calcIncomeTax(salary, false, salary + dividends);
         empNI = calcEmployeeNI(salary);
         divTax = calcDividendTax(dividends, salary);
