@@ -235,7 +235,7 @@
             </div>
 
             <p style="margin-top:1rem; font-size:0.82rem; color:var(--text-muted); line-height:1.6;">
-              HMRC requires two payments on account, each equal to 50% of your previous year's tax bill. These are due on 31 January and 31 July. A balancing payment (or refund) is made with your Self Assessment return.
+              Payments on account are two payments, due 31 January and 31 July, each half of last year's income tax and Class 4 NI. Student loan and capital gains are paid in the balancing payment instead. You do not make them if last year's tax was under &pound;1,000, or if you paid more than 80% of it outside Self Assessment (for example through PAYE). Shown here using this year's figures as an estimate.
             </p>
           </div>
 
@@ -294,7 +294,7 @@
             <li><strong>Self-employed NI:</strong> Class 2 is treated as paid at profits of &pound;7,105 or more (voluntary at &pound;3.65 a week below that). Class 4 is 6% on profits from &pound;12,570 to &pound;50,270 and 2% above. Rates may differ if you have a deferment certificate. <a href="https://www.gov.uk/self-employed-national-insurance-rates" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Self-employed NI rates &rarr;</a></li>
             <li><strong>Tax region:</strong> England, Wales &amp; NI rates by default. Tick &ldquo;Scottish taxpayer&rdquo; for Scottish bands. <a href="https://www.gov.uk/income-tax-rates" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Income Tax rates &rarr;</a></li>
             <li><strong>Allowable expenses:</strong> Only genuine business expenses are deductible. This calculator does not validate what qualifies as an allowable expense. <a href="https://www.gov.uk/expenses-if-youre-self-employed" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Allowable expenses &rarr;</a></li>
-            <li><strong>Payment on account:</strong> Calculated as 50% of total tax bill. You may reduce payments on account if you expect a lower bill next year. <a href="https://www.gov.uk/understand-self-assessment-bill/payments-on-account" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Payments on account &rarr;</a></li>
+            <li><strong>Payment on account:</strong> Each is 50% of income tax plus Class 4 NI (not student loan), and none are due if that is under &pound;1,000. You may reduce payments on account if you expect a lower bill next year. <a href="https://www.gov.uk/understand-self-assessment-bill/payments-on-account" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Payments on account &rarr;</a></li>
             <li><strong>Pension relief:</strong> Personal contributions receive basic-rate relief at source; higher/additional rate relief must be claimed via Self Assessment. <a href="https://www.gov.uk/tax-on-your-private-pension/pension-tax-relief" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Pension tax relief &rarr;</a></li>
             <li><strong>MTD:</strong> Making Tax Digital for Income Tax is mandatory from April 2026 for those with qualifying income above &pound;50,000. <a href="https://www.gov.uk/guidance/use-making-tax-digital-for-income-tax" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: MTD for Income Tax &rarr;</a></li>
           </ul>
@@ -416,9 +416,11 @@
       const takeHome = totalIncome - pension - totalTax;
       const takeHomeMonthly = takeHome / 12;
 
-      // 9. Payment on account
+      // 9. Payment on account: half of income tax plus Class 4 NI each. Student loan
+      // and capital gains go in the balancing payment. None if under £1,000 (GOV.UK).
       const totalBill = totalTax;
-      const poaEach = totalBill / 2;
+      const poaBase = taxResult.tax + ni.class4;
+      const poaEach = poaBase < 1000 ? 0 : poaBase / 2;
 
       // 10. Pension benefit
       const basicRelief = pension * 0.20;
