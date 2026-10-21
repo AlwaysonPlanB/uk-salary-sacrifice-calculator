@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Google Analytics -->
+  <script>try{if(localStorage.getItem('uktaxcal-analytics-optout')==='1'){window['ga-disable-G-B0YQPMRS5H']=true;}}catch(e){}</script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-B0YQPMRS5H"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-B0YQPMRS5H');</script>
   <title>Inside IR35 Umbrella Calculator 2026/27 | UKTaxCal</title>
@@ -16,14 +17,16 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://uktaxcal.com/profiles/inside-ir35.html">
   <meta property="og:site_name" content="UKTaxCal">
-  <meta name="twitter:card" content="summary">
+  <meta property="og:image" content="https://uktaxcal.com/images/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="UKTaxCal: free UK tax calculators for 2026/27">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://uktaxcal.com/images/og-image.png">
   <meta name="twitter:title" content="Inside IR35 Calculator 2026/27 — Umbrella Company Take-Home Pay">
   <meta name="twitter:description" content="Free UK Inside IR35 contractor and umbrella company tax calculator for 2026/27. Calculate rate erosion, employer NI, apprenticeship levy, umbrella margin, and take-home pay with real-time results.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"></noscript>
+  <link rel="stylesheet" href="../css/fonts.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="../css/fonts.css"></noscript>
   <link rel="stylesheet" href="../css/style.css">
   <script type="application/ld+json">
   {
@@ -36,6 +39,26 @@
     "operatingSystem": "Any",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
     "provider": { "@type": "Organization", "name": "UKTaxCal", "url": "https://uktaxcal.com" }
+  }
+  </script>
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "UKTaxCal",
+        "item": "https://uktaxcal.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Inside IR35 Calculator 2026/27",
+        "item": "https://uktaxcal.com/profiles/inside-ir35.html"
+      }
+    ]
   }
   </script>
 </head>
@@ -62,6 +85,7 @@
         <span class="badge">Tax Year 2026/27</span>
         <h1>Inside IR35 Umbrella Company Calculator 2026/27</h1>
         <p>Free UK inside IR35 contractor take-home pay calculator. See exactly how your day rate is eroded by employer NI, apprenticeship levy, umbrella margin, income tax, and employee NI — updated for April 2026 HMRC rates. Enter your assignment rate to see what you actually keep.</p>
+        <p style="font-size:0.82rem; color:var(--text-muted); margin-top:0.5rem;">Rates checked against GOV.UK: October 2026</p>
       </div>
     </section>
 
@@ -70,6 +94,7 @@
       <div class="grid-2">
 
         <!-- ============ LEFT COLUMN — Inputs ============ -->
+        <h2 class="sr-only">Your details and results</h2>
         <div class="input-column">
 
           <!-- Card 1: Assignment Details -->
@@ -290,6 +315,11 @@
       <div id="affiliateContainer"></div>
     </section>
 
+    <!-- Related analysis -->
+    <section class="container" style="margin-top:2rem;">
+      <p style="font-size:0.9rem; color:var(--text-muted);">Related analysis: <a href="../blog/ir35-umbrella-impact-2026.html" style="color:var(--accent);">Inside IR35: The True Cost</a></p>
+    </section>
+
     <!-- Assumptions -->
     <section class="container" style="margin-top:2rem;">
       <div class="result-section">
@@ -299,10 +329,11 @@
         </div>
         <div class="collapsible-body">
           <ul style="font-size:0.85rem; color:var(--text-muted); line-height:1.9; padding-left:1.2rem;">
-            <li><strong>Umbrella deductions:</strong> Employer NI (15% above &pound;5,000) and Apprenticeship Levy (0.5%) are deducted from your assignment rate before you receive any pay. These are statutory deductions, not umbrella fees. <a href="https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2026-to-2027" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Employer rates &rarr;</a></li>
+            <li><strong>Umbrella deductions:</strong> Employer NI (15% above &pound;5,000) and Apprenticeship Levy (0.5%) are deducted from your assignment rate before you receive any pay. These are statutory deductions, not umbrella fees. Employer NI here is worked out on your pay before any pension salary sacrifice. Some umbrella companies pass the employer NI saving from salary sacrifice back to you, so check with yours. <a href="https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2026-to-2027" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Employer rates &rarr;</a></li>
             <li><strong>Umbrella margin:</strong> The weekly margin varies between providers (typically &pound;15&ndash;&pound;35/week). Check your umbrella&rsquo;s terms for exact fees. <a href="https://www.gov.uk/employment-status/umbrella-company" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Umbrella companies &rarr;</a></li>
             <li><strong>IR35 determination:</strong> This calculator assumes you are inside IR35 and working via an umbrella. If your status is disputed, seek a formal determination. <a href="https://www.gov.uk/guidance/understanding-off-payroll-working-ir35" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Understanding IR35 &rarr;</a></li>
             <li><strong>Holiday pay &amp; benefits:</strong> Some umbrellas include accrued holiday pay in your rate. This calculator does not model holiday pay accrual separately.</li>
+            <li><strong>Student loans:</strong> This calculator works out repayments on your pay before pension salary sacrifice. We could not confirm on GOV.UK how every payroll treats this, so check with your umbrella company or an accountant.</li>
             <li><strong>Pension auto-enrolment:</strong> Your umbrella company must auto-enrol you into a workplace pension. The minimum employer contribution is not shown separately here. <a href="https://www.gov.uk/workplace-pensions/what-you-your-employer-and-the-government-pay" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Workplace pensions &rarr;</a></li>
           </ul>
         </div>
@@ -337,6 +368,7 @@
     <div class="container">
       <p>UKTaxCal is for illustrative purposes only and does not constitute financial or tax advice.<br>
       Always consult a qualified accountant or tax adviser. Calculations are based on announced HMRC rates for 2026/27.</p>
+      <p style="margin-top:0.5rem;"><a href="/privacy.html">Privacy and cookies</a></p>
     </div>
   </footer>
 
@@ -531,7 +563,8 @@
       // ── Warnings ──
       const warnings = getWarnings({
         profile: 'inside-ir35',
-        grossSalary: grossSalary
+        grossSalary: grossSalary,
+        adjustedNetIncome: taxableGross
       });
 
       renderWarnings('warningsContainer', warnings);

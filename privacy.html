@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google Analytics -->
+  <script>try{if(localStorage.getItem('uktaxcal-analytics-optout')==='1'){window['ga-disable-G-B0YQPMRS5H']=true;}}catch(e){}</script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-B0YQPMRS5H"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-B0YQPMRS5H');</script>
+  <title>Privacy and Cookies | UKTaxCal</title>
+  <meta name="description" content="How UKTaxCal handles your data: calculator figures stay in your browser, and Google Analytics helps us improve the site. Turn analytics off here.">
+  <link rel="canonical" href="https://uktaxcal.com/privacy.html">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/fonts.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="/css/fonts.css"></noscript>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container">
+      <a href="/" class="logo">UK<span class="accent">Tax</span>Cal</a>
+      <nav class="nav-links">
+        <a href="/">Home</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <span class="toggle-icon">&#9790;</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <article class="blog-article">
+      <h1>Privacy and cookies</h1>
+      <p style="color:var(--text-muted); font-size:0.9rem;">Last updated 21 October 2026</p>
+
+      <h2>Who we are</h2>
+      <p>UKTaxCal (uktaxcal.com) is run by AlwaysOnPlanB. You can contact us through <a href="https://alwaysonplanb.com/contact.html" target="_blank" rel="noopener">alwaysonplanb.com/contact.html</a>.</p>
+
+      <h2>Your calculator figures stay on your device</h2>
+      <p>The numbers you type into our calculators are worked out in your browser. They are not sent to us and we do not store them.</p>
+
+      <h2>Analytics</h2>
+      <p>We use Google Analytics to understand how the site is used so we can improve it. It records things like the pages you visit, how long you stay, how you arrived (for example from a search engine), your device and browser type, and your approximate location such as your country or city.</p>
+      <p>Google processes this data for us as our processor under the Google Ads Data Processing Terms. We have turned off Google signals and sharing data with Google for its own products and services, and we do not use Google Analytics for advertising. Google Analytics keeps this data for 14 months, then deletes it.</p>
+      <p>We rely on the statistical purposes exception in the Privacy and Electronic Communications Regulations (as updated by the Data (Use and Access) Act 2025) and on our legitimate interest in improving the site under UK GDPR. You can turn analytics off at any time below.</p>
+
+      <h3>Cookies and storage we use</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Name</th><th>Set by</th><th>Purpose</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>_ga, _ga_B0YQPMRS5H</td><td>Google Analytics</td><td>Tells visits apart so we can count visitors and see how the site is used</td></tr>
+            <tr><td>uktaxcal-theme</td><td>UKTaxCal (browser storage)</td><td>Remembers light or dark mode. Stays on your device.</td></tr>
+            <tr><td>uktaxcal-analytics-optout</td><td>UKTaxCal (browser storage)</td><td>Remembers that you turned analytics off. Stays on your device.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Turn analytics off</h3>
+      <div class="result-section" style="margin:1rem 0;">
+        <p id="optoutStatus" style="margin:0 0 0.75rem;">Analytics is on for this browser.</p>
+        <button class="btn-primary" id="optoutButton" type="button">Turn analytics off</button>
+        <p style="font-size:0.85rem; color:var(--text-muted); margin:0.75rem 0 0;">This applies to this browser on this device. It removes our Google Analytics cookies and stops analytics on every UKTaxCal page.</p>
+      </div>
+
+      <h2>Links to other sites</h2>
+      <p>Some pages link to other services, such as the App Store for our own app MileLog, and referral links to Xero, Wise and Vitality. When you follow a link, that site&rsquo;s own privacy policy applies. Referral links tell the other site that you came from us.</p>
+
+      <h2>Your rights</h2>
+      <p>You can ask us what personal data we hold about you, ask us to correct or delete it, or object to how we use it. Contact us using the link above. If you are unhappy with how we handle your data, you can complain to the Information Commissioner&rsquo;s Office at <a href="https://ico.org.uk/make-a-complaint/" target="_blank" rel="noopener">ico.org.uk</a>.</p>
+
+      <h2>Changes to this page</h2>
+      <p>We will update this page if how we use data changes, and change the date at the top.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>UKTaxCal is for illustrative purposes only and does not constitute financial or tax advice.<br>
+      Always consult a qualified accountant or tax adviser. Calculations are based on announced HMRC rates for 2026/27.</p>
+      <p style="margin-top:0.5rem;"><a href="/privacy.html">Privacy and cookies</a></p>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      var KEY = 'uktaxcal-analytics-optout';
+      var status = document.getElementById('optoutStatus');
+      var button = document.getElementById('optoutButton');
+
+      function isOptedOut() {
+        try { return localStorage.getItem(KEY) === '1'; } catch (e) { return false; }
+      }
+
+      function removeAnalyticsCookies() {
+        var host = location.hostname;
+        var domains = ['', host, '.' + host, '.' + host.replace(/^www\./, '')];
+        document.cookie.split(';').forEach(function(c) {
+          var name = c.split('=')[0].trim();
+          if (name.indexOf('_ga') === 0) {
+            domains.forEach(function(d) {
+              document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/' + (d ? '; domain=' + d : '');
+            });
+          }
+        });
+      }
+
+      function render() {
+        var off = isOptedOut();
+        status.textContent = off ? 'Analytics is off for this browser.' : 'Analytics is on for this browser.';
+        button.textContent = off ? 'Turn analytics back on' : 'Turn analytics off';
+      }
+
+      button.addEventListener('click', function() {
+        try {
+          if (isOptedOut()) {
+            localStorage.removeItem(KEY);
+            window['ga-disable-G-B0YQPMRS5H'] = false;
+          } else {
+            localStorage.setItem(KEY, '1');
+            window['ga-disable-G-B0YQPMRS5H'] = true;
+            removeAnalyticsCookies();
+          }
+        } catch (e) {
+          status.textContent = 'Your browser is blocking storage, so we cannot save this choice.';
+          return;
+        }
+        render();
+      });
+
+      render();
+    })();
+  </script>
+
+  <!-- Theme Toggle Script -->
+  <script>
+    (function() {
+      var toggle = document.getElementById('themeToggle');
+      var iconEl = toggle.querySelector('.toggle-icon');
+      var html = document.documentElement;
+      var moonChar = '\u263E';
+      var sunChar = '\u263C';
+
+      // Restore saved theme
+      var saved = localStorage.getItem('uktaxcal-theme');
+      if (saved) {
+        html.setAttribute('data-theme', saved);
+      }
+
+      function updateIcon() {
+        var theme = html.getAttribute('data-theme');
+        iconEl.textContent = theme === 'light' ? sunChar : moonChar;
+      }
+
+      updateIcon();
+
+      toggle.addEventListener('click', function() {
+        var current = html.getAttribute('data-theme');
+        var next = current === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', next);
+        localStorage.setItem('uktaxcal-theme', next);
+        updateIcon();
+      });
+    })();
+  </script>
+
+</body>
+</html>

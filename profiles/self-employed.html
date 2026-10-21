@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Google Analytics -->
+  <script>try{if(localStorage.getItem('uktaxcal-analytics-optout')==='1'){window['ga-disable-G-B0YQPMRS5H']=true;}}catch(e){}</script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-B0YQPMRS5H"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-B0YQPMRS5H');</script>
   <title>Self-Employed Tax Calculator 2026/27 | UKTaxCal</title>
@@ -16,14 +17,16 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://uktaxcal.com/profiles/self-employed.html">
   <meta property="og:site_name" content="UKTaxCal">
-  <meta name="twitter:card" content="summary">
+  <meta property="og:image" content="https://uktaxcal.com/images/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="UKTaxCal: free UK tax calculators for 2026/27">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://uktaxcal.com/images/og-image.png">
   <meta name="twitter:title" content="Self-Employed Tax Calculator 2026/27 — Sole Trader Income Tax & NI">
   <meta name="twitter:description" content="Free UK self-employed sole trader tax calculator for 2026/27. Calculate income tax, Class 2 &amp; 4 National Insurance, student loans, pension relief, and take-home pay with real-time results.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"></noscript>
+  <link rel="stylesheet" href="../css/fonts.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="../css/fonts.css"></noscript>
   <link rel="stylesheet" href="../css/style.css">
   <script type="application/ld+json">
   {
@@ -36,6 +39,26 @@
     "operatingSystem": "Any",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
     "provider": { "@type": "Organization", "name": "UKTaxCal", "url": "https://uktaxcal.com" }
+  }
+  </script>
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "UKTaxCal",
+        "item": "https://uktaxcal.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Self-Employed Tax Calculator 2026/27",
+        "item": "https://uktaxcal.com/profiles/self-employed.html"
+      }
+    ]
   }
   </script>
 </head>
@@ -61,7 +84,8 @@
       <div class="container">
         <span class="badge">Tax Year 2026/27</span>
         <h1>Self-Employed Tax Calculator 2026/27</h1>
-        <p>Free UK sole trader tax calculator. Calculate your income tax, Class 2 and Class 4 National Insurance, student loan repayments, pension relief, and payments on account — using the latest HMRC rates for 2026/27. MTD for Income Tax is now mandatory for self-employed workers earning over £50,000.</p>
+        <p>Free UK sole trader tax calculator. Calculate your income tax, Class 2 and Class 4 National Insurance, student loan repayments, pension relief, and payments on account, using the latest HMRC rates for 2026/27. MTD for Income Tax now applies if your qualifying income (turnover) was over £50,000 in 2024/25, and from April 2027 if it was over £30,000 in 2025/26.</p>
+        <p style="font-size:0.82rem; color:var(--text-muted); margin-top:0.5rem;">Rates checked against GOV.UK: October 2026</p>
       </div>
     </section>
 
@@ -70,6 +94,7 @@
       <div class="grid-2">
 
         <!-- ============ LEFT COLUMN — Inputs ============ -->
+        <h2 class="sr-only">Your details and results</h2>
         <div class="input-column">
 
           <!-- Card 1: Business Income -->
@@ -190,14 +215,14 @@
               <span class="value" id="resTax">&minus;&pound;0</span>
             </div>
             <div class="result-row negative">
-              <span class="label">Class 2 NI (&pound;3.65/week)</span>
+              <span class="label">Class 2 NI (treated as paid)</span>
               <span class="value" id="resNIC2">&minus;&pound;0</span>
             </div>
             <div class="result-row negative">
               <span class="label">Class 4 NI</span>
               <span class="value" id="resNIC4">&minus;&pound;0</span>
             </div>
-            <p style="font-size:0.82rem; color:var(--text-muted); margin-top:0.25rem; margin-bottom:0;">Class 2 (&pound;3.65/week if profit exceeds &pound;12,570) and Class 4 (6%/2%) are standard self-employed rates. <a href="https://www.gov.uk/self-employed-national-insurance-rates" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Self-employed NI rates &rarr;</a></p>
+            <p style="font-size:0.82rem; color:var(--text-muted); margin-top:0.25rem; margin-bottom:0;">Class 2 is treated as paid if your profits are &pound;7,105 or more, so there is nothing to pay. Below that it is voluntary at &pound;3.65 a week. Class 4 is 6% on profits from &pound;12,570 to &pound;50,270 and 2% above. <a href="https://www.gov.uk/self-employed-national-insurance-rates" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Self-employed NI rates &rarr;</a></p>
             <div class="result-row negative">
               <span class="label">Student Loan</span>
               <span class="value" id="resStudentLoan">&minus;&pound;0</span>
@@ -235,7 +260,7 @@
             </div>
 
             <p style="margin-top:1rem; font-size:0.82rem; color:var(--text-muted); line-height:1.6;">
-              HMRC requires two payments on account, each equal to 50% of your previous year's tax bill. These are due on 31 January and 31 July. A balancing payment (or refund) is made with your Self Assessment return.
+              Payments on account are two payments, due 31 January and 31 July, each half of last year's income tax and Class 4 NI. Student loan and capital gains are paid in the balancing payment instead. You do not make them if last year's tax was under &pound;1,000, or if you paid more than 80% of it outside Self Assessment (for example through PAYE). Shown here using this year's figures as an estimate.
             </p>
           </div>
 
@@ -282,6 +307,11 @@
       <div id="affiliateContainer"></div>
     </section>
 
+    <!-- Related analysis -->
+    <section class="container" style="margin-top:2rem;">
+      <p style="font-size:0.9rem; color:var(--text-muted);">Related analysis: <a href="../blog/mtd-income-tax-2026.html" style="color:var(--accent);">MTD: What You Must Do</a> &middot; <a href="../blog/fiscal-drag-frozen-thresholds.html" style="color:var(--accent);">Fiscal Drag: The Silent Tax Rise</a> &middot; <a href="../blog/mileage-allowance-2026-27.html" style="color:var(--accent);">Mileage Allowance: The New 55p Rate</a></p>
+    </section>
+
     <!-- Assumptions -->
     <section class="container" style="margin-top:2rem;">
       <div class="result-section">
@@ -291,12 +321,12 @@
         </div>
         <div class="collapsible-body">
           <ul style="font-size:0.85rem; color:var(--text-muted); line-height:1.9; padding-left:1.2rem;">
-            <li><strong>Self-employed NI:</strong> Class 2 at &pound;3.65/week (if profit exceeds &pound;12,570) and Class 4 at 6% (&pound;12,570&ndash;&pound;50,270) / 2% above. Rates may differ if you have a deferment certificate. <a href="https://www.gov.uk/self-employed-national-insurance-rates" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Self-employed NI rates &rarr;</a></li>
+            <li><strong>Self-employed NI:</strong> Class 2 is treated as paid at profits of &pound;7,105 or more (voluntary at &pound;3.65 a week below that). Class 4 is 6% on profits from &pound;12,570 to &pound;50,270 and 2% above. Rates may differ if you have a deferment certificate. <a href="https://www.gov.uk/self-employed-national-insurance-rates" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Self-employed NI rates &rarr;</a></li>
             <li><strong>Tax region:</strong> England, Wales &amp; NI rates by default. Tick &ldquo;Scottish taxpayer&rdquo; for Scottish bands. <a href="https://www.gov.uk/income-tax-rates" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Income Tax rates &rarr;</a></li>
             <li><strong>Allowable expenses:</strong> Only genuine business expenses are deductible. This calculator does not validate what qualifies as an allowable expense. <a href="https://www.gov.uk/expenses-if-youre-self-employed" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Allowable expenses &rarr;</a></li>
-            <li><strong>Payment on account:</strong> Calculated as 50% of total tax bill. You may reduce payments on account if you expect a lower bill next year. <a href="https://www.gov.uk/understand-self-assessment-bill/payments-on-account" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Payments on account &rarr;</a></li>
+            <li><strong>Payment on account:</strong> Each is 50% of income tax plus Class 4 NI (not student loan), and none are due if that is under &pound;1,000. You may reduce payments on account if you expect a lower bill next year. <a href="https://www.gov.uk/understand-self-assessment-bill/payments-on-account" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Payments on account &rarr;</a></li>
             <li><strong>Pension relief:</strong> Personal contributions receive basic-rate relief at source; higher/additional rate relief must be claimed via Self Assessment. <a href="https://www.gov.uk/tax-on-your-private-pension/pension-tax-relief" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Pension tax relief &rarr;</a></li>
-            <li><strong>MTD:</strong> Making Tax Digital for Income Tax is mandatory from April 2026 for those with qualifying income above &pound;50,000. <a href="https://www.gov.uk/guidance/use-making-tax-digital-for-income-tax" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: MTD for Income Tax &rarr;</a></li>
+            <li><strong>MTD:</strong> Making Tax Digital for Income Tax applies from April 2026 if your qualifying income (turnover) was over &pound;50,000 in 2024/25, from April 2027 if over &pound;30,000 in 2025/26, and from April 2028 if over &pound;20,000 in 2026/27. <a href="https://www.gov.uk/guidance/use-making-tax-digital-for-income-tax" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: MTD for Income Tax &rarr;</a></li>
           </ul>
         </div>
       </div>
@@ -330,6 +360,7 @@
     <div class="container">
       <p>UKTaxCal is for illustrative purposes only and does not constitute financial or tax advice.<br>
       Always consult a qualified accountant or tax adviser. Calculations are based on announced HMRC rates for 2026/27.</p>
+      <p style="margin-top:0.5rem;"><a href="/privacy.html">Privacy and cookies</a></p>
     </div>
   </footer>
 
@@ -348,6 +379,7 @@
     import { renderCalendar } from '../js/calendar.js';
     import { downloadICS } from '../js/ical-export.js';
     import { getRecommendations, renderAffiliates } from '../js/affiliate.js';
+    import { renderMileageBox, approvedMileage } from '../js/mileage-box.js';
     import {
       setupTheme,
       setupCollapsibles,
@@ -416,9 +448,11 @@
       const takeHome = totalIncome - pension - totalTax;
       const takeHomeMonthly = takeHome / 12;
 
-      // 9. Payment on account
+      // 9. Payment on account: half of income tax plus Class 4 NI each. Student loan
+      // and capital gains go in the balancing payment. None if under £1,000 (GOV.UK).
       const totalBill = totalTax;
-      const poaEach = totalBill / 2;
+      const poaBase = taxResult.tax + ni.class4;
+      const poaEach = poaBase < 1000 ? 0 : poaBase / 2;
 
       // 10. Pension benefit
       const basicRelief = pension * 0.20;
@@ -469,6 +503,7 @@
       const warnings = getWarnings({
         profile: 'self-employed',
         grossSalary: totalIncome,
+        qualifyingIncome: turnover,
         adjustedNetIncome,
         hasChildcare,
         isScottish
@@ -484,6 +519,27 @@
       });
 
       renderAffiliates('affiliateContainer', recommendations);
+
+      // MileLog box: simplified expenses mileage claim and the tax it saves
+      renderMileageBox({
+        profile: 'self-employed',
+        title: 'Driving for work? See what your mileage is worth',
+        note: 'Under simplified expenses you can claim 55p a mile for the first 10,000 business miles and 25p after, and you need to keep records of your business miles (GOV.UK). Only add this if your expenses above do not already include car costs.',
+        rows: (miles, pence, ctx) => {
+          const claim = approvedMileage(miles);
+          return [
+            { label: 'Mileage claim', amount: claim },
+            { label: 'Income tax and Class 4 NI saved', amount: ctx.saving(claim) },
+          ];
+        },
+      }, {
+        saving: (claim) => {
+          const profitAfter = Math.max(0, profit - claim);
+          const taxableAfter = Math.max(0, profitAfter + otherIncome - pension);
+          return (taxResult.tax + ni.class4) -
+            (calcIncomeTax(taxableAfter, isScottish).tax + calcSelfEmployedNI(profitAfter).class4);
+        },
+      });
 
       // Mobile summary
       updateMobileSummary(takeHome, takeHomeMonthly);

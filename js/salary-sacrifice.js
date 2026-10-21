@@ -3,7 +3,7 @@
  * Compares take-home pay with and without salary sacrifice arrangements.
  */
 
-import { calcIncomeTax, calcEmployeeNI, RATES } from './tax-engine.js';
+import { calcIncomeTax, calcEmployeeNI, calcTaperedAA, RATES } from './tax-engine.js';
 import { calcCombinedStudentLoans } from './student-loans.js';
 
 /* ------------------------------------------------------------------ */
@@ -12,29 +12,6 @@ import { calcCombinedStudentLoans } from './student-loans.js';
 
 function round2(x) {
   return Math.round(x * 100) / 100;
-}
-
-/* ------------------------------------------------------------------ */
-/*  Pension Annual Allowance                                          */
-/* ------------------------------------------------------------------ */
-
-/**
- * Pension annual allowance: £60k, reduces £1 per £2 above £200k, min £10k.
- * Mirrors calcTaperedAA from tax-engine.
- */
-function calcPensionAllowance(adjustedIncome) {
-  if (adjustedIncome <= RATES.pension.taperedAAThreshold) {
-    return RATES.pension.annualAllowance;
-  }
-
-  const reduction = Math.floor(
-    (adjustedIncome - RATES.pension.taperedAAThreshold) / 2
-  );
-
-  return Math.max(
-    RATES.pension.minimumTaperedAA,
-    RATES.pension.annualAllowance - reduction
-  );
 }
 
 /* ------------------------------------------------------------------ */
@@ -55,8 +32,8 @@ export function calcBiKTax(details, marginalRate) {
   if (fuelType === 'electric' || co2 === 0) {
     // Zero-emission: flat electric rate
     bikRate = RATES.bik.electric;
-  } else if (fuelType === 'hybrid' && co2 <= 50) {
-    // Plugin hybrid with CO2 <= 50: lookup by electric range
+  } else if (co2 >= 1 && co2 <= 50) {
+    // Any car with CO2 of 1 to 50 g/km: lookup by electric range (GOV.UK)
     const ranges = RATES.bik.pluginHybrid[0].ranges;
     const match = ranges.find((r) => electricRange >= r.minRange);
     bikRate = match ? match.rate : ranges[ranges.length - 1].rate;
@@ -64,11 +41,11 @@ export function calcBiKTax(details, marginalRate) {
     // Petrol or diesel: lookup by CO2 emissions
     const band = RATES.bik.petrol.find((b) => co2 <= b.maxCO2);
     bikRate = band ? band.rate : RATES.bik.petrol[RATES.bik.petrol.length - 1].rate;
+  }
 
-    // Diesel supplement, capped at maximum BIK rate
-    if (fuelType === 'diesel') {
-      bikRate = Math.min(bikRate + RATES.bik.dieselSupplement, RATES.bik.maxBikRate);
-    }
+  // Diesel supplement, capped at maximum BIK rate (not for zero-emission / no CO2 entered)
+  if (fuelType === 'diesel' && co2 > 0) {
+    bikRate = Math.min(bikRate + RATES.bik.dieselSupplement, RATES.bik.maxBikRate);
   }
 
   const annualBiKValue = Math.round(p11dValue * bikRate);
@@ -166,7 +143,9 @@ export function calcSalarySacrifice(input) {
   /* ---- Pension Check ---- */
 
   const totalContributions = personalPension + employerPension + additionalPension;
-  const annualAllowance = calcPensionAllowance(grossSalary);
+  // Pension salary sacrifice is added back for threshold income; other sacrifices are not
+  const thresholdIncome = grossSalary - cycleToWork - evLease - otherSacrifice;
+  const annualAllowance = calcTaperedAA(thresholdIncome, thresholdIncome + employerPension);
   const exceeded = totalContributions > annualAllowance;
 
   /* ---- Return ---- */

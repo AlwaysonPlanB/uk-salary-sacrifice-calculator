@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Google Analytics -->
+  <script>try{if(localStorage.getItem('uktaxcal-analytics-optout')==='1'){window['ga-disable-G-B0YQPMRS5H']=true;}}catch(e){}</script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-B0YQPMRS5H"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-B0YQPMRS5H');</script>
   <title>Investor Tax Calculator 2026/27 — CGT & ISA | UKTaxCal</title>
@@ -16,14 +17,16 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://uktaxcal.com/profiles/investor.html">
   <meta property="og:site_name" content="UKTaxCal">
-  <meta name="twitter:card" content="summary">
+  <meta property="og:image" content="https://uktaxcal.com/images/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="UKTaxCal: free UK tax calculators for 2026/27">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://uktaxcal.com/images/og-image.png">
   <meta name="twitter:title" content="Investor Tax Calculator 2026/27 — CGT, Dividends & ISA Calculator">
   <meta name="twitter:description" content="Free UK investor tax calculator for 2026/27. Calculate capital gains tax, dividend tax, ISA vs GIA comparison, and BADR relief — updated for the 2026/27 tax year.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"></noscript>
+  <link rel="stylesheet" href="../css/fonts.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="../css/fonts.css"></noscript>
   <link rel="stylesheet" href="../css/style.css">
   <script type="application/ld+json">
   {
@@ -36,6 +39,26 @@
     "operatingSystem": "Any",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
     "provider": { "@type": "Organization", "name": "UKTaxCal", "url": "https://uktaxcal.com" }
+  }
+  </script>
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "UKTaxCal",
+        "item": "https://uktaxcal.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Investor Tax Calculator 2026/27",
+        "item": "https://uktaxcal.com/profiles/investor.html"
+      }
+    ]
   }
   </script>
 </head>
@@ -62,6 +85,7 @@
         <span class="badge">Tax Year 2026/27</span>
         <h1>Investor Tax Calculator 2026/27 — CGT, Dividends & ISA</h1>
         <p>Free UK capital gains tax and dividend tax calculator for investors. Compare ISA vs GIA performance, calculate CGT on shares and property, and see the impact of the £500 dividend allowance — updated for April 2026 rates including BADR at 18%.</p>
+        <p style="font-size:0.82rem; color:var(--text-muted); margin-top:0.5rem;">Rates checked against GOV.UK: October 2026</p>
       </div>
     </section>
 
@@ -70,6 +94,7 @@
       <div class="grid-2">
 
         <!-- ============ LEFT COLUMN — Inputs ============ -->
+        <h2 class="sr-only">Your details and results</h2>
         <div class="input-column">
 
           <!-- Card 1: Your Income -->
@@ -262,6 +287,11 @@
       <div id="affiliateContainer"></div>
     </section>
 
+    <!-- Related analysis -->
+    <section class="container" style="margin-top:2rem;">
+      <p style="font-size:0.9rem; color:var(--text-muted);">Related analysis: <a href="../blog/dividend-tax-increase-2026.html" style="color:var(--accent);">Dividend Tax +2%: Real Impact</a></p>
+    </section>
+
     <!-- Assumptions -->
     <section class="container" style="margin-top:2rem;">
       <div class="result-section">
@@ -309,6 +339,7 @@
     <div class="container">
       <p>UKTaxCal is for illustrative purposes only and does not constitute financial or tax advice.<br>
       Always consult a qualified accountant or tax adviser. Calculations are based on announced HMRC rates for 2026/27.</p>
+      <p style="margin-top:0.5rem;"><a href="/privacy.html">Privacy and cookies</a></p>
     </div>
   </footer>
 
@@ -362,9 +393,10 @@
       const isResidential = getCheckbox('isResidential');
       const isBADR = getCheckbox('isBADR');
       const investmentAmount = getNumericInput('investmentAmount');
-      const expectedReturn = getNumericInput('expectedReturn', 7);
+      // Keep within the inputs' own limits (0 to 100% return, 1 to 50 years)
+      const expectedReturn = Math.min(100, Math.max(0, getNumericInput('expectedReturn', 7)));
       const holdingPeriod = getNumericInput('holdingPeriod', 10);
-      const years = Math.max(1, Math.round(holdingPeriod));
+      const years = Math.min(50, Math.max(1, Math.round(holdingPeriod)));
 
       // ── 1. Dividend Tax ──
       const divTaxResult = calcDividendTax(dividendIncome, otherIncome);

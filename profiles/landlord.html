@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Google Analytics -->
+  <script>try{if(localStorage.getItem('uktaxcal-analytics-optout')==='1'){window['ga-disable-G-B0YQPMRS5H']=true;}}catch(e){}</script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-B0YQPMRS5H"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-B0YQPMRS5H');</script>
   <title>Landlord Tax Calculator 2026/27 | UKTaxCal</title>
@@ -16,14 +17,16 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://uktaxcal.com/profiles/landlord.html">
   <meta property="og:site_name" content="UKTaxCal">
-  <meta name="twitter:card" content="summary">
+  <meta property="og:image" content="https://uktaxcal.com/images/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="UKTaxCal: free UK tax calculators for 2026/27">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://uktaxcal.com/images/og-image.png">
   <meta name="twitter:title" content="Landlord Tax Calculator 2026/27 — Rental Income & Section 24">
   <meta name="twitter:description" content="Free UK landlord property income tax calculator for 2026/27. Calculate rental income tax, Section 24 mortgage interest restriction, capital gains on property disposal, student loans, and take-home pay with real-time results.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"></noscript>
+  <link rel="stylesheet" href="../css/fonts.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="../css/fonts.css"></noscript>
   <link rel="stylesheet" href="../css/style.css">
   <script type="application/ld+json">
   {
@@ -36,6 +39,26 @@
     "operatingSystem": "Any",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
     "provider": { "@type": "Organization", "name": "UKTaxCal", "url": "https://uktaxcal.com" }
+  }
+  </script>
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "UKTaxCal",
+        "item": "https://uktaxcal.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Landlord Tax Calculator 2026/27",
+        "item": "https://uktaxcal.com/profiles/landlord.html"
+      }
+    ]
   }
   </script>
 </head>
@@ -61,7 +84,8 @@
       <div class="container">
         <span class="badge">Tax Year 2026/27</span>
         <h1>Landlord Rental Income Tax Calculator 2026/27</h1>
-        <p>Free UK landlord tax calculator for buy-to-let and rental property income. Calculate income tax on rent, Section 24 mortgage interest restriction, capital gains on property disposal, and take-home pay — updated for April 2026 HMRC rates. MTD for Income Tax is now mandatory for landlords earning over £50,000.</p>
+        <p>Free UK landlord tax calculator for buy-to-let and rental property income. Calculate income tax on rent, Section 24 mortgage interest restriction, capital gains on property disposal, and take-home pay, updated for April 2026 HMRC rates. MTD for Income Tax now applies if your qualifying income (rent before expenses, plus any self-employment turnover) was over £50,000 in 2024/25, and from April 2027 if it was over £30,000 in 2025/26.</p>
+        <p style="font-size:0.82rem; color:var(--text-muted); margin-top:0.5rem;">Rates checked against GOV.UK: October 2026</p>
       </div>
     </section>
 
@@ -70,6 +94,7 @@
       <div class="grid-2">
 
         <!-- ============ LEFT COLUMN — Inputs ============ -->
+        <h2 class="sr-only">Your details and results</h2>
         <div class="input-column">
 
           <!-- Card 1: Rental Income -->
@@ -168,7 +193,7 @@
               <span class="warning-icon">&#9432;</span>
               <div><strong>Section 24 Restriction:</strong> Since April 2020, mortgage interest is no longer deducted from rental income. Instead, you receive a 20% tax credit on mortgage interest paid. This means higher and additional rate taxpayers pay more tax on rental income than before the restriction.</div>
             </div>
-            <p style="font-size:0.82rem; color:var(--text-muted); margin-top:0.5rem;">Section 24 applies to individual landlords only; limited companies can still deduct mortgage interest in full. <a href="https://www.gov.uk/guidance/changes-to-tax-relief-for-residential-landlords" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Mortgage interest restriction &rarr;</a></p>
+            <p style="font-size:0.82rem; color:var(--text-muted); margin-top:0.5rem;">Section 24 applies to individual landlords only; limited companies can still deduct mortgage interest in full. <a href="https://www.gov.uk/guidance/changes-to-tax-relief-for-residential-landlords-how-its-worked-out-including-case-studies" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Mortgage interest restriction &rarr;</a></p>
           </div>
 
         </div>
@@ -216,6 +241,7 @@
               <span class="label">Mortgage Interest Tax Credit (20%)</span>
               <span class="value" id="resMortCredit">&pound;0</span>
             </div>
+            <p id="mortCarryNote" style="display:none; font-size:0.82rem; color:var(--text-muted); margin-top:0.25rem; margin-bottom:0;">The credit is limited to 20% of the lowest of your mortgage interest, your property profit and your income above the Personal Allowance. <span id="mortCarryAmount"></span> of interest is carried forward to next year. <a href="https://www.gov.uk/guidance/changes-to-tax-relief-for-residential-landlords-how-its-worked-out-including-case-studies" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: How it's worked out &rarr;</a></p>
             <div class="result-row negative">
               <span class="label">Net Tax After Credit</span>
               <span class="value" id="resNetTax">&minus;&pound;0</span>
@@ -350,6 +376,11 @@
       <div id="affiliateContainer"></div>
     </section>
 
+    <!-- Related analysis -->
+    <section class="container" style="margin-top:2rem;">
+      <p style="font-size:0.9rem; color:var(--text-muted);">Related analysis: <a href="../blog/mtd-income-tax-2026.html" style="color:var(--accent);">MTD: What You Must Do</a> &middot; <a href="../blog/mileage-allowance-2026-27.html" style="color:var(--accent);">Mileage Allowance: The New 55p Rate</a></p>
+    </section>
+
     <!-- Assumptions -->
     <section class="container" style="margin-top:2rem;">
       <div class="result-section">
@@ -362,7 +393,7 @@
             <li><strong>Section 24 mortgage interest:</strong> Finance costs are restricted to a 20% basic-rate tax credit. This applies to all individual landlords but <em>not</em> to limited companies holding property. <a href="https://www.gov.uk/guidance/changes-to-tax-relief-for-residential-landlords-how-its-worked-out-including-case-studies" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Mortgage interest restriction &rarr;</a></li>
             <li><strong>Allowable expenses:</strong> Only qualifying property expenses (repairs, letting fees, insurance etc.) are deductible. Improvements are capital expenditure and not allowable against rental income. <a href="https://www.gov.uk/guidance/income-tax-when-you-rent-out-a-property-working-out-your-rental-income#expenses" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Allowable property expenses &rarr;</a></li>
             <li><strong>CGT on property:</strong> Residential property CGT rates are 18% (basic) and 24% (higher). You must report and pay within 60 days of completion. Private residence relief may apply to your main home. <a href="https://www.gov.uk/tax-sell-property" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: CGT on property &rarr;</a></li>
-            <li><strong>Furnished holiday lets:</strong> The tax advantages for furnished holiday lettings were removed from April 2025. This calculator treats all rental income the same. <a href="https://www.gov.uk/government/publications/furnished-holiday-lettings" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Furnished holiday lets &rarr;</a></li>
+            <li><strong>Furnished holiday lets:</strong> The tax advantages for furnished holiday lettings were removed from April 2025. This calculator treats all rental income the same. <a href="https://www.gov.uk/government/publications/furnished-holiday-lettings-tax-regime-abolition" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Furnished holiday lets &rarr;</a></li>
             <li><strong>NI on rental income:</strong> Rental income is generally <em>not</em> subject to National Insurance unless HMRC considers it a trade. This calculator does not apply NI to rental profits. <a href="https://www.gov.uk/renting-out-a-property" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Renting out property &rarr;</a></li>
           </ul>
         </div>
@@ -397,6 +428,7 @@
     <div class="container">
       <p>UKTaxCal is for illustrative purposes only and does not constitute financial or tax advice.<br>
       Always consult a qualified accountant or tax adviser. Calculations are based on announced HMRC rates for 2026/27.</p>
+      <p style="margin-top:0.5rem;"><a href="/privacy.html">Privacy and cookies</a></p>
     </div>
   </footer>
 
@@ -415,6 +447,7 @@
     import { renderCalendar } from '../js/calendar.js';
     import { downloadICS } from '../js/ical-export.js';
     import { getRecommendations, renderAffiliates } from '../js/affiliate.js';
+    import { renderMileageBox, approvedMileage } from '../js/mileage-box.js';
     import {
       setupTheme,
       setupCollapsibles,
@@ -471,8 +504,12 @@
       // 4. Income tax
       const taxResult = calcIncomeTax(taxableIncome, isScottish);
 
-      // 5. Mortgage interest tax credit — Section 24: 20% credit
-      const mortgageCredit = mortgageInterest * 0.20;
+      // 5. Mortgage interest tax credit (Section 24): 20% of the lowest of finance costs,
+      // property profits and income above the Personal Allowance (GOV.UK). The rest is carried forward.
+      const incomeAbovePA = Math.max(0, taxableIncome - taxResult.personalAllowance);
+      const relievableInterest = Math.min(mortgageInterest, rentalProfit, incomeAbovePA);
+      const mortgageCredit = relievableInterest * 0.20;
+      const interestCarriedForward = Math.max(0, mortgageInterest - relievableInterest);
 
       // 6. Net tax after credit
       const netTax = Math.max(0, taxResult.tax - mortgageCredit);
@@ -543,6 +580,8 @@
       setResult('resPA', personalAllowance, { format: 'currency' });
       setResult('resTax', taxResult.tax, { format: 'currency' });
       setResult('resMortCredit', mortgageCredit, { format: 'currency' });
+      showIf('mortCarryNote', interestCarriedForward > 0);
+      setResult('mortCarryAmount', interestCarriedForward, { format: 'currency' });
       setResult('resNetTax', netTax, { format: 'currency' });
       setResult('resStudentLoan', studentLoan.total, { format: 'currency' });
       setResult('resTotalYear', takeHome, { format: 'currency' });
@@ -575,6 +614,7 @@
         profile: 'landlord',
         grossSalary: totalIncome,
         rentalIncome,
+        qualifyingIncome: rentalIncome,
         adjustedNetIncome,
         hasChildcare,
         isScottish
@@ -590,6 +630,20 @@
       });
 
       renderAffiliates('affiliateContainer', recommendations);
+
+      // MileLog box: mileage at the approved car rates, approximate tax at the marginal rate
+      renderMileageBox({
+        profile: 'landlord',
+        title: 'Driving to your properties? See what your mileage is worth',
+        note: 'GOV.UK lists mileage rate deductions as an allowable expense for a rental business, and mileage logs as records to keep. The figure above uses the 55p and 25p car rates; check with an accountant that they suit your property business.',
+        rows: (miles, pence, ctx) => {
+          const claim = approvedMileage(miles);
+          return [
+            { label: 'Mileage at 55p (25p after 10,000)', amount: claim },
+            { label: 'Approx. tax saved at your marginal rate', amount: claim * ctx.marginalRate },
+          ];
+        },
+      }, { marginalRate: taxResult.marginalRate || 0 });
 
       // Mobile summary
       updateMobileSummary(takeHome, takeHomeMonthly);

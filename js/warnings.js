@@ -12,8 +12,11 @@ export function getWarnings(input) {
     adjustedNetIncome,
     totalPensionContributions,
     employerPension,
+    pensionThresholdIncome = adjustedNetIncome,
+    pensionAdjustedIncome = adjustedNetIncome,
     dividendIncome = 0,
     rentalIncome = 0,
+    qualifyingIncome = 0,
     hasChildcare,
     isScottish,
   } = input;
@@ -23,11 +26,11 @@ export function getWarnings(input) {
   /* ------------------------------------------------------------------ */
   /*  1. PA Taper — £100k tax trap                                      */
   /* ------------------------------------------------------------------ */
-  const paTaperProfiles = ['employed', 'self-employed', 'outside-ir35', 'director', 'landlord'];
+  const paTaperProfiles = ['employed', 'self-employed', 'outside-ir35', 'inside-ir35', 'director', 'landlord'];
 
-  if (adjustedNetIncome >= 100000) {
+  if (adjustedNetIncome > 100000) {
     const paLoss = RATES.personalAllowance - calcPersonalAllowance(adjustedNetIncome);
-    const pensionNeeded = adjustedNetIncome - 99999;
+    const pensionNeeded = adjustedNetIncome - 100000;
     warnings.push({
       id: 'pa-taper',
       severity: 'red',
@@ -39,7 +42,7 @@ export function getWarnings(input) {
         `A pension contribution of ${fmt(pensionNeeded)} would bring you below the threshold.`,
       profiles: paTaperProfiles,
     });
-  } else if (adjustedNetIncome >= 95000 && adjustedNetIncome <= 99999) {
+  } else if (adjustedNetIncome >= 95000 && adjustedNetIncome <= 100000) {
     warnings.push({
       id: 'pa-taper-approaching',
       severity: 'amber',
@@ -57,7 +60,7 @@ export function getWarnings(input) {
   /* ------------------------------------------------------------------ */
   const childcareProfiles = ['employed', 'self-employed', 'director'];
 
-  if (adjustedNetIncome >= 100000 && hasChildcare) {
+  if (adjustedNetIncome > 100000 && hasChildcare) {
     warnings.push({
       id: 'childcare-trap',
       severity: 'red',
@@ -65,19 +68,19 @@ export function getWarnings(input) {
       message:
         `Adjusted net income above \u00A3100,000 means you lose access to Tax-Free Childcare ` +
         `(\u00A32,000/child/year, \u00A34,000 for disabled children). ` +
-        `Note: the 30 hours free childcare entitlement is not affected by income. ` +
+        `You also lose 30 hours free childcare if you or your partner's adjusted net income is over \u00A3100,000. ` +
         `Pension contributions could bring you below the threshold.`,
       profiles: childcareProfiles,
     });
-  } else if (adjustedNetIncome >= 95000 && adjustedNetIncome <= 99999 && hasChildcare) {
+  } else if (adjustedNetIncome >= 95000 && adjustedNetIncome <= 100000 && hasChildcare) {
     warnings.push({
       id: 'childcare-trap-approaching',
       severity: 'amber',
       title: 'Approaching Tax-Free Childcare Cliff Edge',
       message:
         `Your adjusted net income of ${fmt(adjustedNetIncome)} is close to \u00A3100,000. ` +
-        `Exceeding this threshold means losing Tax-Free Childcare (\u00A32,000/child/year). ` +
-        `The 30 hours free childcare entitlement is not affected by income.`,
+        `Going over \u00A3100,000 means losing Tax-Free Childcare (\u00A32,000/child/year) ` +
+        `and 30 hours free childcare.`,
       profiles: childcareProfiles,
     });
   }
@@ -86,7 +89,7 @@ export function getWarnings(input) {
   /*  3. Pension Annual Allowance                                       */
   /* ------------------------------------------------------------------ */
   const pensionAAProfiles = ['employed', 'self-employed', 'outside-ir35', 'director', 'landlord'];
-  const aaLimit = calcTaperedAA(adjustedNetIncome);
+  const aaLimit = calcTaperedAA(pensionThresholdIncome, pensionAdjustedIncome);
 
   if (totalPensionContributions > aaLimit) {
     const excess = totalPensionContributions - aaLimit;
@@ -122,8 +125,8 @@ export function getWarnings(input) {
       title: 'Fiscal Drag \u2014 Frozen Thresholds',
       message:
         `The Personal Allowance has been frozen at \u00A312,570 since 2021. If indexed to inflation ` +
-        `it would be ~\u00A315,000, costing you ~\u00A3486 in extra tax per year. ` +
-        `All income tax thresholds remain frozen until at least 2028.`,
+        `it would be ~\u00A315,000, costing you ~\u00A3486 in extra tax per year (our estimate, not an HMRC figure, so check with an accountant). ` +
+        `Income tax thresholds are frozen until 5 April 2031.`,
       profiles: ['employed', 'self-employed', 'outside-ir35', 'inside-ir35', 'director', 'landlord'],
     });
   }
@@ -131,21 +134,20 @@ export function getWarnings(input) {
   /* ------------------------------------------------------------------ */
   /*  5. Making Tax Digital                                             */
   /* ------------------------------------------------------------------ */
-  const mtdIncome =
-    (profile === 'self-employed' ? grossSalary : 0) +
-    (profile === 'landlord' ? rentalIncome : 0);
-
+  // Qualifying income is turnover from self-employment and property, before expenses (GOV.UK)
   if (
     (profile === 'self-employed' || profile === 'landlord') &&
-    mtdIncome > 50000
+    qualifyingIncome > 20000
   ) {
     warnings.push({
       id: 'mtd',
       severity: 'amber',
-      title: 'Making Tax Digital \u2014 Mandatory from April 2026',
+      title: 'Making Tax Digital for Income Tax',
       message:
-        `Self-employed and landlord income over \u00A350,000 must use MTD-compatible software ` +
-        `for income tax from April 2026. Quarterly digital updates will be required.`,
+        `Your qualifying income here (turnover before expenses) is ${fmt(qualifyingIncome)}. ` +
+        `MTD applies from 6 April 2026 if it was over \u00A350,000 in 2024/25, from 6 April 2027 ` +
+        `if over \u00A330,000 in 2025/26, and from 6 April 2028 if over \u00A320,000 in 2026/27. ` +
+        `It means keeping digital records and sending quarterly updates.`,
       profiles: ['self-employed', 'landlord'],
     });
   }
@@ -157,11 +159,11 @@ export function getWarnings(input) {
     warnings.push({
       id: 'umbrella-jsl',
       severity: 'amber',
-      title: 'Umbrella Company \u2014 Joint & Several Liability (April 2026)',
+      title: 'Umbrella Company PAYE Rules (April 2026)',
       message:
-        `From April 2026, end clients and agencies share joint and several liability for ` +
-        `unpaid tax and NI where umbrella companies fail to remit PAYE. ` +
-        `Ensure your umbrella provider is compliant.`,
+        `From 6 April 2026, the agency that contracts with the end client (or the end client, ` +
+        `if there is no agency) is responsible for PAYE being operated correctly on umbrella ` +
+        `workers' pay, and HMRC can recover underpaid PAYE from them. Check your umbrella company is compliant.`,
       profiles: ['inside-ir35'],
     });
   }
@@ -177,9 +179,9 @@ export function getWarnings(input) {
       severity: 'blue',
       title: 'Dividend Tax Rates Increased (April 2026)',
       message:
-        `Dividend tax rates have increased by 2% across all bands: basic rate 10.75%, ` +
-        `higher rate 35.75%, additional rate 39.35%. ` +
-        `The dividend allowance is now \u00A3500.`,
+        `From 6 April 2026 the basic and higher dividend rates rose by 2 percentage points, ` +
+        `to 10.75% and 35.75%. The additional rate is unchanged at 39.35%. ` +
+        `The dividend allowance is \u00A3500.`,
       profiles: dividendProfiles,
     });
   }
@@ -193,8 +195,8 @@ export function getWarnings(input) {
       severity: 'blue',
       title: 'Working from Home Tax Relief Removed',
       message:
-        `The \u00A36/week (\u00A3312/year) working from home tax relief is no longer available ` +
-        `unless your employer requires you to work from home with no office available.`,
+        `From 6 April 2026, employees cannot claim tax relief for working from home ` +
+        `(previously \u00A36 a week). You can still claim for the 4 previous tax years if you were eligible.`,
       profiles: ['employed'],
     });
   }
@@ -241,11 +243,10 @@ export function getWarnings(input) {
     warnings.push({
       id: 'pension-ss-ni-cap',
       severity: 'blue',
-      title: 'Pension Salary Sacrifice NI Relief \u2014 Cap Coming 2029',
+      title: 'Pension Salary Sacrifice NI Limit from April 2029',
       message:
-        `From 2029, employer NI savings from salary sacrifice pension contributions ` +
-        `will be capped at \u00A32,000 per employee. ` +
-        `Consider front-loading salary sacrifice arrangements before the cap.`,
+        `From 6 April 2029, pension contributions made through salary sacrifice above ` +
+        `\u00A32,000 a year will pay employee and employer National Insurance.`,
       profiles: ssNIProfiles,
     });
   }

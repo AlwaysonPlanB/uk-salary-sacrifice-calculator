@@ -16,16 +16,18 @@
   --text-heading: #f1f5f9;
   --border: #2d3348;
   --border-hover: #3d4460;
-  --accent: #6366f1;
-  --accent-hover: #818cf8;
+  --accent: #818cf8;          /* text and links: 5.6:1 or better on dark surfaces */
+  --accent-hover: #a5b4fc;
+  --accent-solid: #4f46e5;    /* button backgrounds with white text (6.3:1) */
+  --accent-solid-hover: #4338ca;
   --accent-bg: rgba(99, 102, 241, 0.12);
   --green: #22c55e;
   --green-bg: rgba(34, 197, 94, 0.12);
   --amber: #f59e0b;
   --amber-bg: rgba(245, 158, 11, 0.12);
-  --red: #ef4444;
+  --red: #f87171;
   --red-bg: rgba(239, 68, 68, 0.12);
-  --blue: #3b82f6;
+  --blue: #60a5fa;
   --blue-bg: rgba(59, 130, 246, 0.12);
   --shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
   --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.5);
@@ -45,8 +47,10 @@
   --text-heading: #0f172a;
   --border: #e2e8f0;
   --border-hover: #cbd5e1;
-  --accent: #6366f1;
-  --accent-hover: #4f46e5;
+  --accent: #4f46e5;
+  --accent-hover: #4338ca;
+  --accent-solid: #4f46e5;
+  --accent-solid-hover: #4338ca;
   --accent-bg: rgba(99, 102, 241, 0.08);
   --green: #16a34a;
   --green-bg: rgba(22, 163, 74, 0.08);
@@ -643,6 +647,87 @@ select {
   color: var(--text-muted);
 }
 
+/* ---------- Links in body text are underlined (not colour alone) ---------- */
+main p a, main li a, .warning a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ---------- Input with a unit after the value (data-unit="miles") ---------- */
+.input-unit {
+  position: relative;
+}
+
+.input-unit::after {
+  content: attr(data-unit);
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.input-unit input[type="text"] {
+  padding-right: 4rem;
+}
+
+/* ---------- MileLog box (js/mileage-box.js) ---------- */
+.mileage-box {
+  background: var(--bg-card);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.mileage-box summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 600;
+  color: var(--text-heading);
+}
+
+.mileage-box summary::-webkit-details-marker {
+  display: none;
+}
+
+.mileage-box-body {
+  margin-top: 0.9rem;
+}
+
+.mileage-box-body label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.mileage-box-body .input-unit {
+  margin: 0.35rem 0 0.8rem;
+}
+
+.mileage-box-note {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin: 0.6rem 0;
+}
+
+/* ---------- Screen reader only ---------- */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* ---------- Affiliate Cards ---------- */
 .affiliate-grid {
   display: grid;
@@ -676,6 +761,20 @@ select {
   flex: 1;
 }
 
+.affiliate-badge {
+  display: inline-block;
+  margin-left: 0.5rem;
+  padding: 0.05rem 0.5rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  vertical-align: middle;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
 /* ---------- Buttons ---------- */
 .btn-primary {
   display: inline-flex;
@@ -687,7 +786,7 @@ select {
   font-weight: 600;
   font-family: inherit;
   color: #fff;
-  background: var(--accent);
+  background: var(--accent-solid);
   border: none;
   border-radius: var(--radius-sm);
   cursor: pointer;
@@ -695,7 +794,7 @@ select {
 }
 
 .btn-primary:hover {
-  background: var(--accent-hover);
+  background: var(--accent-solid-hover);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
 }
@@ -1089,7 +1188,7 @@ select {
 
 .blog-bottom-cta .btn-cta {
   display: inline-block;
-  background: var(--accent);
+  background: var(--accent-solid);
   color: #fff;
   padding: 0.75rem 2rem;
   border-radius: 8px;
@@ -1099,7 +1198,7 @@ select {
 }
 
 .blog-bottom-cta .btn-cta:hover {
-  background: var(--accent-hover);
+  background: var(--accent-solid-hover);
 }
 
 /* Blog tables */
@@ -1297,7 +1396,8 @@ select {
 
 .blog-article a {
   color: var(--accent);
-  text-decoration: none;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .blog-article a:hover {
@@ -1420,7 +1520,7 @@ select {
 
 .blog-bottom-cta .btn-cta {
   display: inline-block;
-  background: var(--accent);
+  background: var(--accent-solid);
   color: #fff;
   padding: 0.75rem 2rem;
   border-radius: 8px;

@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Google Analytics -->
+  <script>try{if(localStorage.getItem('uktaxcal-analytics-optout')==='1'){window['ga-disable-G-B0YQPMRS5H']=true;}}catch(e){}</script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-B0YQPMRS5H"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-B0YQPMRS5H');</script>
   <title>UK Tax & Salary Sacrifice Calculator 2026/27 | UKTaxCal</title>
@@ -16,14 +17,16 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://uktaxcal.com/">
   <meta property="og:site_name" content="UKTaxCal">
-  <meta name="twitter:card" content="summary">
+  <meta property="og:image" content="https://uktaxcal.com/images/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="UKTaxCal: free UK tax calculators for 2026/27">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://uktaxcal.com/images/og-image.png">
   <meta name="twitter:title" content="UK Tax & Salary Sacrifice Calculator 2026/27 | UKTaxCal">
   <meta name="twitter:description" content="Free UK tax calculator for 2026/27. Calculate income tax, National Insurance, dividends, and take-home pay for employed, self-employed, contractors, landlords, directors and investors.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"></noscript>
+  <link rel="stylesheet" href="css/fonts.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="css/fonts.css"></noscript>
   <link rel="stylesheet" href="css/style.css">
   <script type="application/ld+json">
   {
@@ -55,7 +58,7 @@
         "name": "What is salary sacrifice and how does it reduce my tax?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Salary sacrifice is an arrangement where you agree to reduce your gross salary in exchange for a non-cash benefit such as pension contributions, an electric car, or cycle-to-work scheme. Because your official salary is lower, you pay less income tax and National Insurance. For a basic rate taxpayer, every £1 sacrificed saves roughly 32p in tax and NI. Use our employed calculator to see the exact impact on your take-home pay."
+          "text": "Salary sacrifice is an arrangement where you agree to reduce your gross salary in exchange for a non-cash benefit such as pension contributions, an electric car, or cycle-to-work scheme. Because your official salary is lower, you pay less income tax and National Insurance. For a basic rate taxpayer, every £1 sacrificed saves roughly 28p in tax and NI. Use our employed calculator to see the exact impact on your take-home pay."
         }
       },
       {
@@ -95,10 +98,18 @@
         "name": "How much will I take home on a £50,000 salary in the UK?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "On a £50,000 salary in 2026/27 with no other deductions, you would pay approximately £7,486 in income tax and £3,002 in National Insurance, giving a take-home pay of around £39,512 per year or £3,293 per month. Use our PAYE calculator for an exact breakdown including pension, student loans, and salary sacrifice."
+          "text": "On a £50,000 salary in 2026/27 with no other deductions, you would pay approximately £7,486 in income tax and £2,994 in National Insurance, giving a take-home pay of around £39,520 per year or £3,293 per month. Use our PAYE calculator for an exact breakdown including pension, student loans, and salary sacrifice."
         }
       }
     ]
+  }
+  </script>
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "UKTaxCal",
+    "url": "https://uktaxcal.com/"
   }
   </script>
 </head>
@@ -129,6 +140,7 @@
 
     <!-- Profile Grid -->
     <section class="container">
+      <h2 class="sr-only">Choose your calculator</h2>
       <div class="profile-grid">
 
         <a href="profiles/employed.html" class="profile-card">
@@ -170,7 +182,7 @@
         <a href="profiles/investor.html" class="profile-card">
           <div class="icon" style="background: var(--green-bg);">&#128176;</div>
           <h3>Investor</h3>
-          <p>Calculate tax on dividends, capital gains, savings interest, and ISA allowances for your portfolio.</p>
+          <p>Calculate tax on dividends, capital gains, and ISA allowances for your portfolio.</p>
         </a>
 
       </div>
@@ -183,11 +195,11 @@
         <ul class="changes-list">
           <li>Dividend tax rates increase by 2% on basic and higher bands (basic 10.75%, higher 35.75%) &mdash; the additional rate stays at 39.35%</li>
           <li>Business Asset Disposal Relief (BADR) rate rises from 14% to 18%, matching the main CGT rate</li>
-          <li>Making Tax Digital (MTD) for Income Tax becomes mandatory for self-employed and landlords earning over &#163;50,000</li>
+          <li>Making Tax Digital (MTD) for Income Tax applies to sole traders and landlords whose qualifying income (turnover) was over &#163;50,000 in 2024/25</li>
           <li>Electric vehicle benefit-in-kind rate rises from 3% to 4%, increasing company car tax for EV drivers</li>
-          <li>Umbrella companies must account for Joint &amp; Several Liability on PAYE deductions</li>
+          <li>Agencies (or end clients, if there is no agency) become responsible for umbrella company PAYE</li>
           <li>Income tax and NI thresholds remain frozen, continuing fiscal drag into higher tax bands</li>
-          <li>Student loan Plan 1 repayment threshold rises with inflation, reducing repayments for some borrowers</li>
+          <li>Student loan Plan 1 repayment threshold rises to &#163;26,900, reducing repayments for some borrowers</li>
           <li>New ISA cash subscription cap takes effect from April 2027 &mdash; plan contributions now</li>
         </ul>
       </div>
@@ -200,6 +212,13 @@
         <p style="color:var(--text-muted); max-width:640px; margin:1rem auto;">AI-powered analysis of the April 2026 tax changes &mdash; real numbers, real impact, and practical strategies. These guides use publicly available HMRC data to help you understand and plan for the changes ahead.</p>
 
         <div class="profile-grid" style="margin-top:1.5rem;">
+          <a href="blog/mileage-allowance-2026-27.html" class="profile-card">
+            <div class="icon" style="background: var(--green-bg);">&#128663;</div>
+            <h3>Mileage Allowance: The New 55p Rate</h3>
+            <p>HMRC mileage rates rose from 45p to 55p a mile in April 2026. What sole traders, employees, directors and landlords can now claim, with worked examples.</p>
+            <span style="font-size:0.8rem; color:var(--accent);">Read analysis &rarr;</span>
+          </a>
+
           <a href="blog/100k-tax-trap.html" class="profile-card">
             <div class="icon" style="background: var(--red-bg);">&#128200;</div>
             <h3>The &pound;100k Tax Trap</h3>
@@ -244,6 +263,7 @@
     <div class="container">
       <p>UKTaxCal is for illustrative purposes only and does not constitute financial or tax advice.<br>
       Always consult a qualified accountant or tax adviser. Calculations are based on announced HMRC rates for 2026/27.</p>
+      <p style="margin-top:0.5rem;"><a href="/privacy.html">Privacy and cookies</a></p>
     </div>
   </footer>
 

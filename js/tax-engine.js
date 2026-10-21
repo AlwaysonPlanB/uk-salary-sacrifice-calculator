@@ -8,6 +8,8 @@ export const TAX_YEAR = '2026/27';
 export const RATES = {
   personalAllowance: 12570,
   paTaperThreshold: 100000,
+  // Top of the higher (rUK) and advanced (Scotland) bands, as income after allowances
+  additionalRateLimit: 125140,
 
   // England, Wales & NI income tax bands
   incomeTax: {
@@ -39,8 +41,8 @@ export const RATES = {
   },
 
   selfEmployedNI: {
-    class2WeeklyRate: 3.65,
-    class2Threshold: 12570,
+    class2WeeklyRate: 3.65,     // voluntary rate only (below the small profits threshold)
+    smallProfitsThreshold: 7105, // at or above this, Class 2 is treated as paid (nothing to pay)
     class4LowerProfit: 12570,
     class4UpperProfit: 50270,
     class4LowerRate: 0.06,
@@ -86,37 +88,41 @@ export const RATES = {
     mainRateLimit: 250000,
   },
 
+  // Company car appropriate percentages for 2026/27 (GOV.UK HMRC 480 appendix 2).
+  // Band edges are inclusive maximum CO2 in g/km.
   bik: {
     electric: 0.04,
     pluginHybrid: [
       { maxCO2: 50, ranges: [
         { minRange: 130, rate: 0.04 },
-        { minRange: 70,  rate: 0.08 },
-        { minRange: 40,  rate: 0.12 },
+        { minRange: 70,  rate: 0.07 },
+        { minRange: 40,  rate: 0.10 },
         { minRange: 30,  rate: 0.14 },
         { minRange: 0,   rate: 0.16 },
       ]},
     ],
     petrol: [
-      { maxCO2: 50,  rate: 0.18 },
-      { maxCO2: 55,  rate: 0.19 },
-      { maxCO2: 60,  rate: 0.20 },
-      { maxCO2: 65,  rate: 0.21 },
-      { maxCO2: 70,  rate: 0.22 },
-      { maxCO2: 75,  rate: 0.23 },
-      { maxCO2: 80,  rate: 0.24 },
-      { maxCO2: 85,  rate: 0.25 },
-      { maxCO2: 90,  rate: 0.26 },
-      { maxCO2: 95,  rate: 0.27 },
-      { maxCO2: 100, rate: 0.28 },
-      { maxCO2: 105, rate: 0.29 },
-      { maxCO2: 110, rate: 0.30 },
-      { maxCO2: 115, rate: 0.31 },
-      { maxCO2: 120, rate: 0.32 },
-      { maxCO2: 125, rate: 0.33 },
-      { maxCO2: 130, rate: 0.34 },
-      { maxCO2: 135, rate: 0.35 },
-      { maxCO2: 140, rate: 0.36 },
+      { maxCO2: 54,  rate: 0.17 },
+      { maxCO2: 59,  rate: 0.18 },
+      { maxCO2: 64,  rate: 0.19 },
+      { maxCO2: 69,  rate: 0.20 },
+      { maxCO2: 74,  rate: 0.21 },
+      { maxCO2: 79,  rate: 0.21 },
+      { maxCO2: 84,  rate: 0.22 },
+      { maxCO2: 89,  rate: 0.23 },
+      { maxCO2: 94,  rate: 0.24 },
+      { maxCO2: 99,  rate: 0.25 },
+      { maxCO2: 104, rate: 0.26 },
+      { maxCO2: 109, rate: 0.27 },
+      { maxCO2: 114, rate: 0.28 },
+      { maxCO2: 119, rate: 0.29 },
+      { maxCO2: 124, rate: 0.30 },
+      { maxCO2: 129, rate: 0.31 },
+      { maxCO2: 134, rate: 0.32 },
+      { maxCO2: 139, rate: 0.33 },
+      { maxCO2: 144, rate: 0.34 },
+      { maxCO2: 149, rate: 0.35 },
+      { maxCO2: 154, rate: 0.36 },
       { maxCO2: Infinity, rate: 0.37 },
     ],
     dieselSupplement: 0.04,
@@ -161,8 +167,9 @@ export function calcPersonalAllowance(grossIncome) {
  * Progressive income tax for England/Wales/NI or Scotland.
  * Returns { tax, effectiveRate, marginalRate, personalAllowance, breakdown[] }
  */
-export function calcIncomeTax(taxableIncome, isScottish = false) {
-  const pa = calcPersonalAllowance(taxableIncome);
+export function calcIncomeTax(taxableIncome, isScottish = false, allowanceIncome = taxableIncome) {
+  // allowanceIncome: income used to taper the PA (pass salary + dividends for directors)
+  const pa = calcPersonalAllowance(allowanceIncome);
   const incomeAfterPA = Math.max(0, taxableIncome - pa);
 
   const bands = isScottish ? RATES.scottishTax : RATES.incomeTax;
@@ -176,10 +183,15 @@ export function calcIncomeTax(taxableIncome, isScottish = false) {
 
     // Width of this band: from (band.lower - PA offset) to band.upper
     // We work on income-after-PA, so bands are relative to 0.
+    // Band edges are stored as gross income with the full PA, except the £125,140
+    // limit, which GOV.UK sets on income after allowances.
     const bandStart = band.lower - RATES.personalAllowance - 1; // offset from 0
-    const bandWidth = band.upper
-      ? band.upper - band.lower + 1
-      : Infinity;
+    let bandWidth = Infinity;
+    if (band.upper === RATES.additionalRateLimit) {
+      bandWidth = RATES.additionalRateLimit - bandStart;
+    } else if (band.upper) {
+      bandWidth = band.upper - band.lower + 1;
+    }
 
     const taxableInBand = Math.min(remaining, bandWidth);
     const taxForBand = round2(taxableInBand * band.rate);
@@ -203,13 +215,13 @@ export function calcIncomeTax(taxableIncome, isScottish = false) {
   // Detect 60% effective marginal rate in PA taper zone (£100k-£125,140)
   if (
     taxableIncome > RATES.paTaperThreshold &&
-    taxableIncome <= 125140
+    taxableIncome <= RATES.additionalRateLimit
   ) {
-    // In the taper zone the effective marginal rate is ~60% for rUK (40% tax + 20% lost PA)
-    // or ~63% for Scotland (42% higher + 21% lost PA)
+    // In the taper zone the effective marginal rate is 60% for rUK (40% tax + 20% lost PA)
+    // or 67.5% for Scotland (45% advanced + 22.5% lost PA)
     if (isScottish) {
-      // Find the Scottish rate that applies at the taper zone income level
-      marginalRate = 0.63; // 42% + 21% effective from PA taper
+      // The whole taper zone falls in the Scottish advanced band (£62,431 to £125,140 after allowances)
+      marginalRate = 0.675; // 45% + 22.5% effective from PA taper
     } else {
       marginalRate = 0.60; // 40% + 20% effective from PA taper
     }
@@ -277,16 +289,15 @@ export function calcEmployerNI(salary) {
 
 /**
  * Self-employed NI: Class 2 + Class 4.
+ * Class 2 is never compulsory: at profits of £7,105 or more it is treated as paid,
+ * and below that it is voluntary (not included here).
  * Returns { class2, class4, total }
  */
 export function calcSelfEmployedNI(profit) {
   const se = RATES.selfEmployedNI;
 
-  // Class 2: flat weekly rate if profit >= threshold
-  const class2 =
-    profit >= se.class2Threshold
-      ? round2(se.class2WeeklyRate * 52)
-      : 0;
+  // Class 2: nothing to pay (treated as paid, or voluntary below £7,105)
+  const class2 = 0;
 
   // Class 4: 6% on £12,570-£50,270, 2% above £50,270
   let class4 = 0;
@@ -358,70 +369,44 @@ export function calcDividendTax(dividendIncome, otherTaxableIncome) {
     return { tax: 0, breakdown: [] };
   }
 
-  const allowance = RATES.dividends.allowance;
-  const taxableDividends = Math.max(0, dividendIncome - allowance);
-
-  if (taxableDividends <= 0) {
-    return { tax: 0, breakdown: [] };
-  }
-
+  // Personal Allowance tapers on total income (other income plus dividends).
+  // It is used against other income first; any unused part covers dividends.
   const pa = calcPersonalAllowance(otherTaxableIncome + dividendIncome);
-  const totalIncome = otherTaxableIncome + dividendIncome;
+  const paLeftForDividends = Math.max(0, pa - otherTaxableIncome);
+  const dividendsAfterPA = Math.max(0, dividendIncome - paLeftForDividends);
 
-  // Basic rate band ceiling (income level, not taxable amount)
-  const basicCeiling = RATES.incomeTax.basic.upper;   // 50270
-  const higherCeiling = RATES.incomeTax.higher.upper;  // 125140
+  // Bands as income after allowances (GOV.UK): basic to £37,700, higher to £125,140.
+  // Scottish taxpayers use these UK bands for dividends.
+  const basicLimit = RATES.incomeTax.basic.upper - RATES.personalAllowance; // 37700
+  const higherLimit = RATES.additionalRateLimit;                              // 125140
 
-  // How much of the basic-rate band is already used by other income
+  // Dividends sit on top of other income. The £500 allowance is taxed at 0%
+  // but still uses up band space.
   const otherAfterPA = Math.max(0, otherTaxableIncome - pa);
-  const basicBandRemaining = Math.max(0, basicCeiling - pa - otherAfterPA);
-  const higherBandRemaining = Math.max(
-    0,
-    higherCeiling - pa - Math.max(otherAfterPA, basicCeiling - pa)
-  );
+  const start = otherAfterPA + Math.min(RATES.dividends.allowance, dividendsAfterPA);
+  const end = otherAfterPA + dividendsAfterPA;
 
   const breakdown = [];
-  let remaining = taxableDividends;
   let totalTax = 0;
 
-  // Basic rate portion of dividends
-  if (remaining > 0 && basicBandRemaining > 0) {
-    const inBasic = Math.min(remaining, basicBandRemaining);
-    const t = round2(inBasic * RATES.dividends.basic);
-    breakdown.push({
-      band: 'basic',
-      rate: RATES.dividends.basic,
-      taxableAmount: round2(inBasic),
-      tax: t,
-    });
-    totalTax += t;
-    remaining -= inBasic;
-  }
+  const slices = [
+    { band: 'basic', rate: RATES.dividends.basic, from: 0, to: basicLimit },
+    { band: 'higher', rate: RATES.dividends.higher, from: basicLimit, to: higherLimit },
+    { band: 'additional', rate: RATES.dividends.additional, from: higherLimit, to: Infinity },
+  ];
 
-  // Higher rate portion
-  if (remaining > 0 && higherBandRemaining > 0) {
-    const inHigher = Math.min(remaining, higherBandRemaining);
-    const t = round2(inHigher * RATES.dividends.higher);
-    breakdown.push({
-      band: 'higher',
-      rate: RATES.dividends.higher,
-      taxableAmount: round2(inHigher),
-      tax: t,
-    });
-    totalTax += t;
-    remaining -= inHigher;
-  }
-
-  // Additional rate portion
-  if (remaining > 0) {
-    const t = round2(remaining * RATES.dividends.additional);
-    breakdown.push({
-      band: 'additional',
-      rate: RATES.dividends.additional,
-      taxableAmount: round2(remaining),
-      tax: t,
-    });
-    totalTax += t;
+  for (const slice of slices) {
+    const inBand = Math.max(0, Math.min(end, slice.to) - Math.max(start, slice.from));
+    if (inBand > 0) {
+      const t = round2(inBand * slice.rate);
+      breakdown.push({
+        band: slice.band,
+        rate: slice.rate,
+        taxableAmount: round2(inBand),
+        tax: t,
+      });
+      totalTax += t;
+    }
   }
 
   return {
@@ -491,15 +476,21 @@ export function calcCapitalGainsTax(
 /* ------------------------------------------------------------------ */
 
 /**
- * Pension annual allowance: £60k, reduces £1 per £2 above £200k, min £10k.
+ * Pension annual allowance (GOV.UK): £60k. Reduced only when threshold income is
+ * over £200k AND adjusted income is over £260k: £1 less per £2 over £260k, min £10k.
+ * Threshold income: income with pension salary sacrifice added back.
+ * Adjusted income: threshold income plus employer pension contributions.
  */
-export function calcTaperedAA(adjustedIncome) {
-  if (adjustedIncome <= RATES.pension.taperedAAThreshold) {
+export function calcTaperedAA(thresholdIncome, adjustedIncome = thresholdIncome) {
+  if (
+    thresholdIncome <= RATES.pension.taperedAAThreshold ||
+    adjustedIncome <= RATES.pension.taperedAAAdjustedThreshold
+  ) {
     return RATES.pension.annualAllowance;
   }
 
   const reduction = Math.floor(
-    (adjustedIncome - RATES.pension.taperedAAThreshold) / 2
+    (adjustedIncome - RATES.pension.taperedAAAdjustedThreshold) / 2
   );
 
   return Math.max(

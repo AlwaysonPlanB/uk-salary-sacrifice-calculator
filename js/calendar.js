@@ -13,8 +13,8 @@ export const DEADLINES = [
   },
   {
     date: '2026-04-19',
-    title: 'Final PAYE/NI Submission 2025/26',
-    description: 'Employers must submit final Full Payment Submission (FPS) for the 2025/26 tax year.',
+    title: 'Last Day to Correct Final FPS 2025/26',
+    description: 'Employers can correct mistakes in the final Full Payment Submission (FPS) for 2025/26 with an additional FPS until 19 April. The final FPS itself is due on or before the last payday of the tax year.',
     profiles: ['employed', 'director'],
     hmrcLink: 'https://www.gov.uk/running-payroll/reporting-to-hmrc'
   },
@@ -26,9 +26,9 @@ export const DEADLINES = [
     hmrcLink: 'https://www.gov.uk/paye-forms-p45-p60-p11d/p60'
   },
   {
-    date: '2026-07-05',
+    date: '2026-08-07',
     title: 'MTD Quarterly Update #1',
-    description: 'First quarterly update due under Making Tax Digital for Income Tax (April to June).',
+    description: 'First quarterly update due under Making Tax Digital for Income Tax (covers 6 April to 5 July).',
     profiles: ['self-employed', 'landlord'],
     hmrcLink: 'https://www.gov.uk/guidance/use-making-tax-digital-for-income-tax'
   },
@@ -47,16 +47,16 @@ export const DEADLINES = [
     hmrcLink: 'https://www.gov.uk/understand-self-assessment-bill/payments-on-account'
   },
   {
-    date: '2026-10-05',
+    date: '2026-11-07',
     title: 'MTD Quarterly Update #2',
-    description: 'Second quarterly update due under Making Tax Digital for Income Tax (July to September).',
+    description: 'Second quarterly update due under Making Tax Digital for Income Tax (covers 6 April to 5 October).',
     profiles: ['self-employed', 'landlord'],
     hmrcLink: 'https://www.gov.uk/guidance/use-making-tax-digital-for-income-tax'
   },
   {
     date: '2026-10-05',
     title: 'Register for Self Assessment',
-    description: 'Deadline to register for Self Assessment if you need to file a tax return for 2026/27.',
+    description: 'Deadline to tell HMRC you need to complete a Self Assessment tax return for 2025/26, if you have not sent one before or did not need to send one for 2024/25.',
     profiles: ['self-employed', 'landlord', 'investor'],
     hmrcLink: 'https://www.gov.uk/register-for-self-assessment'
   },
@@ -68,9 +68,9 @@ export const DEADLINES = [
     hmrcLink: 'https://www.gov.uk/self-assessment-tax-returns/deadlines'
   },
   {
-    date: '2027-01-05',
+    date: '2027-02-07',
     title: 'MTD Quarterly Update #3',
-    description: 'Third quarterly update due under Making Tax Digital for Income Tax (October to December).',
+    description: 'Third quarterly update due under Making Tax Digital for Income Tax (covers 6 April to 5 January).',
     profiles: ['self-employed', 'landlord'],
     hmrcLink: 'https://www.gov.uk/guidance/use-making-tax-digital-for-income-tax'
   },
@@ -96,9 +96,9 @@ export const DEADLINES = [
     hmrcLink: 'https://www.gov.uk/individual-savings-accounts'
   },
   {
-    date: '2027-04-05',
+    date: '2027-05-07',
     title: 'MTD Quarterly Update #4',
-    description: 'Fourth quarterly update due under Making Tax Digital for Income Tax (January to March).',
+    description: 'Fourth quarterly update due under Making Tax Digital for Income Tax (covers 6 April to 5 April).',
     profiles: ['self-employed', 'landlord'],
     hmrcLink: 'https://www.gov.uk/guidance/use-making-tax-digital-for-income-tax'
   },
@@ -128,7 +128,7 @@ export const DEADLINES = [
     title: 'Confirmation Statement',
     description: 'File a confirmation statement with Companies House at least once every 12 months.',
     profiles: ['outside-ir35', 'director'],
-    hmrcLink: 'https://www.gov.uk/file-a-confirmation-statement-with-companies-house'
+    hmrcLink: 'https://www.gov.uk/running-a-limited-company/confirmation-statement'
   },
   {
     date: 'variable',

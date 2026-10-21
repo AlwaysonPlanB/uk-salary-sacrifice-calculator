@@ -4,32 +4,35 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Google Analytics -->
+  <script>try{if(localStorage.getItem('uktaxcal-analytics-optout')==='1'){window['ga-disable-G-B0YQPMRS5H']=true;}}catch(e){}</script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-B0YQPMRS5H"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-B0YQPMRS5H');</script>
-  <title>PAYE Tax & Salary Sacrifice Calculator 2026/27 | UKTaxCal</title>
+  <title>Take-Home Pay & Salary Calculator 2026/27 UK | UKTaxCal</title>
   <meta name="description" content="Free PAYE tax calculator for 2026/27. Calculate take-home pay, income tax, NI, salary sacrifice, pension and student loans using HMRC rates.">
   <meta name="keywords" content="PAYE calculator 2026/27, employee tax calculator, take-home pay calculator UK, salary sacrifice calculator, pension tax relief, income tax bands, national insurance rates">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="canonical" href="https://uktaxcal.com/profiles/employed.html">
-  <meta property="og:title" content="PAYE Employee Tax Calculator 2026/27 — UK Take-Home Pay Calculator">
+  <meta property="og:title" content="Take-Home Pay & Salary Calculator 2026/27 UK">
   <meta property="og:description" content="Free UK PAYE employee tax calculator for 2026/27. Calculate income tax, National Insurance, student loans, salary sacrifice, pension, and take-home pay with real-time results.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://uktaxcal.com/profiles/employed.html">
   <meta property="og:site_name" content="UKTaxCal">
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="PAYE Employee Tax Calculator 2026/27 — UK Take-Home Pay Calculator">
+  <meta property="og:image" content="https://uktaxcal.com/images/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="UKTaxCal: free UK tax calculators for 2026/27">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://uktaxcal.com/images/og-image.png">
+  <meta name="twitter:title" content="Take-Home Pay & Salary Calculator 2026/27 UK">
   <meta name="twitter:description" content="Free UK PAYE employee tax calculator for 2026/27. Calculate income tax, National Insurance, student loans, salary sacrifice, pension, and take-home pay with real-time results.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"></noscript>
+  <link rel="stylesheet" href="../css/fonts.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="../css/fonts.css"></noscript>
   <link rel="stylesheet" href="../css/style.css">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "PAYE Employee Tax Calculator 2026/27",
+    "name": "Take-Home Pay & Salary Calculator 2026/27",
     "url": "https://uktaxcal.com/profiles/employed.html",
     "description": "Free UK PAYE employee tax calculator for 2026/27. Calculate income tax, National Insurance, student loans, salary sacrifice, pension, and take-home pay.",
     "applicationCategory": "FinanceApplication",
@@ -78,6 +81,26 @@
     ]
   }
   </script>
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "UKTaxCal",
+        "item": "https://uktaxcal.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Take-Home Pay & Salary Calculator 2026/27",
+        "item": "https://uktaxcal.com/profiles/employed.html"
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
 
@@ -100,8 +123,9 @@
     <section class="hero">
       <div class="container">
         <span class="badge">Tax Year 2026/27</span>
-        <h1>PAYE Take-Home Pay Calculator 2026/27</h1>
+        <h1>Take-Home Pay &amp; Salary Calculator 2026/27</h1>
         <p>Free UK salary calculator for employed workers. Calculate your take-home pay after income tax, National Insurance, student loan repayments, pension contributions, and salary sacrifice — using the latest HMRC rates and thresholds for the 2026/27 tax year. Includes Scottish tax bands and the £100k personal allowance taper.</p>
+        <p style="font-size:0.82rem; color:var(--text-muted); margin-top:0.5rem;">Rates checked against GOV.UK: October 2026</p>
       </div>
     </section>
 
@@ -110,6 +134,7 @@
       <div class="grid-2">
 
         <!-- ============ LEFT COLUMN — Inputs ============ -->
+        <h2 class="sr-only">Your details and results</h2>
         <div class="input-column">
 
           <!-- Card 1: Income -->
@@ -408,11 +433,16 @@
             <p style="margin-top:0.75rem;"><strong>Employee NI:</strong> 8% on &pound;12,570 &ndash; &pound;50,270 | 2% above &pound;50,270</p>
             <p><strong>Employer NI:</strong> 15% above &pound;5,000</p>
             <p style="margin-top:0.75rem;"><strong>Scottish Rates:</strong> Starter 19% | Basic 20% | Intermediate 21% | Higher 42% | Advanced 45% | Top 48%</p>
-            <p style="margin-top:0.75rem;"><strong>Pension Annual Allowance:</strong> &pound;60,000 (tapers above &pound;200,000 adjusted income, min &pound;10,000)</p>
+            <p style="margin-top:0.75rem;"><strong>Pension Annual Allowance:</strong> &pound;60,000. Reduced only if threshold income is over &pound;200,000 and adjusted income (including employer contributions) is over &pound;260,000, by &pound;1 for every &pound;2 above &pound;260,000, to a minimum of &pound;10,000. Pension salary sacrifice is treated as set up after 8 July 2015.</p>
             <p><strong>EV BIK Rate:</strong> 4% for zero-emission vehicles</p>
           </div>
         </div>
       </div>
+    </section>
+
+    <!-- Related analysis -->
+    <section class="container" style="margin-top:2rem;">
+      <p style="font-size:0.9rem; color:var(--text-muted);">Related analysis: <a href="../blog/100k-tax-trap.html" style="color:var(--accent);">The &pound;100k Tax Trap</a> &middot; <a href="../blog/fiscal-drag-frozen-thresholds.html" style="color:var(--accent);">Fiscal Drag: The Silent Tax Rise</a> &middot; <a href="../blog/mileage-allowance-2026-27.html" style="color:var(--accent);">Mileage Allowance: The New 55p Rate</a></p>
     </section>
 
     <!-- Assumptions -->
@@ -427,9 +457,9 @@
             <li><strong>Tax region:</strong> England, Wales &amp; Northern Ireland rates are used by default. Tick &ldquo;Scottish taxpayer&rdquo; for Scottish income tax bands. <a href="https://www.gov.uk/income-tax-rates" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Income Tax rates &rarr;</a></li>
             <li><strong>National Insurance:</strong> Category A (standard employee) rates are assumed. Other NI categories (B, C, H, M, Z) have different rates. <a href="https://www.gov.uk/national-insurance-rates-letters" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: NI categories &rarr;</a></li>
             <li><strong>Personal Allowance:</strong> Standard &pound;12,570 assumed. Marriage Allowance transfers and Blind Person&rsquo;s Allowance are not included. <a href="https://www.gov.uk/income-tax-rates/income-tax-rates" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Personal Allowance &rarr;</a></li>
-            <li><strong>Student loans:</strong> Repayments are calculated on original gross salary (pre salary-sacrifice), as per SLC rules. <a href="https://www.gov.uk/repaying-your-student-loan" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Student loan repayments &rarr;</a></li>
+            <li><strong>Student loans:</strong> This calculator works out repayments on your pay after salary sacrifice. We could not confirm on GOV.UK how every payroll treats salary sacrifice, so check your payslip or ask an accountant. <a href="https://www.gov.uk/repaying-your-student-loan" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Student loan repayments &rarr;</a></li>
             <li><strong>Pension tax relief:</strong> Salary sacrifice pension contributions reduce both income tax and NI. Personal contributions receive basic-rate relief at source; higher-rate relief must be claimed via Self Assessment. <a href="https://www.gov.uk/tax-on-your-private-pension/pension-tax-relief" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Pension tax relief &rarr;</a></li>
-            <li><strong>BIK rates:</strong> Electric vehicle BIK at 4% for 2026/27. Hybrid and petrol rates vary by CO2 emissions. <a href="https://www.gov.uk/tax-on-company-benefits/tax-on-benefit-in-kind" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Company car tax &rarr;</a></li>
+            <li><strong>BIK rates:</strong> Electric vehicle BIK at 4% for 2026/27. Hybrid and petrol rates vary by CO2 emissions. Diesel cars include a 4% supplement here, which we could not confirm on GOV.UK, so check with an accountant. <a href="https://www.gov.uk/tax-company-benefits" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">HMRC: Company car tax &rarr;</a></li>
           </ul>
         </div>
       </div>
@@ -463,6 +493,7 @@
     <div class="container">
       <p>UKTaxCal is for illustrative purposes only and does not constitute financial or tax advice.<br>
       Always consult a qualified accountant or tax adviser. Calculations are based on announced HMRC rates for 2026/27.</p>
+      <p style="margin-top:0.5rem;"><a href="/privacy.html">Privacy and cookies</a></p>
     </div>
   </footer>
 
@@ -474,6 +505,7 @@
     import { renderCalendar } from '../js/calendar.js';
     import { downloadICS } from '../js/ical-export.js';
     import { getRecommendations, renderAffiliates } from '../js/affiliate.js';
+    import { renderMileageBox, approvedMileage } from '../js/mileage-box.js';
     import {
       setupTheme,
       setupCollapsibles,
@@ -501,12 +533,18 @@
       });
     }
 
+    // Electric range sets the rate for any car at 1 to 50 g/km (GOV.UK), so show it then too
     const fuelTypeSelect = document.getElementById('fuelType');
+    const syncElectricRange = () => {
+      const co2 = getNumericInput('carCO2');
+      showIf('electricRangeGroup', getSelectValue('fuelType') === 'hybrid' || (co2 >= 1 && co2 <= 50));
+    };
     if (fuelTypeSelect) {
-      fuelTypeSelect.addEventListener('change', () => {
-        const val = getSelectValue('fuelType');
-        showIf('electricRangeGroup', val === 'hybrid');
-      });
+      fuelTypeSelect.addEventListener('change', syncElectricRange);
+    }
+    const carCO2Input = document.getElementById('carCO2');
+    if (carCO2Input) {
+      carCO2Input.addEventListener('input', syncElectricRange);
     }
 
     // ── Download ICS ──
@@ -653,7 +691,8 @@
       setResult('niSaving', comparison.niSaving, { format: 'currency' });
 
       // Warnings
-      const adjustedNetIncome = grossSalary - personalPension - additionalPension;
+      // All salary sacrifice (pension, cycle, EV) reduces adjusted net income
+      const adjustedNetIncome = grossSalary - personalPension - additionalPension - cycleToWork - evLease;
       const totalPensionContributions = personalPension + employerPension + additionalPension;
 
       const warnings = getWarnings({
@@ -662,6 +701,8 @@
         adjustedNetIncome,
         totalPensionContributions,
         employerPension,
+        pensionThresholdIncome: grossSalary - cycleToWork - evLease,
+        pensionAdjustedIncome: grossSalary - cycleToWork - evLease + employerPension,
         hasChildcare,
         isScottish
       });
@@ -678,6 +719,21 @@
       });
 
       renderAffiliates('affiliateContainer', recommendations);
+
+      // MileLog box: Mileage Allowance Relief on the difference between the approved rate and what the employer pays
+      renderMileageBox({
+        profile: 'employed',
+        title: 'Use your own car for work? See what you can claim',
+        withEmployerRate: true,
+        note: 'You can claim tax relief on the approved rate minus anything your employer pays. Travel to and from your usual workplace does not count, unless it is a temporary place of work. Keep records of the dates and mileage of your work journeys (GOV.UK).',
+        rows: (miles, pence, ctx) => {
+          const relief = Math.max(0, approvedMileage(miles) - miles * pence / 100);
+          return [
+            { label: 'Mileage Allowance Relief you can claim', amount: relief },
+            { label: 'Approx. tax saved at your marginal rate', amount: relief * ctx.marginalRate },
+          ];
+        },
+      }, { marginalRate: scenarioA.marginalRate || 0 });
 
       // Mobile summary
       updateMobileSummary(scenarioA.takeHome, scenarioA.takeHomeMonthly);
