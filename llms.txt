@@ -33,3 +33,4 @@
 - [MTD for Income Tax](https://uktaxcal.com/blog/mtd-income-tax-2026.html): Making Tax Digital requirements from April 2026.
 - [Inside IR35 True Cost](https://uktaxcal.com/blog/ir35-umbrella-impact-2026.html): Umbrella company rate erosion for IT contractors.
 - [Fiscal Drag](https://uktaxcal.com/blog/fiscal-drag-frozen-thresholds.html): Impact of frozen thresholds since 2021.
+- [Mileage Allowance 2026/27](https://uktaxcal.com/blog/mileage-allowance-2026-27.html): The 55p rate from April 2026 for sole traders, employees, directors and landlords.
