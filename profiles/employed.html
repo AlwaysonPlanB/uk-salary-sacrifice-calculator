@@ -408,7 +408,7 @@
             <p style="margin-top:0.75rem;"><strong>Employee NI:</strong> 8% on &pound;12,570 &ndash; &pound;50,270 | 2% above &pound;50,270</p>
             <p><strong>Employer NI:</strong> 15% above &pound;5,000</p>
             <p style="margin-top:0.75rem;"><strong>Scottish Rates:</strong> Starter 19% | Basic 20% | Intermediate 21% | Higher 42% | Advanced 45% | Top 48%</p>
-            <p style="margin-top:0.75rem;"><strong>Pension Annual Allowance:</strong> &pound;60,000 (tapers above &pound;200,000 adjusted income, min &pound;10,000)</p>
+            <p style="margin-top:0.75rem;"><strong>Pension Annual Allowance:</strong> &pound;60,000. Reduced only if threshold income is over &pound;200,000 and adjusted income (including employer contributions) is over &pound;260,000, by &pound;1 for every &pound;2 above &pound;260,000, to a minimum of &pound;10,000. Pension salary sacrifice is treated as set up after 8 July 2015.</p>
             <p><strong>EV BIK Rate:</strong> 4% for zero-emission vehicles</p>
           </div>
         </div>
@@ -662,6 +662,8 @@
         adjustedNetIncome,
         totalPensionContributions,
         employerPension,
+        pensionThresholdIncome: grossSalary - cycleToWork - evLease,
+        pensionAdjustedIncome: grossSalary - cycleToWork - evLease + employerPension,
         hasChildcare,
         isScottish
       });

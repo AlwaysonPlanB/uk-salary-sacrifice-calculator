@@ -6,7 +6,12 @@ import {
   calcIncomeTax,
   calcDividendTax,
   calcSelfEmployedNI,
+  calcTaperedAA,
 } from '../js/tax-engine.js';
+import { getWarnings } from '../js/warnings.js';
+import { calcSalarySacrifice } from '../js/salary-sacrifice.js';
+
+const hasWarning = (w, id) => (w.some((x) => x.id === id) ? 1 : 0);
 
 let passed = 0;
 let failed = 0;
@@ -46,6 +51,17 @@ check('OK', 'Salary income tax, no dividends, default PA', calcIncomeTax(12570).
 // L3: Class 2 is not payable at profits of £7,105 or more
 check('L3', 'Self-employed NI on £40,000 profit: Class 2', calcSelfEmployedNI(40000).class2, 0);
 check('L3', 'Self-employed NI on £40,000 profit: total', calcSelfEmployedNI(40000).total, 1645.80);
+
+// L7: annual allowance taper needs threshold income over £200,000 AND adjusted income over £260,000
+check('L7', 'AA, threshold £240,000, adjusted £285,000', calcTaperedAA(240000, 285000), 47500);
+check('L7', 'AA, threshold £250,000, adjusted £250,000', calcTaperedAA(250000, 250000), 60000);
+check('L7', 'AA, threshold £190,000, adjusted £300,000', calcTaperedAA(190000, 300000), 60000);
+check('L7', 'AA, threshold and adjusted £400,000 (minimum)', calcTaperedAA(400000, 400000), 10000);
+check('L7', 'Employed £240,000, employer pension £45,000: AA warning shown (1 = yes)', hasWarning(getWarnings({
+  profile: 'employed', grossSalary: 240000, adjustedNetIncome: 240000, totalPensionContributions: 45000,
+  employerPension: 45000, pensionThresholdIncome: 240000, pensionAdjustedIncome: 285000,
+}), 'pension-aa'), 0);
+check('L7', 'Salary sacrifice module AA, £240,000 salary, £45,000 employer', calcSalarySacrifice({ grossSalary: 240000, employerPension: 45000 }).pensionCheck.annualAllowance, 47500);
 
 console.log(`\n${passed} passed, ${failed} failed`);
 process.exit(failed ? 1 : 0);

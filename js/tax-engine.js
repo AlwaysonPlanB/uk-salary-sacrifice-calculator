@@ -472,15 +472,21 @@ export function calcCapitalGainsTax(
 /* ------------------------------------------------------------------ */
 
 /**
- * Pension annual allowance: £60k, reduces £1 per £2 above £200k, min £10k.
+ * Pension annual allowance (GOV.UK): £60k. Reduced only when threshold income is
+ * over £200k AND adjusted income is over £260k: £1 less per £2 over £260k, min £10k.
+ * Threshold income: income with pension salary sacrifice added back.
+ * Adjusted income: threshold income plus employer pension contributions.
  */
-export function calcTaperedAA(adjustedIncome) {
-  if (adjustedIncome <= RATES.pension.taperedAAThreshold) {
+export function calcTaperedAA(thresholdIncome, adjustedIncome = thresholdIncome) {
+  if (
+    thresholdIncome <= RATES.pension.taperedAAThreshold ||
+    adjustedIncome <= RATES.pension.taperedAAAdjustedThreshold
+  ) {
     return RATES.pension.annualAllowance;
   }
 
   const reduction = Math.floor(
-    (adjustedIncome - RATES.pension.taperedAAThreshold) / 2
+    (adjustedIncome - RATES.pension.taperedAAAdjustedThreshold) / 2
   );
 
   return Math.max(

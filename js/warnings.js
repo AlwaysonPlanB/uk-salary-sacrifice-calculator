@@ -12,6 +12,8 @@ export function getWarnings(input) {
     adjustedNetIncome,
     totalPensionContributions,
     employerPension,
+    pensionThresholdIncome = adjustedNetIncome,
+    pensionAdjustedIncome = adjustedNetIncome,
     dividendIncome = 0,
     rentalIncome = 0,
     hasChildcare,
@@ -86,7 +88,7 @@ export function getWarnings(input) {
   /*  3. Pension Annual Allowance                                       */
   /* ------------------------------------------------------------------ */
   const pensionAAProfiles = ['employed', 'self-employed', 'outside-ir35', 'director', 'landlord'];
-  const aaLimit = calcTaperedAA(adjustedNetIncome);
+  const aaLimit = calcTaperedAA(pensionThresholdIncome, pensionAdjustedIncome);
 
   if (totalPensionContributions > aaLimit) {
     const excess = totalPensionContributions - aaLimit;

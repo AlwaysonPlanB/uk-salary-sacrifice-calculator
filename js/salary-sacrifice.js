@@ -3,7 +3,7 @@
  * Compares take-home pay with and without salary sacrifice arrangements.
  */
 
-import { calcIncomeTax, calcEmployeeNI, RATES } from './tax-engine.js';
+import { calcIncomeTax, calcEmployeeNI, calcTaperedAA, RATES } from './tax-engine.js';
 import { calcCombinedStudentLoans } from './student-loans.js';
 
 /* ------------------------------------------------------------------ */
@@ -12,29 +12,6 @@ import { calcCombinedStudentLoans } from './student-loans.js';
 
 function round2(x) {
   return Math.round(x * 100) / 100;
-}
-
-/* ------------------------------------------------------------------ */
-/*  Pension Annual Allowance                                          */
-/* ------------------------------------------------------------------ */
-
-/**
- * Pension annual allowance: £60k, reduces £1 per £2 above £200k, min £10k.
- * Mirrors calcTaperedAA from tax-engine.
- */
-function calcPensionAllowance(adjustedIncome) {
-  if (adjustedIncome <= RATES.pension.taperedAAThreshold) {
-    return RATES.pension.annualAllowance;
-  }
-
-  const reduction = Math.floor(
-    (adjustedIncome - RATES.pension.taperedAAThreshold) / 2
-  );
-
-  return Math.max(
-    RATES.pension.minimumTaperedAA,
-    RATES.pension.annualAllowance - reduction
-  );
 }
 
 /* ------------------------------------------------------------------ */
@@ -166,7 +143,9 @@ export function calcSalarySacrifice(input) {
   /* ---- Pension Check ---- */
 
   const totalContributions = personalPension + employerPension + additionalPension;
-  const annualAllowance = calcPensionAllowance(grossSalary);
+  // Pension salary sacrifice is added back for threshold income; other sacrifices are not
+  const thresholdIncome = grossSalary - cycleToWork - evLease - otherSacrifice;
+  const annualAllowance = calcTaperedAA(thresholdIncome, thresholdIncome + employerPension);
   const exceeded = totalContributions > annualAllowance;
 
   /* ---- Return ---- */
