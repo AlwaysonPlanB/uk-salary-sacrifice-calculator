@@ -28,9 +28,9 @@ export function getWarnings(input) {
   /* ------------------------------------------------------------------ */
   const paTaperProfiles = ['employed', 'self-employed', 'outside-ir35', 'director', 'landlord'];
 
-  if (adjustedNetIncome >= 100000) {
+  if (adjustedNetIncome > 100000) {
     const paLoss = RATES.personalAllowance - calcPersonalAllowance(adjustedNetIncome);
-    const pensionNeeded = adjustedNetIncome - 99999;
+    const pensionNeeded = adjustedNetIncome - 100000;
     warnings.push({
       id: 'pa-taper',
       severity: 'red',
@@ -42,7 +42,7 @@ export function getWarnings(input) {
         `A pension contribution of ${fmt(pensionNeeded)} would bring you below the threshold.`,
       profiles: paTaperProfiles,
     });
-  } else if (adjustedNetIncome >= 95000 && adjustedNetIncome <= 99999) {
+  } else if (adjustedNetIncome >= 95000 && adjustedNetIncome <= 100000) {
     warnings.push({
       id: 'pa-taper-approaching',
       severity: 'amber',
@@ -60,7 +60,7 @@ export function getWarnings(input) {
   /* ------------------------------------------------------------------ */
   const childcareProfiles = ['employed', 'self-employed', 'director'];
 
-  if (adjustedNetIncome >= 100000 && hasChildcare) {
+  if (adjustedNetIncome > 100000 && hasChildcare) {
     warnings.push({
       id: 'childcare-trap',
       severity: 'red',
@@ -72,7 +72,7 @@ export function getWarnings(input) {
         `Pension contributions could bring you below the threshold.`,
       profiles: childcareProfiles,
     });
-  } else if (adjustedNetIncome >= 95000 && adjustedNetIncome <= 99999 && hasChildcare) {
+  } else if (adjustedNetIncome >= 95000 && adjustedNetIncome <= 100000 && hasChildcare) {
     warnings.push({
       id: 'childcare-trap-approaching',
       severity: 'amber',

@@ -85,5 +85,13 @@ check('L12', 'Turnover £60,000, expenses £20,000: MTD warning (1 = yes)', mtd(
 check('L12', 'Profit £30,000 + £25,000 employment, turnover £30,000: MTD warning still shown for 2027/28 rule', mtd(30000), 1);
 check('L12', 'Turnover £15,000: no MTD warning', mtd(15000), 0);
 
+// L16: the PA taper and Tax-Free Childcare apply over £100,000, not at exactly £100,000
+const pa = (ani) => hasWarning(getWarnings({ profile: 'employed', grossSalary: ani, adjustedNetIncome: ani, hasChildcare: true }), 'pa-taper');
+const cc = (ani) => hasWarning(getWarnings({ profile: 'employed', grossSalary: ani, adjustedNetIncome: ani, hasChildcare: true }), 'childcare-trap');
+check('L16', 'ANI exactly £100,000: £100k trap warning (1 = yes)', pa(100000), 0);
+check('L16', 'ANI £100,001: £100k trap warning', pa(100001), 1);
+check('L16', 'ANI exactly £100,000: childcare lost warning', cc(100000), 0);
+check('L16', 'ANI £100,001: childcare lost warning', cc(100001), 1);
+
 console.log(`\n${passed} passed, ${failed} failed`);
 process.exit(failed ? 1 : 0);
