@@ -18,15 +18,18 @@ Older backup tags in the repo (`v0-live-backup`, `v1.0-pre-spouse`) are from ear
 
 ## Revert the live site (GitHub Pages serves the `main` branch)
 
-This keeps the history and adds one new commit that restores every file to the backup. Nothing is deleted.
+Since 21 October 2026 `main` is protected: changes go through a pull request, even for the owner. No approval is needed, so you can merge your own. This keeps the history and adds one new commit that restores every file to the backup. Nothing is deleted.
 
 ```bash
 cd /Users/ven/Dev/Dwija/uktaxcal
 git checkout main
 git pull
+git checkout -b revert/live-backup-2026-10-21
 git restore --source=live-backup-2026-10-21 --staged --worktree -- .
 git commit -m "Revert site to live-backup-2026-10-21"
-git push origin main
+git push -u origin revert/live-backup-2026-10-21
+gh pr create --base main --head revert/live-backup-2026-10-21 --title "Revert site to live-backup-2026-10-21" --body "Revert to the 21 Oct 2026 live backup"
+gh pr merge revert/live-backup-2026-10-21 --merge
 ```
 
 GitHub Pages republishes within a few minutes. Check with:
@@ -44,4 +47,4 @@ Note: `git restore --source` restores files that existed in the backup. Files AD
 git diff --name-only --diff-filter=A live-backup-2026-10-21 main
 ```
 
-Remove any of them with `git rm <file>` before the commit above if the revert should drop them too.
+Remove any of them with `git rm <file>` before the commit above (on the revert branch) if the revert should drop them too.
