@@ -33,3 +33,8 @@ To undo everything, see `docs/REVERT-live-backup-2026-10-21.md`.
 | F9 (warning) | js/warnings.js | Umbrella rules: the agency (or end client if no agency) is responsible for PAYE from 6 April 2026 | "end clients and agencies share joint and several liability" | As GOV.UK |
 | F10 | js/warnings.js | From 6 April 2029, pension salary sacrifice above £2,000 a year pays employee and employer NI. "Front-loading" advice removed | "employer NI savings ... capped at £2,000 per employee" | As GOV.UK |
 | L15 (follow-up) | js/warnings.js | £100k personal allowance warning now also shown on inside IR35 (warnings are filtered by profile, and inside IR35 was not in the list) | No £100k warning for inside IR35 contractors | Shown when pay after sacrifice is over £100,000 |
+| F2 | index.html (FAQ structured data) | Salary sacrifice saving for a basic rate taxpayer: 20% tax plus 8% NI | "roughly 32p" | "roughly 28p" |
+| F3 | index.html (FAQ structured data) | £50,000 salary NI and take-home | NI £3,002, take-home £39,512 | NI £2,994, take-home £39,520 (monthly £3,293 unchanged) |
+| F9 (homepage) | index.html | Umbrella line matches GOV.UK | "Joint & Several Liability on PAYE deductions" | Agencies (or end clients) responsible for umbrella PAYE |
+| F11 | index.html, profiles/self-employed.html, profiles/landlord.html | MTD wording uses qualifying income (turnover) and the year it is measured, plus the April 2027 £30,000 step | "earning over £50,000" | Qualifying income over £50,000 in 2024/25; over £30,000 in 2025/26 from April 2027 |
+| F37 | index.html | Investor card no longer mentions savings interest (the calculator has no savings input) | "dividends, capital gains, savings interest, and ISA allowances" | "dividends, capital gains, and ISA allowances" |
