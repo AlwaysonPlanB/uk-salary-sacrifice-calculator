@@ -18,8 +18,8 @@
   --border-hover: #3d4460;
   --accent: #818cf8;          /* text and links: 5.6:1 or better on dark surfaces */
   --accent-hover: #a5b4fc;
-  --accent-solid: #6366f1;    /* button backgrounds with white text */
-  --accent-solid-hover: #4f46e5;
+  --accent-solid: #4f46e5;    /* button backgrounds with white text (6.3:1) */
+  --accent-solid-hover: #4338ca;
   --accent-bg: rgba(99, 102, 241, 0.12);
   --green: #22c55e;
   --green-bg: rgba(34, 197, 94, 0.12);
@@ -648,9 +648,28 @@ select {
 }
 
 /* ---------- Links in body text are underlined (not colour alone) ---------- */
-main p a, main li a {
+main p a, main li a, .warning a {
   text-decoration: underline;
   text-underline-offset: 2px;
+}
+
+/* ---------- Input with a unit after the value (data-unit="miles") ---------- */
+.input-unit {
+  position: relative;
+}
+
+.input-unit::after {
+  content: attr(data-unit);
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.input-unit input[type="text"] {
+  padding-right: 4rem;
 }
 
 /* ---------- MileLog box (js/mileage-box.js) ---------- */
@@ -686,7 +705,7 @@ main p a, main li a {
   color: var(--text-muted);
 }
 
-.mileage-box-body .input-prefix {
+.mileage-box-body .input-unit {
   margin: 0.35rem 0 0.8rem;
 }
 
@@ -752,6 +771,8 @@ main p a, main li a {
   border: 1px solid var(--accent);
   border-radius: 999px;
   vertical-align: middle;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 /* ---------- Buttons ---------- */
@@ -1375,7 +1396,8 @@ main p a, main li a {
 
 .blog-article a {
   color: var(--accent);
-  text-decoration: none;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .blog-article a:hover {

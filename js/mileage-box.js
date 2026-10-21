@@ -47,12 +47,13 @@ function build(config) {
   const body = document.createElement('div');
   body.className = 'mileage-box-body';
 
-  const addInput = (id, label, value) => {
+  const addInput = (id, label, value, unit) => {
     const lab = document.createElement('label');
     lab.htmlFor = id;
     lab.textContent = label;
     const wrap = document.createElement('div');
-    wrap.className = 'input-prefix';
+    wrap.className = 'input-unit';
+    wrap.dataset.unit = unit;
     const input = document.createElement('input');
     input.type = 'text';
     input.id = id;
@@ -64,9 +65,9 @@ function build(config) {
     return input;
   };
 
-  const miles = addInput('mileageMiles', 'Business miles this tax year', '8,000');
+  const miles = addInput('mileageMiles', 'Business miles this tax year', '8,000', 'miles');
   const employerPence = config.withEmployerRate
-    ? addInput('mileageEmployerPence', 'Your employer pays you (pence per mile, 0 if nothing)', '0')
+    ? addInput('mileageEmployerPence', 'Your employer pays you per mile (0 if nothing)', '0', 'p per mile')
     : null;
 
   const rows = document.createElement('div');
