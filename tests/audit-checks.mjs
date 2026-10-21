@@ -78,6 +78,7 @@ check('L9', 'Petrol 154 g/km', bikPct(154, 'petrol'), 36);
 check('L9', 'Petrol 155 g/km', bikPct(155, 'petrol'), 37);
 check('L9', 'Electric', bikPct(0, 'electric'), 4);
 check('U1', 'Diesel 120 g/km keeps existing 4% supplement (unverified, unchanged)', bikPct(120, 'diesel'), 34);
+check('L9', 'Diesel with no CO2 entered stays at the zero-emission rate', bikPct(0, 'diesel'), 4);
 
 // L12: MTD warning uses qualifying income (turnover), not profit plus other income
 const mtd = (q) => hasWarning(getWarnings({ profile: 'self-employed', grossSalary: 0, adjustedNetIncome: 0, qualifyingIncome: q }), 'mtd');

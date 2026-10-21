@@ -43,8 +43,8 @@ export function calcBiKTax(details, marginalRate) {
     bikRate = band ? band.rate : RATES.bik.petrol[RATES.bik.petrol.length - 1].rate;
   }
 
-  // Diesel supplement, capped at maximum BIK rate
-  if (fuelType === 'diesel') {
+  // Diesel supplement, capped at maximum BIK rate (not for zero-emission / no CO2 entered)
+  if (fuelType === 'diesel' && co2 > 0) {
     bikRate = Math.min(bikRate + RATES.bik.dieselSupplement, RATES.bik.maxBikRate);
   }
 

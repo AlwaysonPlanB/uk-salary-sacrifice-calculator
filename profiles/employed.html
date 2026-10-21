@@ -501,12 +501,18 @@
       });
     }
 
+    // Electric range sets the rate for any car at 1 to 50 g/km (GOV.UK), so show it then too
     const fuelTypeSelect = document.getElementById('fuelType');
+    const syncElectricRange = () => {
+      const co2 = getNumericInput('carCO2');
+      showIf('electricRangeGroup', getSelectValue('fuelType') === 'hybrid' || (co2 >= 1 && co2 <= 50));
+    };
     if (fuelTypeSelect) {
-      fuelTypeSelect.addEventListener('change', () => {
-        const val = getSelectValue('fuelType');
-        showIf('electricRangeGroup', val === 'hybrid');
-      });
+      fuelTypeSelect.addEventListener('change', syncElectricRange);
+    }
+    const carCO2Input = document.getElementById('carCO2');
+    if (carCO2Input) {
+      carCO2Input.addEventListener('input', syncElectricRange);
     }
 
     // ── Download ICS ──
