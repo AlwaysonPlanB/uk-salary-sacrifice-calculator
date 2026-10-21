@@ -80,3 +80,7 @@ Make one title change at a time (Employed first), and check rankings for 2 to 3 
 
 - "take home pay calculator uk" impressions down 92% recently: check again after the title change and sitemap submission.
 - Core Web Vitals are already "Good" for real visitors, so the self-hosted fonts change is a lab improvement, not a fix for a real-user problem.
+
+## Decisions
+
+- 21 October 2026: Employed page title and H1 change approved and added to Phase 1. Other title changes wait until its effect is measured (2 to 3 weeks after deploy).
