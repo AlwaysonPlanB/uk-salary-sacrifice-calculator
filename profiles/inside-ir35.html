@@ -531,7 +531,8 @@
       // ── Warnings ──
       const warnings = getWarnings({
         profile: 'inside-ir35',
-        grossSalary: grossSalary
+        grossSalary: grossSalary,
+        adjustedNetIncome: taxableGross
       });
 
       renderWarnings('warningsContainer', warnings);

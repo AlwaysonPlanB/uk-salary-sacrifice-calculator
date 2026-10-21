@@ -826,7 +826,9 @@
       });
 
       // ── Pension via Ltd — Tax Saving ──
-      const pensionCorpTaxSaved = employerPensionVal * (corpTax.effectiveRate || 0);
+      // Corporation tax with the pension added back, minus actual corporation tax
+      // (handles marginal relief between £50,000 and £250,000)
+      const pensionCorpTaxSaved = Math.max(0, calcCorporationTax(adjustedProfit + employerPensionVal).tax - corpTax.tax);
       const pensionEffCost = employerPensionVal - pensionCorpTaxSaved;
 
       setResult('resPensionAmt', employerPensionVal, { format: 'currency' });
@@ -838,7 +840,11 @@
         profile: 'director',
         grossSalary: salary + dividends,
         dividendIncome: dividends,
-        totalPensionContributions: employerPensionVal
+        // Director 1's own income (dividends are split when a spouse is included)
+        adjustedNetIncome: salary + (includeSpouse ? dividends / 2 : dividends),
+        totalPensionContributions: employerPensionVal,
+        pensionThresholdIncome: salary + (includeSpouse ? dividends / 2 : dividends),
+        pensionAdjustedIncome: salary + (includeSpouse ? dividends / 2 : dividends) + employerPensionVal
       });
 
       renderWarnings('warningsContainer', warnings);

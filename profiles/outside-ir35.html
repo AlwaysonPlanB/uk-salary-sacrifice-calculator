@@ -686,7 +686,12 @@
       const warnings = getWarnings({
         profile: 'outside-ir35',
         grossSalary: salary + dividends,
-        dividendIncome: dividends
+        dividendIncome: dividends,
+        // Director 1's own income (dividends are split when a spouse is included)
+        adjustedNetIncome: salary + (includeSpouse ? dividends / 2 : dividends),
+        totalPensionContributions: employerPensionVal,
+        pensionThresholdIncome: salary + (includeSpouse ? dividends / 2 : dividends),
+        pensionAdjustedIncome: salary + (includeSpouse ? dividends / 2 : dividends) + employerPensionVal
       });
 
       renderWarnings('warningsContainer', warnings);
