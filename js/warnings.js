@@ -125,7 +125,7 @@ export function getWarnings(input) {
       title: 'Fiscal Drag \u2014 Frozen Thresholds',
       message:
         `The Personal Allowance has been frozen at \u00A312,570 since 2021. If indexed to inflation ` +
-        `it would be ~\u00A315,000, costing you ~\u00A3486 in extra tax per year. ` +
+        `it would be ~\u00A315,000, costing you ~\u00A3486 in extra tax per year (our estimate, not an HMRC figure, so check with an accountant). ` +
         `Income tax thresholds are frozen until 5 April 2031.`,
       profiles: ['employed', 'self-employed', 'outside-ir35', 'inside-ir35', 'director', 'landlord'],
     });
