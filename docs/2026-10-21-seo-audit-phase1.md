@@ -52,3 +52,36 @@ Google Analytics timing is a decision for the user (it affects analytics data).
 
 - Colour contrast (all pages) and links shown by colour only (8 pages): fixing changes the look (slightly darker grey text, underlined links in body text)
 - Two article tables without header cells (100k tax trap, dividend tax): small markup fix
+
+
+## Final audit after the user's decisions (21 October 2026, later the same day)
+
+Added since the first audit: contrast fix, share image, privacy page with analytics opt-out, MileLog box, mileage article, dividend Option 2.
+
+| Page | SEO | Best practices | Accessibility | Performance (local) |
+|:-|:-|:-|:-|:-|
+| 404 | 63 | 100 | 100 | 97 |
+| blog_100k-tax-trap | 100 | 100 | 100 | 100 |
+| blog_dividend-tax-increase-2026 | 100 | 100 | 100 | 100 |
+| blog_fiscal-drag-frozen-thresholds | 100 | 100 | 100 | 100 |
+| blog_ir35-umbrella-impact-2026 | 100 | 100 | 100 | 100 |
+| blog_mileage-allowance-2026-27 | 100 | 100 | 100 | 100 |
+| blog_mtd-income-tax-2026 | 100 | 100 | 100 | 100 |
+| index | 100 | 100 | 100 | 100 |
+| privacy | 100 | 100 | 100 | 100 |
+| profiles_director | 100 | 100 | 100 | 98 |
+| profiles_employed | 100 | 100 | 100 | 99 |
+| profiles_inside-ir35 | 100 | 100 | 100 | 99 |
+| profiles_investor | 100 | 100 | 100 | 99 |
+| profiles_landlord | 100 | 100 | 100 | 99 |
+| profiles_outside-ir35 | 100 | 100 | 100 | 99 |
+| profiles_self-employed | 100 | 100 | 100 | 99 |
+
+Accessibility is now 100 on every page (was 91 to 95 live). Only remaining Lighthouse note: two article tables without header cells, which no longer affect the score. Structure checks: all 16 pages pass (canonical, one H1, structured data parses, no broken local links); sitemap lists 15 pages, all present.
+
+## Go-live conditions
+
+1. In Google Analytics, untick "Modelling contributions & business insights" (Admin, Account details), so the privacy page statement that Google only processes data for us is fully accurate.
+2. MileLog 1.2.0 (55p) must be approved and live on the App Store first: the site, the MileLog box and the new article describe the 55p version.
+3. Confirm the privacy page wording "run by AlwaysOnPlanB" and the contact link alwaysonplanb.com/contact.html.
+4. After deploy: run Lighthouse on the live self-employed page; if mobile LCP is not below 4.6 s, revert the self-hosted fonts commits (1F.1).
