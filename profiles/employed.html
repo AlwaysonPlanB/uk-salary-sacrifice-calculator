@@ -653,7 +653,8 @@
       setResult('niSaving', comparison.niSaving, { format: 'currency' });
 
       // Warnings
-      const adjustedNetIncome = grossSalary - personalPension - additionalPension;
+      // All salary sacrifice (pension, cycle, EV) reduces adjusted net income
+      const adjustedNetIncome = grossSalary - personalPension - additionalPension - cycleToWork - evLease;
       const totalPensionContributions = personalPension + employerPension + additionalPension;
 
       const warnings = getWarnings({
