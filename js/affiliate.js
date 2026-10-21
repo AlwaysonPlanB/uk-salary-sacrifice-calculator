@@ -93,14 +93,14 @@ export function getRecommendations(input) {
       break;
 
     case 'inside-ir35':
-      recs.push(makeRec('milelog', 'Use your own vehicle for business journeys (not your usual commute)? MileLog logs each business journey and exports a report.'));
+      recs.push(makeRec('milelog', 'Use your own vehicle for business journeys (not your usual commute)? MileLog logs them at HMRC mileage rates and exports a report.'));
       recs.push(makeRec('wise', 'If your agency pays in a different currency, Wise gives you the real exchange rate on every transfer.'));
       recs.push(makeRec('vitality', 'As a contractor, you don\'t get employer sick pay — private health insurance keeps you covered. We both get a £100 voucher when you sign up.'));
       recs.push(makeRec('accountant', 'A chartered accountant can review your IR35 status and advise on pension strategies inside IR35.'));
       break;
 
     case 'landlord':
-      recs.push(makeRec('milelog', 'Driving to your properties for viewings and maintenance? MileLog logs each journey and exports a report for your records.'));
+      recs.push(makeRec('milelog', 'Driving to your properties for viewings and maintenance? MileLog logs each journey at HMRC mileage rates and exports a report for your records.'));
       recs.push(makeRec('xero', 'Track rental income, mortgage interest, and expenses — essential when MTD applies to your rental profits.'));
       recs.push(makeRec('vitality', 'Health insurance for you as a property business owner — protect your ability to manage your portfolio. We both get a £100 voucher when you sign up.'));
       recs.push(makeRec('accountant', 'A chartered accountant can advise on Section 24 mortgage interest relief, incorporation, and property tax planning.'));
