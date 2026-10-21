@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-B0YQPMRS5H"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-B0YQPMRS5H');</script>
+  <title>Page Not Found | UKTaxCal</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container">
+      <a href="/" class="logo">UK<span class="accent">Tax</span>Cal</a>
+      <nav class="nav-links">
+        <a href="/">Home</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <span class="toggle-icon">&#9790;</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1>Page not found</h1>
+        <p>The page you were looking for has moved or does not exist. Choose a 2026/27 calculator below, or go to the <a href="/" style="color:var(--accent);">UKTaxCal homepage</a>.</p>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="profile-grid">
+
+        <a href="/profiles/employed.html" class="profile-card">
+          <div class="icon" style="background: var(--accent-bg);">&#128188;</div>
+          <h3>Employed (PAYE)</h3>
+          <p>Calculate take-home pay, income tax bands, NI contributions, and pension deductions for salaried employees.</p>
+        </a>
+
+        <a href="/profiles/self-employed.html" class="profile-card">
+          <div class="icon" style="background: var(--green-bg);">&#128200;</div>
+          <h3>Self-Employed</h3>
+          <p>Work out your Class 2 &amp; 4 NI, tax on profits, payments on account, and allowable expenses.</p>
+        </a>
+
+        <a href="/profiles/outside-ir35.html" class="profile-card">
+          <div class="icon" style="background: var(--blue-bg);">&#127970;</div>
+          <h3>Outside IR35 Contractor</h3>
+          <p>Optimise salary and dividends through your limited company with corporation tax planning.</p>
+        </a>
+
+        <a href="/profiles/inside-ir35.html" class="profile-card">
+          <div class="icon" style="background: var(--amber-bg);">&#9730;</div>
+          <h3>Inside IR35 Contractor</h3>
+          <p>Understand the deemed employment rules, umbrella PAYE deductions, and your net contractor rate.</p>
+        </a>
+
+        <a href="/profiles/landlord.html" class="profile-card">
+          <div class="icon" style="background: var(--red-bg);">&#127968;</div>
+          <h3>Landlord</h3>
+          <p>Calculate rental income tax with mortgage interest restriction, allowable costs, and Section 24 impact.</p>
+        </a>
+
+        <a href="/profiles/director.html" class="profile-card">
+          <div class="icon" style="background: var(--amber-bg);">&#128081;</div>
+          <h3>Company Director</h3>
+          <p>Plan your optimal salary-dividend split, corporation tax, employer NI, and extraction strategy.</p>
+        </a>
+
+        <a href="/profiles/investor.html" class="profile-card">
+          <div class="icon" style="background: var(--green-bg);">&#128176;</div>
+          <h3>Investor</h3>
+          <p>Calculate tax on dividends, capital gains, and ISA allowances for your portfolio.</p>
+        </a>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>UKTaxCal is for illustrative purposes only and does not constitute financial or tax advice.<br>
+      Always consult a qualified accountant or tax adviser. Calculations are based on announced HMRC rates for 2026/27.</p>
+    </div>
+  </footer>
+
+  <!-- Theme Toggle Script -->
+  <script>
+    (function() {
+      var toggle = document.getElementById('themeToggle');
+      var iconEl = toggle.querySelector('.toggle-icon');
+      var html = document.documentElement;
+      var moonChar = '\u263E';
+      var sunChar = '\u263C';
+
+      // Restore saved theme
+      var saved = localStorage.getItem('uktaxcal-theme');
+      if (saved) {
+        html.setAttribute('data-theme', saved);
+      }
+
+      function updateIcon() {
+        var theme = html.getAttribute('data-theme');
+        iconEl.textContent = theme === 'light' ? sunChar : moonChar;
+      }
+
+      updateIcon();
+
+      toggle.addEventListener('click', function() {
+        var current = html.getAttribute('data-theme');
+        var next = current === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', next);
+        localStorage.setItem('uktaxcal-theme', next);
+        updateIcon();
+      });
+    })();
+  </script>
+
+</body>
+</html>
