@@ -37,6 +37,11 @@ const AFFILIATES = {
   }
 };
 
+// App Store campaign link: downloads from each placement show in App Store Connect > Analytics > Campaigns
+function mileLogUrl(campaign) {
+  return `https://apps.apple.com/gb/app/milelog/id6761419413?pt=128674269&ct=${campaign}&mt=8`;
+}
+
 function makeRec(key, reason) {
   const affiliate = AFFILIATES[key];
   return {
@@ -118,6 +123,10 @@ export function getRecommendations(input) {
         recs.push(makeRec('accountant', 'A chartered accountant can help with dividend tax planning, ISA strategy, and CGT reliefs.'));
       }
       break;
+  }
+
+  for (const rec of recs) {
+    if (rec.key === 'milelog') rec.url = mileLogUrl(`uktaxcal-${profile}-card`);
   }
 
   return recs;
