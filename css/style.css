@@ -676,6 +676,18 @@ select {
   flex: 1;
 }
 
+.affiliate-badge {
+  display: inline-block;
+  margin-left: 0.5rem;
+  padding: 0.05rem 0.5rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  vertical-align: middle;
+}
+
 /* ---------- Buttons ---------- */
 .btn-primary {
   display: inline-flex;
