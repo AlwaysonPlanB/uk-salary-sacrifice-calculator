@@ -128,7 +128,6 @@
               <div class="input-prefix">
                 <input type="text" id="bizExpenses" placeholder="5,000" inputmode="numeric">
               </div>
-              <p style="font-size:0.82rem; color:var(--text-muted); margin-top:0.4rem; margin-bottom:0;">Using your own car for company business? Your company can pay you up to 55p a mile tax-free for the first 10,000 business miles. <a href="https://apps.apple.com/gb/app/milelog/id6761419413?pt=128674269&amp;ct=uktaxcal-outside-ir35-expenses&amp;mt=8" target="_blank" rel="noopener" style="color:var(--accent);">MileLog</a>, our own &pound;1.99 iPhone app, keeps the log for you.</p>
             </div>
           </div>
 
@@ -485,6 +484,7 @@
     import { renderCalendar } from '../js/calendar.js';
     import { downloadICS } from '../js/ical-export.js';
     import { getRecommendations, renderAffiliates } from '../js/affiliate.js';
+    import { renderMileageBox, approvedMileage } from '../js/mileage-box.js';
     import {
       setupTheme,
       setupCollapsibles,
@@ -735,6 +735,16 @@
       });
 
       renderAffiliates('affiliateContainer', recommendations);
+
+      // MileLog box: tax-free mileage payments from the company at the approved rates
+      renderMileageBox({
+        profile: 'outside-ir35',
+        title: 'Use your own car for company business? See what is tax-free',
+        note: 'Your company can pay you up to the approved rates (55p a mile for the first 10,000 business miles, 25p after) without income tax, and up to 55p a mile without National Insurance (GOV.UK).',
+        rows: (miles) => [
+          { label: 'Your company can pay you, tax-free', amount: approvedMileage(miles) },
+        ],
+      }, {});
 
       // ── Mobile summary ──
       updateMobileSummary(takeHome, takeHomeMonthly);

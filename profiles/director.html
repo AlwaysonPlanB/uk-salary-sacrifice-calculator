@@ -544,6 +544,7 @@
     import { renderCalendar } from '../js/calendar.js';
     import { downloadICS } from '../js/ical-export.js';
     import { getRecommendations, renderAffiliates } from '../js/affiliate.js';
+    import { renderMileageBox, approvedMileage } from '../js/mileage-box.js';
     import {
       setupTheme,
       setupCollapsibles,
@@ -896,6 +897,16 @@
       });
 
       renderAffiliates('affiliateContainer', recommendations);
+
+      // MileLog box: tax-free mileage payments from the company at the approved rates
+      renderMileageBox({
+        profile: 'director',
+        title: 'Use your own car for company business? See what is tax-free',
+        note: 'Your company can pay you up to the approved rates (55p a mile for the first 10,000 business miles, 25p after) without income tax, and up to 55p a mile without National Insurance (GOV.UK).',
+        rows: (miles) => [
+          { label: 'Your company can pay you, tax-free', amount: approvedMileage(miles) },
+        ],
+      }, {});
 
       // ── Mobile summary ──
       updateMobileSummary(takeHome, takeHomeMonthly);

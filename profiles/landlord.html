@@ -120,7 +120,6 @@
               <div class="input-prefix">
                 <input type="text" id="otherExpenses" placeholder="3,000" inputmode="numeric">
               </div>
-              <p style="font-size:0.82rem; color:var(--text-muted); margin-top:0.4rem; margin-bottom:0;">Driving to your properties? Keep a record of each journey. <a href="https://apps.apple.com/gb/app/milelog/id6761419413?pt=128674269&amp;ct=uktaxcal-landlord-expenses&amp;mt=8" target="_blank" rel="noopener" style="color:var(--accent);">MileLog</a>, our own &pound;1.99 iPhone app, keeps the log for you.</p>
             </div>
           </div>
 
@@ -448,6 +447,7 @@
     import { renderCalendar } from '../js/calendar.js';
     import { downloadICS } from '../js/ical-export.js';
     import { getRecommendations, renderAffiliates } from '../js/affiliate.js';
+    import { renderMileageBox, approvedMileage } from '../js/mileage-box.js';
     import {
       setupTheme,
       setupCollapsibles,
@@ -630,6 +630,20 @@
       });
 
       renderAffiliates('affiliateContainer', recommendations);
+
+      // MileLog box: mileage at the approved car rates, approximate tax at the marginal rate
+      renderMileageBox({
+        profile: 'landlord',
+        title: 'Driving to your properties? See what your mileage is worth',
+        note: 'GOV.UK lists mileage rate deductions as an allowable expense for a rental business, and mileage logs as records to keep. The figure above uses the 55p and 25p car rates; check with an accountant that they suit your property business.',
+        rows: (miles, pence, ctx) => {
+          const claim = approvedMileage(miles);
+          return [
+            { label: 'Mileage at 55p (25p after 10,000)', amount: claim },
+            { label: 'Approx. tax saved at your marginal rate', amount: claim * ctx.marginalRate },
+          ];
+        },
+      }, { marginalRate: taxResult.marginalRate || 0 });
 
       // Mobile summary
       updateMobileSummary(takeHome, takeHomeMonthly);

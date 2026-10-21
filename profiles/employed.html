@@ -505,6 +505,7 @@
     import { renderCalendar } from '../js/calendar.js';
     import { downloadICS } from '../js/ical-export.js';
     import { getRecommendations, renderAffiliates } from '../js/affiliate.js';
+    import { renderMileageBox, approvedMileage } from '../js/mileage-box.js';
     import {
       setupTheme,
       setupCollapsibles,
@@ -718,6 +719,21 @@
       });
 
       renderAffiliates('affiliateContainer', recommendations);
+
+      // MileLog box: Mileage Allowance Relief on the difference between the approved rate and what the employer pays
+      renderMileageBox({
+        profile: 'employed',
+        title: 'Use your own car for work? See what you can claim',
+        withEmployerRate: true,
+        note: 'You can claim tax relief on the approved rate minus anything your employer pays. Travel to and from your usual workplace does not count, unless it is a temporary place of work. Keep records of the dates and mileage of your work journeys (GOV.UK).',
+        rows: (miles, pence, ctx) => {
+          const relief = Math.max(0, approvedMileage(miles) - miles * pence / 100);
+          return [
+            { label: 'Mileage Allowance Relief you can claim', amount: relief },
+            { label: 'Approx. tax saved at your marginal rate', amount: relief * ctx.marginalRate },
+          ];
+        },
+      }, { marginalRate: scenarioA.marginalRate || 0 });
 
       // Mobile summary
       updateMobileSummary(scenarioA.takeHome, scenarioA.takeHomeMonthly);

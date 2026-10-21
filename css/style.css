@@ -653,6 +653,49 @@ main p a, main li a {
   text-underline-offset: 2px;
 }
 
+/* ---------- MileLog box (js/mileage-box.js) ---------- */
+.mileage-box {
+  background: var(--bg-card);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.mileage-box summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 600;
+  color: var(--text-heading);
+}
+
+.mileage-box summary::-webkit-details-marker {
+  display: none;
+}
+
+.mileage-box-body {
+  margin-top: 0.9rem;
+}
+
+.mileage-box-body label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.mileage-box-body .input-prefix {
+  margin: 0.35rem 0 0.8rem;
+}
+
+.mileage-box-note {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin: 0.6rem 0;
+}
+
 /* ---------- Screen reader only ---------- */
 .sr-only {
   position: absolute;
