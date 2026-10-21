@@ -564,7 +564,7 @@
       const retained = Math.max(0, adjustedProfit - corpTax.tax);
       const dividends = retained;
 
-      const personalTax = calcIncomeTax(salaryLevel, false);
+      const personalTax = calcIncomeTax(salaryLevel, false, salaryLevel + dividends);
       const empNI = calcEmployeeNI(salaryLevel);
       const divTax = calcDividendTax(dividends, salaryLevel);
       const studentLoan = calcCombinedStudentLoans(salaryLevel, studentLoanPlans);
@@ -654,14 +654,14 @@
         const divPerPerson = dividends / 2;
 
         // Director 1
-        const d1IncomeTax = calcIncomeTax(salary, false);
+        const d1IncomeTax = calcIncomeTax(salary, false, salary + divPerPerson);
         const d1EmpNI = calcEmployeeNI(salary);
         const d1DivTax = calcDividendTax(divPerPerson, salary);
         const d1StudentLoan = calcCombinedStudentLoans(salary, studentLoanPlans);
         const d1TakeHome = salary + divPerPerson - d1IncomeTax.tax - d1EmpNI - d1DivTax.tax - d1StudentLoan.total - bikTaxAmount;
 
         // Director 2 (spouse) — same salary, no student loan, no BIK
-        const d2IncomeTax = calcIncomeTax(salary, false);
+        const d2IncomeTax = calcIncomeTax(salary, false, salary + divPerPerson);
         const d2EmpNI = calcEmployeeNI(salary);
         const d2DivTax = calcDividendTax(divPerPerson, salary);
         const d2TakeHome = salary + divPerPerson - d2IncomeTax.tax - d2EmpNI - d2DivTax.tax;
@@ -699,7 +699,7 @@
         showIf('spouseSection', false);
         document.getElementById('personalTaxHeading').textContent = 'Personal Tax (Your Extraction)';
 
-        personalTax = calcIncomeTax(salary, false);
+        personalTax = calcIncomeTax(salary, false, salary + dividends);
         empNI = calcEmployeeNI(salary);
         divTax = calcDividendTax(dividends, salary);
         studentLoan = calcCombinedStudentLoans(salary, studentLoanPlans);
@@ -773,8 +773,8 @@
           const ct2 = calcCorporationTax(adjProf2);
           const ret2 = Math.max(0, adjProf2 - ct2.tax);
           const divPP = ret2 / 2;
-          const d1Tax = calcIncomeTax(level, false).tax + calcEmployeeNI(level) + calcDividendTax(divPP, level).tax;
-          const d2Tax = calcIncomeTax(level, false).tax + calcEmployeeNI(level) + calcDividendTax(divPP, level).tax;
+          const d1Tax = calcIncomeTax(level, false, level + divPP).tax + calcEmployeeNI(level) + calcDividendTax(divPP, level).tax;
+          const d2Tax = calcIncomeTax(level, false, level + divPP).tax + calcEmployeeNI(level) + calcDividendTax(divPP, level).tax;
           const sloan = calcCombinedStudentLoans(level, studentLoanPlans);
           const personalTax2 = d1Tax + d2Tax;
           const totalTax2 = ct2.tax + erNI2 + personalTax2 + sloan.total;

@@ -163,8 +163,9 @@ export function calcPersonalAllowance(grossIncome) {
  * Progressive income tax for England/Wales/NI or Scotland.
  * Returns { tax, effectiveRate, marginalRate, personalAllowance, breakdown[] }
  */
-export function calcIncomeTax(taxableIncome, isScottish = false) {
-  const pa = calcPersonalAllowance(taxableIncome);
+export function calcIncomeTax(taxableIncome, isScottish = false, allowanceIncome = taxableIncome) {
+  // allowanceIncome: income used to taper the PA (pass salary + dividends for directors)
+  const pa = calcPersonalAllowance(allowanceIncome);
   const incomeAfterPA = Math.max(0, taxableIncome - pa);
 
   const bands = isScottish ? RATES.scottishTax : RATES.incomeTax;
@@ -365,70 +366,44 @@ export function calcDividendTax(dividendIncome, otherTaxableIncome) {
     return { tax: 0, breakdown: [] };
   }
 
-  const allowance = RATES.dividends.allowance;
-  const taxableDividends = Math.max(0, dividendIncome - allowance);
-
-  if (taxableDividends <= 0) {
-    return { tax: 0, breakdown: [] };
-  }
-
+  // Personal Allowance tapers on total income (other income plus dividends).
+  // It is used against other income first; any unused part covers dividends.
   const pa = calcPersonalAllowance(otherTaxableIncome + dividendIncome);
-  const totalIncome = otherTaxableIncome + dividendIncome;
+  const paLeftForDividends = Math.max(0, pa - otherTaxableIncome);
+  const dividendsAfterPA = Math.max(0, dividendIncome - paLeftForDividends);
 
-  // Basic rate band ceiling (income level, not taxable amount)
-  const basicCeiling = RATES.incomeTax.basic.upper;   // 50270
-  const higherCeiling = RATES.incomeTax.higher.upper;  // 125140
+  // Bands as income after allowances (GOV.UK): basic to £37,700, higher to £125,140.
+  // Scottish taxpayers use these UK bands for dividends.
+  const basicLimit = RATES.incomeTax.basic.upper - RATES.personalAllowance; // 37700
+  const higherLimit = RATES.additionalRateLimit;                              // 125140
 
-  // How much of the basic-rate band is already used by other income
+  // Dividends sit on top of other income. The £500 allowance is taxed at 0%
+  // but still uses up band space.
   const otherAfterPA = Math.max(0, otherTaxableIncome - pa);
-  const basicBandRemaining = Math.max(0, basicCeiling - pa - otherAfterPA);
-  const higherBandRemaining = Math.max(
-    0,
-    higherCeiling - pa - Math.max(otherAfterPA, basicCeiling - pa)
-  );
+  const start = otherAfterPA + Math.min(RATES.dividends.allowance, dividendsAfterPA);
+  const end = otherAfterPA + dividendsAfterPA;
 
   const breakdown = [];
-  let remaining = taxableDividends;
   let totalTax = 0;
 
-  // Basic rate portion of dividends
-  if (remaining > 0 && basicBandRemaining > 0) {
-    const inBasic = Math.min(remaining, basicBandRemaining);
-    const t = round2(inBasic * RATES.dividends.basic);
-    breakdown.push({
-      band: 'basic',
-      rate: RATES.dividends.basic,
-      taxableAmount: round2(inBasic),
-      tax: t,
-    });
-    totalTax += t;
-    remaining -= inBasic;
-  }
+  const slices = [
+    { band: 'basic', rate: RATES.dividends.basic, from: 0, to: basicLimit },
+    { band: 'higher', rate: RATES.dividends.higher, from: basicLimit, to: higherLimit },
+    { band: 'additional', rate: RATES.dividends.additional, from: higherLimit, to: Infinity },
+  ];
 
-  // Higher rate portion
-  if (remaining > 0 && higherBandRemaining > 0) {
-    const inHigher = Math.min(remaining, higherBandRemaining);
-    const t = round2(inHigher * RATES.dividends.higher);
-    breakdown.push({
-      band: 'higher',
-      rate: RATES.dividends.higher,
-      taxableAmount: round2(inHigher),
-      tax: t,
-    });
-    totalTax += t;
-    remaining -= inHigher;
-  }
-
-  // Additional rate portion
-  if (remaining > 0) {
-    const t = round2(remaining * RATES.dividends.additional);
-    breakdown.push({
-      band: 'additional',
-      rate: RATES.dividends.additional,
-      taxableAmount: round2(remaining),
-      tax: t,
-    });
-    totalTax += t;
+  for (const slice of slices) {
+    const inBand = Math.max(0, Math.min(end, slice.to) - Math.max(start, slice.from));
+    if (inBand > 0) {
+      const t = round2(inBand * slice.rate);
+      breakdown.push({
+        band: slice.band,
+        rate: slice.rate,
+        taxableAmount: round2(inBand),
+        tax: t,
+      });
+      totalTax += t;
+    }
   }
 
   return {
