@@ -72,7 +72,7 @@ export function getRecommendations(input) {
     case 'self-employed':
       recs.push(makeRec('xero', 'MTD-compatible cloud accounting for self-employed — invoicing, expenses, and self-assessment in one place.'));
       recs.push(makeRec('wise', 'Accept payments from international clients at the real exchange rate — no hidden fees.'));
-      recs.push(makeRec('milelog', 'Claim HMRC mileage allowance on business trips — log journeys, calculate tax relief at 45p/25p per mile, and export reports for your self-assessment.'));
+      recs.push(makeRec('milelog', 'Claim HMRC mileage allowance on business trips — log journeys, calculate tax relief at 55p/25p per mile, and export reports for your self-assessment.'));
       recs.push(makeRec('vitality', 'Protect yourself with health insurance — as a sole trader, you are your business. We both get a £100 voucher when you sign up.'));
       recs.push(makeRec('accountant', 'A chartered accountant can help optimise your self-employed tax position and ensure MTD compliance.'));
       break;
