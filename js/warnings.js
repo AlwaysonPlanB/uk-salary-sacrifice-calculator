@@ -16,6 +16,7 @@ export function getWarnings(input) {
     pensionAdjustedIncome = adjustedNetIncome,
     dividendIncome = 0,
     rentalIncome = 0,
+    qualifyingIncome = 0,
     hasChildcare,
     isScottish,
   } = input;
@@ -133,21 +134,20 @@ export function getWarnings(input) {
   /* ------------------------------------------------------------------ */
   /*  5. Making Tax Digital                                             */
   /* ------------------------------------------------------------------ */
-  const mtdIncome =
-    (profile === 'self-employed' ? grossSalary : 0) +
-    (profile === 'landlord' ? rentalIncome : 0);
-
+  // Qualifying income is turnover from self-employment and property, before expenses (GOV.UK)
   if (
     (profile === 'self-employed' || profile === 'landlord') &&
-    mtdIncome > 50000
+    qualifyingIncome > 20000
   ) {
     warnings.push({
       id: 'mtd',
       severity: 'amber',
-      title: 'Making Tax Digital \u2014 Mandatory from April 2026',
+      title: 'Making Tax Digital for Income Tax',
       message:
-        `Self-employed and landlord income over \u00A350,000 must use MTD-compatible software ` +
-        `for income tax from April 2026. Quarterly digital updates will be required.`,
+        `Your qualifying income here (turnover before expenses) is ${fmt(qualifyingIncome)}. ` +
+        `MTD applies from 6 April 2026 if it was over \u00A350,000 in 2024/25, from 6 April 2027 ` +
+        `if over \u00A330,000 in 2025/26, and from 6 April 2028 if over \u00A320,000 in 2026/27. ` +
+        `It means keeping digital records and sending quarterly updates.`,
       profiles: ['self-employed', 'landlord'],
     });
   }

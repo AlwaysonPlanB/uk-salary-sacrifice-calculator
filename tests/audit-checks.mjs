@@ -79,5 +79,11 @@ check('L9', 'Petrol 155 g/km', bikPct(155, 'petrol'), 37);
 check('L9', 'Electric', bikPct(0, 'electric'), 4);
 check('U1', 'Diesel 120 g/km keeps existing 4% supplement (unverified, unchanged)', bikPct(120, 'diesel'), 34);
 
+// L12: MTD warning uses qualifying income (turnover), not profit plus other income
+const mtd = (q) => hasWarning(getWarnings({ profile: 'self-employed', grossSalary: 0, adjustedNetIncome: 0, qualifyingIncome: q }), 'mtd');
+check('L12', 'Turnover £60,000, expenses £20,000: MTD warning (1 = yes)', mtd(60000), 1);
+check('L12', 'Profit £30,000 + £25,000 employment, turnover £30,000: MTD warning still shown for 2027/28 rule', mtd(30000), 1);
+check('L12', 'Turnover £15,000: no MTD warning', mtd(15000), 0);
+
 console.log(`\n${passed} passed, ${failed} failed`);
 process.exit(failed ? 1 : 0);
