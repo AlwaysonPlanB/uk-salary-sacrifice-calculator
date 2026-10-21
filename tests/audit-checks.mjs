@@ -22,5 +22,9 @@ check('L1', 'rUK income tax, £120,000', calcIncomeTax(120000).tax, 39432);
 check('L1', 'rUK income tax, £150,000', calcIncomeTax(150000).tax, 53703);
 check('L1', 'Scottish income tax, £200,000', calcIncomeTax(200000, true).tax, 83634.35);
 
+// L2: Scottish marginal rate in the £100,000 to £125,140 taper zone is 45% x 1.5
+check('L2', 'Scottish marginal rate at £110,000', calcIncomeTax(110000, true).marginalRate, 0.675);
+check('L2', 'rUK marginal rate at £110,000 (unchanged)', calcIncomeTax(110000).marginalRate, 0.60);
+
 console.log(`\n${passed} passed, ${failed} failed`);
 process.exit(failed ? 1 : 0);

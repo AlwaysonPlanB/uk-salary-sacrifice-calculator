@@ -210,13 +210,13 @@ export function calcIncomeTax(taxableIncome, isScottish = false) {
   // Detect 60% effective marginal rate in PA taper zone (£100k-£125,140)
   if (
     taxableIncome > RATES.paTaperThreshold &&
-    taxableIncome <= 125140
+    taxableIncome <= RATES.additionalRateLimit
   ) {
-    // In the taper zone the effective marginal rate is ~60% for rUK (40% tax + 20% lost PA)
-    // or ~63% for Scotland (42% higher + 21% lost PA)
+    // In the taper zone the effective marginal rate is 60% for rUK (40% tax + 20% lost PA)
+    // or 67.5% for Scotland (45% advanced + 22.5% lost PA)
     if (isScottish) {
-      // Find the Scottish rate that applies at the taper zone income level
-      marginalRate = 0.63; // 42% + 21% effective from PA taper
+      // The whole taper zone falls in the Scottish advanced band (£62,431 to £125,140 after allowances)
+      marginalRate = 0.675; // 45% + 22.5% effective from PA taper
     } else {
       marginalRate = 0.60; // 40% + 20% effective from PA taper
     }
